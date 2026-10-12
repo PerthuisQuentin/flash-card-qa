@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import McqView from '../../components/cards/McqView.tsx'
 import Button from '../../components/ui/Button.tsx'
+import KeyHint from '../../components/ui/KeyHint.tsx'
 import { getCard } from '../../data/cards.ts'
+import { useHotkeys, type HotkeyBindings } from '../../hooks/useHotkeys.ts'
 import {
   abandonExam,
   finishExam,
@@ -13,6 +15,7 @@ import {
   unansweredCount,
 } from '../../lib/exam.ts'
 import { formatClock } from '../../lib/format.ts'
+import { toggleMcqOption } from '../../lib/grading.ts'
 import type { ExamInProgress } from '../../lib/storage.ts'
 import { useStore } from '../../state/store.tsx'
 
@@ -34,6 +37,26 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
     update((s) => finishExam(s, new Date(), getCard))
     navigate(`/exam/${exam.id}`)
   }, [update, navigate, exam.id])
+
+  const last = exam.questions.length - 1
+  const examBindings: HotkeyBindings = {
+    arrowleft: () => setIndex((i) => Math.max(0, i - 1)),
+    arrowright: () => setIndex((i) => Math.min(last, i + 1)),
+    f: () => update((s) => toggleExamFlag(s, cardId)),
+  }
+  if (card?.type === 'mcq') {
+    card.options.forEach((_, option) => {
+      examBindings[String(option + 1)] = () =>
+        update((s) =>
+          setExamAnswer(
+            s,
+            cardId,
+            toggleMcqOption(card, s.currentExam?.answers[cardId] ?? [], option),
+          ),
+        )
+    })
+  }
+  useHotkeys(examBindings, confirm === null)
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000)
@@ -99,6 +122,13 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
             {index === exam.questions.length - 1 ? 'Terminer l’examen' : 'Suivante →'}
           </Button>
         </div>
+        <KeyHint
+          items={[
+            ['1–4', 'répondre'],
+            ['← →', 'naviguer'],
+            ['F', 'marquer'],
+          ]}
+        />
       </article>
 
       <nav aria-label="Questions">

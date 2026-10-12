@@ -119,10 +119,10 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 10 — Finitions
 
-- [ ] Raccourcis clavier.
-- [ ] Thème sombre, passe responsive complète, accessibilité (focus, contrastes, labels).
-- [ ] États vides et messages d'erreur soignés.
-- [ ] README (lancer le projet, ajouter des cartes, déployer).
+- [x] Raccourcis clavier.
+- [x] Thème sombre, passe responsive complète, accessibilité (focus, contrastes, labels).
+- [x] États vides et messages d'erreur soignés.
+- [x] README (lancer le projet, ajouter des cartes, déployer).
 
 ---
 

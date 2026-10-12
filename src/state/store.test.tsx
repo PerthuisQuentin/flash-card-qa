@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, render, screen } from '@testing-library/react'
 import { useEffect } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { STORAGE_KEY } from '../lib/storage.ts'
 import { memoryStorage } from '../test/memoryStorage.ts'
 import { StoreProvider, useStore } from './store.tsx'
@@ -42,6 +42,21 @@ describe('StoreProvider', () => {
     cleanup()
     mount(storage)
     expect(screen.getByText('answers: 1')).toBeTruthy()
+  })
+
+  it('reports failed writes so the user can be warned', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    const storage = memoryStorage()
+    storage.setItem = () => {
+      throw new Error('QuotaExceededError')
+    }
+    mount(storage)
+    expect(store.saveFailed).toBe(false)
+
+    act(() => store.recordAnswer({ cardId: 'c1-001', correct: true, mode: 'practice' }))
+    expect(store.saveFailed).toBe(true)
+    expect(screen.getByText('answers: 1')).toBeTruthy()
+    vi.restoreAllMocks()
   })
 
   it('throws a helpful error outside the provider', () => {

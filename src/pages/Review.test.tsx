@@ -59,4 +59,24 @@ describe('Review page', () => {
     expect(screen.getByText('Session terminée 🎉')).toBeTruthy()
     expect(screen.getByText('50 %')).toBeTruthy()
   })
+
+  it('can be driven entirely with the keyboard', async () => {
+    const { user, stored } = setup()
+    await user.click(screen.getByRole('button', { name: 'Commencer (20 cartes)' }))
+
+    // Flashcard: Enter reveals, 3 rates "Good".
+    await user.keyboard('{Enter}')
+    expect(screen.getByRole('button', { name: /^Bien/ })).toBeTruthy()
+    await user.keyboard('3')
+    expect(stored().answers[0]).toMatchObject({ cardId: cards[0].id, rating: 3 })
+
+    // True/false: V or F answers, Enter validates, Enter continues.
+    const second = cards[1]
+    if (second.type !== 'true_false') throw new Error('Expected a true/false card')
+    await user.keyboard(second.answer ? 'f' : 'v')
+    await user.keyboard('{Enter}')
+    expect(screen.getByText('✗ Mauvaise réponse')).toBeTruthy()
+    await user.keyboard('{Enter}')
+    expect(stored().answers[1]).toMatchObject({ cardId: second.id, correct: false, rating: 1 })
+  })
 })

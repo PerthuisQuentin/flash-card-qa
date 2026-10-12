@@ -194,7 +194,10 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 
 - Responsive, **mobile first**.
 - Thème clair/sombre selon le système.
-- Raccourcis clavier (desktop) : `Espace` retourner / valider, `1`–`4` notation ou choix d'option, `V`/`F` vrai/faux, `Entrée` question suivante.
+- Raccourcis clavier (détail dans le README) : `1`–`n` choix d'option ou notation, `V`/`F` vrai/faux, `Entrée`/`Espace` valider ou continuer, `←`/`→` et `F` en examen. Désactivés dans les champs de saisie ; un contrôle qui a le focus garde `Entrée`/`Espace` ; les cartes « remise en ordre » gardent le clavier du glisser-déposer. Rappel des touches affiché seulement avec un pointeur précis (souris).
+- Accessibilité : lien d'évitement « Aller au contenu », titre d'onglet par page, focus visible, libellés ARIA sur la grille d'examen et les graphiques.
+- Robustesse : bandeau d'alerte si l'écriture dans le `localStorage` échoue ; écran de secours en cas d'erreur de rendu.
+- Pages secondaires chargées à la demande (code splitting).
 - Les cartes dont l'`id` n'existe plus dans le JSON sont ignorées (leur progression est conservée dans le stockage mais non affichée).
 
 ---

@@ -6,6 +6,7 @@ import {
   gradeTrueFalse,
   isMultiAnswer,
   moveItem,
+  toggleMcqOption,
   shuffle,
   shuffleOrdering,
 } from './grading.ts'
@@ -106,5 +107,20 @@ describe('moveItem', () => {
   it('ignores out-of-range moves', () => {
     expect(moveItem(['a', 'b'], 0, 5)).toEqual(['a', 'b'])
     expect(moveItem(['a', 'b'], -1, 0)).toEqual(['a', 'b'])
+  })
+})
+
+describe('toggleMcqOption', () => {
+  it('replaces the selection for a single-answer question', () => {
+    expect(toggleMcqOption(singleMcq, [1], 2)).toEqual([2])
+  })
+
+  it('toggles options for a multi-answer question, kept sorted', () => {
+    expect(toggleMcqOption(multiMcq, [3], 0)).toEqual([0, 3])
+    expect(toggleMcqOption(multiMcq, [0, 3], 3)).toEqual([0])
+  })
+
+  it('ignores options that do not exist', () => {
+    expect(toggleMcqOption(singleMcq, [1], 7)).toEqual([1])
   })
 })

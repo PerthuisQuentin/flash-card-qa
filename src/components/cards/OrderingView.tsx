@@ -78,7 +78,8 @@ export default function OrderingView({ card, order, onChange, revealed }: Orderi
   }
 
   return (
-    <div>
+    // Drag and drop has its own keyboard handling (Space / Enter / arrows).
+    <div data-hotkeys="off">
       <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">
         Glisse les éléments (poignée ⋮⋮) ou utilise les flèches pour les remettre dans l'ordre.
       </p>

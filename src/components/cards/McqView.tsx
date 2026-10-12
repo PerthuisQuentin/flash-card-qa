@@ -1,5 +1,5 @@
 import type { McqCard } from '../../data/schema.ts'
-import { isMultiAnswer } from '../../lib/grading.ts'
+import { isMultiAnswer, toggleMcqOption } from '../../lib/grading.ts'
 import { OPTION_LETTERS } from './labels.ts'
 
 interface McqViewProps {
@@ -11,15 +11,6 @@ interface McqViewProps {
 
 export default function McqView({ card, selected, onChange, revealed }: McqViewProps) {
   const multi = isMultiAnswer(card)
-
-  function toggle(index: number) {
-    if (!multi) return onChange([index])
-    onChange(
-      selected.includes(index)
-        ? selected.filter((i) => i !== index)
-        : [...selected, index].sort((a, b) => a - b),
-    )
-  }
 
   return (
     <fieldset className="space-y-2">
@@ -44,7 +35,7 @@ export default function McqView({ card, selected, onChange, revealed }: McqViewP
               className="mt-1 accent-indigo-600"
               checked={isSelected}
               disabled={revealed}
-              onChange={() => toggle(index)}
+              onChange={() => onChange(toggleMcqOption(card, selected, index))}
             />
             <span className="font-semibold text-slate-500 dark:text-slate-400">
               {OPTION_LETTERS[index]}.

@@ -47,3 +47,16 @@ export function moveItem<T>(items: readonly T[], from: number, to: number): T[] 
   result.splice(to, 0, item)
   return result
 }
+
+/** New MCQ selection after clicking an option: replaces it (single answer) or toggles it (multi). */
+export function toggleMcqOption(
+  card: McqCard,
+  selected: readonly number[],
+  index: number,
+): number[] {
+  if (index < 0 || index >= card.options.length) return [...selected]
+  if (!isMultiAnswer(card)) return [index]
+  return selected.includes(index)
+    ? selected.filter((i) => i !== index)
+    : [...selected, index].sort((a, b) => a - b)
+}

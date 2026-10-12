@@ -4,9 +4,11 @@ import CardPlayer from '../components/cards/CardPlayer.tsx'
 import CardFilterPanel from '../components/CardFilterPanel.tsx'
 import PageTitle from '../components/PageTitle.tsx'
 import Button from '../components/ui/Button.tsx'
+import KeyHint from '../components/ui/KeyHint.tsx'
 import StatTile from '../components/ui/StatTile.tsx'
 import { getCard, type CardFilter } from '../data/cards.ts'
 import type { CardId } from '../data/schema.ts'
+import { useHotkeys } from '../hooks/useHotkeys.ts'
 import { shuffle } from '../lib/grading.ts'
 import { percent } from '../lib/format.ts'
 import {
@@ -204,23 +206,56 @@ function Session({ series, results, onAnswer, onStop }: SessionProps) {
       <CardPlayer
         key={`${card.id}-${index}`}
         card={card}
-        renderActions={({ correct }) =>
-          correct === null ? (
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="secondary" onClick={() => answer(false)}>
-                À revoir
-              </Button>
-              <Button onClick={() => answer(true)}>Je savais</Button>
-            </div>
-          ) : (
-            <div className="flex justify-end">
-              <Button onClick={() => answer(correct)}>
-                {index + 1 < series.length ? 'Carte suivante →' : 'Voir le bilan'}
-              </Button>
-            </div>
-          )
-        }
+        renderActions={({ correct }) => (
+          <PracticeActions
+            correct={correct}
+            isLast={index + 1 === series.length}
+            onAnswer={answer}
+          />
+        )}
       />
+    </div>
+  )
+}
+
+interface PracticeActionsProps {
+  correct: boolean | null
+  isLast: boolean
+  onAnswer: (correct: boolean) => void
+}
+
+function PracticeActions({ correct, isLast, onAnswer }: PracticeActionsProps) {
+  const next = () => onAnswer(correct === true)
+  useHotkeys(
+    correct === null
+      ? { '1': () => onAnswer(false), '2': () => onAnswer(true) }
+      : { enter: next, space: next },
+  )
+
+  if (correct === null) {
+    return (
+      <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-3">
+          <Button variant="secondary" onClick={() => onAnswer(false)}>
+            À revoir
+          </Button>
+          <Button onClick={() => onAnswer(true)}>Je savais</Button>
+        </div>
+        <KeyHint
+          items={[
+            ['1', 'à revoir'],
+            ['2', 'je savais'],
+          ]}
+        />
+      </div>
+    )
+  }
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-end">
+        <Button onClick={next}>{isLast ? 'Voir le bilan' : 'Carte suivante →'}</Button>
+      </div>
+      <KeyHint items={[['Entrée', isLast ? 'bilan' : 'suivante']]} />
     </div>
   )
 }

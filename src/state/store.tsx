@@ -25,6 +25,8 @@ interface StoreValue {
   /** Generic escape hatch for transitions defined in actions.ts. */
   update: (updater: (state: StoredState) => StoredState) => void
   recordAnswer: (answer: NewAnswer) => void
+  /** True once a write to localStorage failed (private browsing, quota, blocked storage). */
+  saveFailed: boolean
   /** Rates a card in review mode, updates its FSRS schedule and returns the new schedule. */
   reviewCard: (review: ReviewInput) => SrsCardData
 }
@@ -41,13 +43,15 @@ export function StoreProvider({ children, storage }: StoreProviderProps) {
   const [state, setState] = useState(() => loadState(storage))
   // Skips the write that would otherwise follow the initial load or an external sync.
   const skipNextSave = useRef(true)
+  const [saveFailed, setSaveFailed] = useState(false)
 
   useEffect(() => {
     if (skipNextSave.current) {
       skipNextSave.current = false
       return
     }
-    saveState(state, storage)
+    const saved = saveState(state, storage)
+    setSaveFailed((failed) => failed || !saved)
   }, [state, storage])
 
   // Keep several open tabs in sync: another tab's write replaces our state.
@@ -85,8 +89,8 @@ export function StoreProvider({ children, storage }: StoreProviderProps) {
   }, [])
 
   const value = useMemo(
-    () => ({ state, update, recordAnswer, reviewCard }),
-    [state, update, recordAnswer, reviewCard],
+    () => ({ state, saveFailed, update, recordAnswer, reviewCard }),
+    [state, saveFailed, update, recordAnswer, reviewCard],
   )
   return <StoreContext value={value}>{children}</StoreContext>
 }

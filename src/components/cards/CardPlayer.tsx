@@ -1,7 +1,15 @@
 import { useState, type ReactNode } from 'react'
 import type { Card } from '../../data/schema.ts'
-import { gradeMcq, gradeOrdering, gradeTrueFalse, shuffleOrdering } from '../../lib/grading.ts'
+import { useHotkeys, type HotkeyBindings } from '../../hooks/useHotkeys.ts'
+import {
+  gradeMcq,
+  gradeOrdering,
+  gradeTrueFalse,
+  shuffleOrdering,
+  toggleMcqOption,
+} from '../../lib/grading.ts'
 import Button from '../ui/Button.tsx'
+import KeyHint from '../ui/KeyHint.tsx'
 import CardHeader from './CardHeader.tsx'
 import FlashcardView from './FlashcardView.tsx'
 import McqView from './McqView.tsx'
@@ -50,10 +58,23 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
           : card.type === 'ordering'
             ? gradeOrdering(card, order)
             : null
-    const result = { correct, answeredAt: new Date() }
+    const result = { correct, answeredAt: currentTime() }
     setOutcome(result)
     onGraded?.(result)
   }
+
+  const bindings: HotkeyBindings = {}
+  if (canSubmit) bindings.enter = bindings.space = submit
+  if (card.type === 'mcq') {
+    card.options.forEach((_, index) => {
+      bindings[String(index + 1)] = () => setSelected((s) => toggleMcqOption(card, s, index))
+    })
+  }
+  if (card.type === 'true_false') {
+    bindings.v = () => setTrueFalse(true)
+    bindings.f = () => setTrueFalse(false)
+  }
+  useHotkeys(bindings, !revealed)
 
   return (
     <article className="space-y-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900">
@@ -72,9 +93,12 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
       )}
 
       {!revealed && (
-        <Button onClick={submit} disabled={!canSubmit} className="w-full sm:w-auto">
-          {card.type === 'flashcard' ? 'Afficher la réponse' : 'Valider'}
-        </Button>
+        <div className="space-y-2">
+          <Button onClick={submit} disabled={!canSubmit} className="w-full sm:w-auto">
+            {card.type === 'flashcard' ? 'Afficher la réponse' : 'Valider'}
+          </Button>
+          <KeyHint items={hintsFor(card)} />
+        </div>
       )}
 
       {outcome && (
@@ -85,6 +109,18 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
       )}
     </article>
   )
+}
+
+/** Only called from event handlers (click or shortcut), never during render. */
+function currentTime(): Date {
+  return new Date()
+}
+
+function hintsFor(card: Card): [string, string][] {
+  const submit: [string, string] = ['Entrée', card.type === 'flashcard' ? 'afficher' : 'valider']
+  if (card.type === 'mcq') return [[`1–${card.options.length}`, 'choisir'], submit]
+  if (card.type === 'true_false') return [['V', 'vrai'], ['F', 'faux'], submit]
+  return [submit]
 }
 
 function Feedback({ card, outcome }: { card: Card; outcome: CardOutcome }) {

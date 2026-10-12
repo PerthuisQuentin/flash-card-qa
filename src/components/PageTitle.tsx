@@ -1,4 +1,12 @@
+import { useEffect } from 'react'
+
+export const APP_NAME = 'Flash Cards QA'
+
 export default function PageTitle({ title, subtitle }: { title: string; subtitle?: string }) {
+  useEffect(() => {
+    document.title = `${title} · ${APP_NAME}`
+  }, [title])
+
   return (
     <div className="mb-6">
       <h1 className="text-2xl font-bold tracking-tight">{title}</h1>

@@ -4,9 +4,11 @@ import CardPlayer from '../components/cards/CardPlayer.tsx'
 import CardFilterPanel from '../components/CardFilterPanel.tsx'
 import PageTitle from '../components/PageTitle.tsx'
 import Button from '../components/ui/Button.tsx'
+import KeyHint from '../components/ui/KeyHint.tsx'
 import StatTile from '../components/ui/StatTile.tsx'
 import { getCard, type CardFilter } from '../data/cards.ts'
 import type { CardId } from '../data/schema.ts'
+import { useHotkeys } from '../hooks/useHotkeys.ts'
 import { formatDueDate, percent } from '../lib/format.ts'
 import {
   buildReviewQueue,
@@ -158,49 +160,86 @@ function Session({ queue, initialSize, step, onRated, onStop }: SessionProps) {
       <CardPlayer
         key={`${card.id}-${step}`}
         card={card}
-        renderActions={({ correct, answeredAt }) => {
-          const preview = previewIntervals(state, card.id, answeredAt)
-          const label = (grade: Grade) => formatInterval(answeredAt, preview[grade])
+        renderActions={({ correct, answeredAt }) => (
+          <ReviewActions
+            preview={previewIntervals(state, card.id, answeredAt)}
+            answeredAt={answeredAt}
+            correct={correct}
+            onRate={rate}
+          />
+        )}
+      />
+    </div>
+  )
+}
 
-          if (correct === null) {
-            return (
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {GRADES.map((grade) => (
-                  <RatingButton
-                    key={grade}
-                    grade={grade}
-                    interval={label(grade)}
-                    onClick={() => rate(grade, isCorrectGrade(grade))}
-                  />
-                ))}
-              </div>
-            )
-          }
-          if (!correct) {
-            return (
-              <div className="flex justify-end">
-                <Button onClick={() => rate(Rating.Again, false)}>
-                  Continuer · revient dans {label(Rating.Again)}
-                </Button>
-              </div>
-            )
-          }
-          return (
-            <div className="grid grid-cols-2 gap-2">
-              <RatingButton
-                grade={Rating.Good}
-                interval={label(Rating.Good)}
-                onClick={() => rate(gradeFromOutcome(true), true)}
-              />
-              <RatingButton
-                grade={Rating.Easy}
-                label="C'était facile"
-                interval={label(Rating.Easy)}
-                onClick={() => rate(gradeFromOutcome(true, true), true)}
-              />
-            </div>
-          )
-        }}
+interface ReviewActionsProps {
+  preview: Record<Grade, Date>
+  answeredAt: Date
+  correct: boolean | null
+  onRate: (grade: Grade, correct: boolean) => void
+}
+
+/** Rating buttons shown once a card is answered, with matching keyboard shortcuts. */
+function ReviewActions({ preview, answeredAt, correct, onRate }: ReviewActionsProps) {
+  const label = (grade: Grade) => formatInterval(answeredAt, preview[grade])
+  const good = () => onRate(gradeFromOutcome(true), true)
+  const easy = () => onRate(gradeFromOutcome(true, true), true)
+  const again = () => onRate(Rating.Again, false)
+
+  useHotkeys(
+    correct === null
+      ? Object.fromEntries(
+          GRADES.map((grade) => [String(grade), () => onRate(grade, isCorrectGrade(grade))]),
+        )
+      : correct
+        ? { enter: good, space: good, '3': good, '4': easy }
+        : { enter: again, space: again, '1': again },
+  )
+
+  if (correct === null) {
+    return (
+      <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {GRADES.map((grade) => (
+            <RatingButton
+              key={grade}
+              grade={grade}
+              interval={label(grade)}
+              onClick={() => onRate(grade, isCorrectGrade(grade))}
+            />
+          ))}
+        </div>
+        <KeyHint items={[['1–4', 'noter']]} />
+      </div>
+    )
+  }
+  if (!correct) {
+    return (
+      <div className="space-y-2">
+        <div className="flex justify-end">
+          <Button onClick={again}>Continuer · revient dans {label(Rating.Again)}</Button>
+        </div>
+        <KeyHint items={[['Entrée', 'continuer']]} />
+      </div>
+    )
+  }
+  return (
+    <div className="space-y-2">
+      <div className="grid grid-cols-2 gap-2">
+        <RatingButton grade={Rating.Good} interval={label(Rating.Good)} onClick={good} />
+        <RatingButton
+          grade={Rating.Easy}
+          label="C'était facile"
+          interval={label(Rating.Easy)}
+          onClick={easy}
+        />
+      </div>
+      <KeyHint
+        items={[
+          ['Entrée', 'bien'],
+          ['4', 'facile'],
+        ]}
       />
     </div>
   )

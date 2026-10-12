@@ -130,4 +130,20 @@ describe('Exam pages', () => {
 
     expect(screen.getByRole('link', { name: /0\/40 · 0 %.*Échoué/ })).toBeTruthy()
   })
+
+  it('supports keyboard navigation, answers and flags', async () => {
+    const { user, stored } = setup()
+    await user.click(screen.getByRole('button', { name: 'Démarrer l’examen' }))
+
+    await user.keyboard('{ArrowRight}')
+    expect(screen.getByText('Question 2 / 40')).toBeTruthy()
+    await user.keyboard('1f')
+    expect(screen.getByText('1/40 répondues')).toBeTruthy()
+    const exam = stored().currentExam!
+    expect(exam.answers[exam.questions[1]]).toEqual([0])
+    expect(exam.flagged).toEqual([exam.questions[1]])
+
+    await user.keyboard('{ArrowLeft}{ArrowLeft}')
+    expect(screen.getByText('Question 1 / 40')).toBeTruthy()
+  })
 })
