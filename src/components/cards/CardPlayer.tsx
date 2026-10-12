@@ -8,9 +8,10 @@ import McqView from './McqView.tsx'
 import OrderingView from './OrderingView.tsx'
 import TrueFalseView from './TrueFalseView.tsx'
 
-/** `correct` is null for flashcards, which are self-assessed. */
 export interface CardOutcome {
+  /** null for flashcards, which are self-assessed. */
   correct: boolean | null
+  answeredAt: Date
 }
 
 interface CardPlayerProps {
@@ -49,7 +50,7 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
           : card.type === 'ordering'
             ? gradeOrdering(card, order)
             : null
-    const result = { correct }
+    const result = { correct, answeredAt: new Date() }
     setOutcome(result)
     onGraded?.(result)
   }

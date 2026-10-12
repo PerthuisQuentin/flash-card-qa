@@ -29,7 +29,7 @@ describe('CardPlayer', () => {
     await user.click(screen.getByRole('button', { name: 'Afficher la réponse' }))
 
     expect(screen.getByText(card.answer)).toBeTruthy()
-    expect(onGraded).toHaveBeenCalledWith({ correct: null })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: null }))
     expect(screen.getByText('actions')).toBeTruthy()
   })
 
@@ -43,7 +43,7 @@ describe('CardPlayer', () => {
     await user.click(screen.getAllByRole('radio')[card.correct[0]])
     await user.click(submit)
 
-    expect(onGraded).toHaveBeenCalledWith({ correct: true })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: true }))
     expect(screen.getByText('✓ Bonne réponse !')).toBeTruthy()
     expect(screen.getByText(card.explanation!)).toBeTruthy()
     expect(screen.queryByRole('button', { name: 'Valider' })).toBeNull()
@@ -57,7 +57,7 @@ describe('CardPlayer', () => {
     await user.click(screen.getAllByRole('checkbox')[card.correct[0]])
     await user.click(screen.getByRole('button', { name: 'Valider' }))
 
-    expect(onGraded).toHaveBeenCalledWith({ correct: false })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: false }))
     expect(screen.getByText('✗ Mauvaise réponse')).toBeTruthy()
     for (const checkbox of screen.getAllByRole('checkbox')) {
       expect((checkbox as HTMLInputElement).disabled).toBe(true)
@@ -71,7 +71,7 @@ describe('CardPlayer', () => {
     await user.click(screen.getByRole('radio', { name: card.answer ? 'Faux' : 'Vrai' }))
     await user.click(screen.getByRole('button', { name: 'Valider' }))
 
-    expect(onGraded).toHaveBeenCalledWith({ correct: false })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: false }))
   })
 
   it('grades an ordering card rearranged with the arrow buttons', async () => {
@@ -91,7 +91,7 @@ describe('CardPlayer', () => {
     expect(currentOrder()).toEqual(card.items)
 
     await user.click(screen.getByRole('button', { name: 'Valider' }))
-    expect(onGraded).toHaveBeenCalledWith({ correct: true })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: true }))
   })
 
   it('shows the expected order when an ordering card is wrong', async () => {
@@ -101,7 +101,7 @@ describe('CardPlayer', () => {
     // The initial shuffle is guaranteed to differ from the correct order.
     await user.click(screen.getByRole('button', { name: 'Valider' }))
 
-    expect(onGraded).toHaveBeenCalledWith({ correct: false })
+    expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: false }))
     expect(screen.getByText('Ordre attendu :')).toBeTruthy()
   })
 })

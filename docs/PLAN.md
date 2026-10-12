@@ -55,12 +55,12 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 4 — Révision avec FSRS
 
-- [ ] `lib/srs.ts` : wrapper `ts-fsrs` (paramètres depuis `settings`), sérialisation des cartes FSRS, mapping des notes (§3.2 des specs).
-- [ ] Constitution de la session : dues (les plus en retard d'abord) + nouvelles dans la limite du quota journalier (`newCardsIntroduced`).
-- [ ] Réinsertion dans la session des cartes réapprises dans la journée.
-- [ ] Page `Review` : filtres, carte courante, boutons de notation (flashcard) / « C'était facile » (auto-corrigées), compteur restant.
-- [ ] Récapitulatif de fin de session.
-- [ ] Tests : constitution de la file, quota journalier, mapping juste/faux → note.
+- [x] `lib/srs.ts` : wrapper `ts-fsrs` (paramètres depuis `settings`), sérialisation des cartes FSRS, mapping des notes (§3.2 des specs).
+- [x] Constitution de la session : dues (les plus en retard d'abord) + nouvelles dans la limite du quota journalier (`newCardsIntroduced`).
+- [x] Réinsertion dans la session des cartes réapprises dans la journée.
+- [x] Page `Review` : filtres, carte courante, boutons de notation (flashcard) / « C'était facile » (auto-corrigées), compteur restant.
+- [x] Récapitulatif de fin de session.
+- [x] Tests : constitution de la file, quota journalier, mapping juste/faux → note.
 
 **Terminé quand** : une session complète met à jour les échéances, et les cartes reviennent aux bonnes dates (vérifié par tests avec date simulée).
 

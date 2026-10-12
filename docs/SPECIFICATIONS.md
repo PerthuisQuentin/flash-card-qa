@@ -110,7 +110,9 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Filtres : chapitres (multi-sélection), niveau K, tags. Par défaut : tout.
 - Contenu : toutes les cartes **dues** du filtre, puis des **nouvelles** cartes dans la limite du quota journalier restant (paramètre, 20 par défaut).
 - Ordre : cartes dues d'abord (les plus en retard en premier), puis nouvelles cartes (dans l'ordre du JSON, pour suivre la progression du syllabus).
-- Une carte notée « À revoir » est réinsérée plus loin dans la session si FSRS la planifie dans la journée (étapes d'apprentissage).
+- Une carte encore en (ré)apprentissage et replanifiée dans la journée (étapes d'apprentissage FSRS : 1 min, 10 min) est remise **en fin de file** de la session.
+- « Due » : une carte en révision (planifiée en jours) est due toute la journée de son échéance ; une carte en apprentissage (planifiée en minutes) seulement une fois l'heure passée.
+- La file est figée au lancement de la session ; les filtres ne sont pas mémorisés entre deux visites.
 
 **Notation (mapping vers FSRS)**
 
@@ -122,6 +124,9 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Un QCM à réponses multiples n'est juste que si la sélection est **exactement** l'ensemble correct.
 - Une carte `ordering` n'est juste que si l'ordre est entièrement correct.
 - Après réponse : affichage de la correction (bonnes options surlignées, ordre correct) et de `explanation`.
+- Chaque bouton de notation affiche le prochain intervalle prévu (« 10 min », « 3 j »…), calculé au moment de la réponse.
+- Une flash card compte comme juste dans les statistiques sauf si elle est notée « À revoir ».
+- Les intervalles FSRS sont légèrement randomisés (fuzz) pour étaler les révisions.
 
 **Fin de session** : récapitulatif (cartes vues, taux de réussite, prochaine échéance).
 

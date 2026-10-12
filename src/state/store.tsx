@@ -1,12 +1,23 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import type { ReactNode } from 'react'
 import {
   loadState,
   saveState,
   STORAGE_KEY,
   type KeyValueStorage,
+  type SrsCardData,
   type StoredState,
 } from '../lib/storage.ts'
+import { applyReview, type ReviewInput } from '../lib/srs.ts'
 import { addAnswer, type NewAnswer } from './actions.ts'
 
 interface StoreValue {
@@ -14,6 +25,8 @@ interface StoreValue {
   /** Generic escape hatch for transitions defined in actions.ts. */
   update: (updater: (state: StoredState) => StoredState) => void
   recordAnswer: (answer: NewAnswer) => void
+  /** Rates a card in review mode, updates its FSRS schedule and returns the new schedule. */
+  reviewCard: (review: ReviewInput) => SrsCardData
 }
 
 const StoreContext = createContext<StoreValue | null>(null)
@@ -58,7 +71,23 @@ export function StoreProvider({ children, storage }: StoreProviderProps) {
     [],
   )
 
-  const value = useMemo(() => ({ state, update, recordAnswer }), [state, update, recordAnswer])
+  // Latest state, so reviewCard can return the computed schedule synchronously.
+  const stateRef = useRef(state)
+  useLayoutEffect(() => {
+    stateRef.current = state
+  }, [state])
+
+  const reviewCard = useCallback((review: ReviewInput) => {
+    const next = applyReview(stateRef.current, review, new Date())
+    stateRef.current = next
+    setState(next)
+    return next.srs[review.cardId]
+  }, [])
+
+  const value = useMemo(
+    () => ({ state, update, recordAnswer, reviewCard }),
+    [state, update, recordAnswer, reviewCard],
+  )
   return <StoreContext value={value}>{children}</StoreContext>
 }
 
