@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router'
 import Layout from './components/Layout.tsx'
 import Dashboard from './pages/Dashboard.tsx'
 import Exam from './pages/Exam.tsx'
+import ExamResultPage from './pages/exam/ExamResultPage.tsx'
 import NotFound from './pages/NotFound.tsx'
 import Practice from './pages/Practice.tsx'
 import Review from './pages/Review.tsx'
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="review" element={<Review />} />
         <Route path="practice" element={<Practice />} />
         <Route path="exam" element={<Exam />} />
+        <Route path="exam/:id" element={<ExamResultPage />} />
         <Route path="stats" element={<Stats />} />
         <Route path="settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

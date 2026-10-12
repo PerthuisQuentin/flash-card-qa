@@ -32,6 +32,37 @@ export const settingsSchema = z.object({
   desiredRetention: z.number().min(0.7).max(0.99),
 })
 
+export const examInProgressSchema = z.object({
+  id: z.string(),
+  startedAt: isoDate,
+  durationSec: z.number().int().positive(),
+  passMark: z.number().int().nonnegative(),
+  questions: z.array(z.string()).min(1),
+  /** Selected option indexes per question; absent = not answered. */
+  answers: z.record(z.string(), z.array(z.number().int().nonnegative())),
+  flagged: z.array(z.string()),
+  warning: z.string().optional(),
+})
+
+export const examResultSchema = z.object({
+  id: z.string(),
+  startedAt: isoDate,
+  finishedAt: isoDate,
+  durationSec: z.number().int().positive(),
+  elapsedSec: z.number().int().nonnegative(),
+  timedOut: z.boolean(),
+  passMark: z.number().int().nonnegative(),
+  score: z.number().int().nonnegative(),
+  questions: z.array(
+    z.object({
+      cardId: z.string(),
+      selected: z.array(z.number().int().nonnegative()),
+      correct: z.boolean(),
+    }),
+  ),
+  warning: z.string().optional(),
+})
+
 export const storedStateSchema = z.object({
   version: z.literal(CURRENT_VERSION),
   settings: settingsSchema,
@@ -39,14 +70,16 @@ export const storedStateSchema = z.object({
   answers: z.array(answerSchema),
   /** Number of new cards introduced per local day (YYYY-MM-DD). */
   newCardsIntroduced: z.record(z.string(), z.number().int().nonnegative()),
-  // Exam shapes are defined in step 8; kept loose until then.
-  exams: z.array(z.unknown()),
-  currentExam: z.unknown().optional(),
+  /** Finished exams, oldest first. */
+  exams: z.array(examResultSchema),
+  currentExam: examInProgressSchema.optional(),
 })
 
 export type SrsCardData = z.infer<typeof srsCardSchema>
 export type Answer = z.infer<typeof answerSchema>
 export type Settings = z.infer<typeof settingsSchema>
+export type ExamInProgress = z.infer<typeof examInProgressSchema>
+export type ExamResult = z.infer<typeof examResultSchema>
 export type StoredState = z.infer<typeof storedStateSchema>
 
 export const DEFAULT_SETTINGS: Settings = {

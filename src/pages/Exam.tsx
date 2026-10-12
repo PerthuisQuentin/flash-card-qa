@@ -1,5 +1,12 @@
-import PageTitle from '../components/PageTitle.tsx'
+import { useStore } from '../state/store.tsx'
+import ExamHome from './exam/ExamHome.tsx'
+import ExamRunner from './exam/ExamRunner.tsx'
 
 export default function Exam() {
-  return <PageTitle title="Examen blanc" subtitle="40 QCM en 60 minutes — à venir." />
+  const { state } = useStore()
+  return state.currentExam ? (
+    <ExamRunner key={state.currentExam.id} exam={state.currentExam} />
+  ) : (
+    <ExamHome />
+  )
 }

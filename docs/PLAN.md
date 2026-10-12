@@ -99,11 +99,11 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 8 — Examen blanc
 
-- [ ] `lib/exam.ts` : tirage selon la répartition officielle, redistribution au prorata si chapitres incomplets, durée ajustée, message d'avertissement. Tests unitaires (cas complet, cas chapitre 1 seul, cas total < 40).
-- [ ] `ExamSetup` : composition prévue + avertissement + bouton Démarrer.
-- [ ] `Exam` : chrono basé sur `startedAt`, navigation libre, grille de questions, marquage « à revoir », soumission manuelle/automatique, sauvegarde de `currentExam` (reprise après rechargement).
-- [ ] `ExamResult` : score, réussite/échec, détail par chapitre et par K, correction question par question.
-- [ ] Historique des examens.
+- [x] `lib/exam.ts` : tirage selon la répartition officielle, redistribution au prorata si chapitres incomplets, durée ajustée, message d'avertissement. Tests unitaires (cas complet, cas chapitre 1 seul, cas total < 40).
+- [x] `ExamHome` : composition prévue + avertissement + bouton Démarrer.
+- [x] `ExamRunner` : chrono basé sur `startedAt`, navigation libre, grille de questions, marquage « à revoir », soumission manuelle/automatique, sauvegarde de `currentExam` (reprise après rechargement).
+- [x] `ExamResultPage` (`/exam/:id`) : score, réussite/échec, détail par chapitre et par K, correction question par question.
+- [x] Historique des examens.
 
 **Terminé quand** : un examen se passe de bout en bout, résiste à un rechargement, et n'a aucun effet sur le planning FSRS.
 

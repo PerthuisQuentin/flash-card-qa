@@ -146,14 +146,14 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Uniquement les cartes de type **`mcq`**.
 - 40 questions, **60 minutes**, seuil de réussite **65 % (26/40)**.
 - Répartition officielle : ch.1 = 8, ch.2 = 6, ch.3 = 4, ch.4 = 11, ch.5 = 9, ch.6 = 2.
-- Tirage aléatoire dans chaque chapitre ; options affichées dans l'ordre du JSON (pas de mélange, certaines options s'y référant).
+- Tirage aléatoire dans chaque chapitre, questions présentées dans l'ordre des chapitres ; options affichées dans l'ordre du JSON (pas de mélange, certaines options s'y référant).
 - Notation tout-ou-rien par question.
 - **N'impacte pas** le planning FSRS.
 
 **Chapitres incomplets** (cas du démarrage)
 
 - Si un chapitre a moins de QCM que son quota, on prend tout ce qui est disponible.
-- Les questions manquantes sont redistribuées sur les autres chapitres au prorata de leur poids officiel, dans la limite de leurs QCM disponibles.
+- Les questions manquantes sont redistribuées sur les autres chapitres au prorata de leur poids officiel (attribution une par une, méthode D'Hondt), dans la limite de leurs QCM disponibles.
 - Si le total reste < 40, l'examen est plus court ; la durée est ajustée au prorata (1,5 min/question) et le seuil reste à 65 %.
 - Un **avertissement** explique la composition réelle (« Chapitres 2 à 6 indisponibles : examen composé de 40 questions du chapitre 1 »).
 
@@ -161,7 +161,9 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 
 - Chronomètre visible ; à 0, soumission automatique.
 - Navigation libre entre questions, grille de progression (répondue / non répondue / marquée « à revoir »).
-- Bouton « Terminer » avec confirmation s'il reste des questions sans réponse.
+- Chrono, compteur de réponses et bouton « Terminer » dans une barre collée en bas de l'écran ; la confirmation s'y affiche (avec le nombre de questions sans réponse, comptées fausses).
+- Possibilité d'abandonner un examen sans enregistrer de résultat.
+- Un examen expiré retrouvé au chargement est soumis automatiquement, clôturé à son heure limite.
 - Un examen en cours est sauvegardé (reprise possible après rechargement ; le temps continue de s'écouler sur la base de `startedAt`).
 
 **Résultats**
@@ -232,8 +234,32 @@ interface StoredState {
   }>
   // Compteur de nouvelles cartes introduites, par jour local (YYYY-MM-DD)
   newCardsIntroduced: Record<string, number>
-  exams: ExamResult[]
+  exams: ExamResult[] // du plus ancien au plus récent
   currentExam?: ExamInProgress
+}
+
+interface ExamInProgress {
+  id: string
+  startedAt: string // ISO
+  durationSec: number
+  passMark: number // ceil(65 % du nombre de questions)
+  questions: CardId[]
+  answers: Record<CardId, number[]> // absent = sans réponse
+  flagged: CardId[]
+  warning?: string // composition non officielle
+}
+
+interface ExamResult {
+  id: string
+  startedAt: string
+  finishedAt: string
+  durationSec: number
+  elapsedSec: number
+  timedOut: boolean
+  passMark: number
+  score: number
+  questions: Array<{ cardId: CardId; selected: number[]; correct: boolean }>
+  warning?: string
 }
 ```
 
@@ -269,7 +295,7 @@ src/
     Dashboard.tsx
     Review.tsx
     Practice.tsx
-    ExamSetup.tsx, Exam.tsx, ExamResult.tsx
+    Exam.tsx, exam/ExamHome.tsx, exam/ExamRunner.tsx, exam/ExamResultPage.tsx
     Stats.tsx
     Settings.tsx
   main.tsx, App.tsx
