@@ -1,0 +1,1280 @@
+{
+  "chapter": 1,
+  "title": "Fondamentaux des tests",
+  "source": "ISTQB CTFL Syllabus v4.0 (FR) – chapitre 1, p. 16-26",
+  "examWeight": "~8 questions",
+  "cards": [
+    {
+      "id": "c1-001",
+      "type": "flashcard",
+      "section": "1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Quelle est la définition du test logiciel selon le syllabus ?",
+      "answer": "Un ensemble d'activités visant à découvrir les défauts et à évaluer la qualité des artefacts logiciels.",
+      "explanation": "Les artefacts testés sont appelés « objets de test ». Le test sert aussi à réduire le risque de défaillance en cours d'utilisation.",
+      "tags": ["définition", "mot-clé"]
+    },
+    {
+      "id": "c1-002",
+      "type": "true_false",
+      "section": "1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Le test consiste uniquement à exécuter le logiciel et à vérifier les résultats.",
+      "answer": false,
+      "explanation": "C'est une idée fausse répandue. Le test comprend aussi la planification, l'analyse, la conception, les revues (test statique), etc., et doit être aligné sur le cycle de vie du développement.",
+      "tags": ["idée reçue"]
+    },
+    {
+      "id": "c1-003",
+      "type": "mcq",
+      "section": "1.1",
+      "lo": "FL-1.1.1",
+      "k": "K2",
+      "question": "Quelle est la différence entre vérification et validation ?",
+      "options": [
+        "La vérification contrôle la conformité aux besoins des utilisateurs ; la validation contrôle la conformité aux exigences spécifiées",
+        "La vérification contrôle la conformité aux exigences spécifiées ; la validation contrôle la conformité aux besoins des utilisateurs et parties prenantes dans l'environnement opérationnel",
+        "La vérification est du test statique ; la validation est du test dynamique",
+        "Ce sont deux synonymes"
+      ],
+      "correct": [1],
+      "explanation": "Vérification = « a-t-on bien construit le produit ? » (exigences spécifiées). Validation = « a-t-on construit le bon produit ? » (besoins réels dans l'environnement opérationnel).",
+      "tags": ["mot-clé", "vérification", "validation"]
+    },
+    {
+      "id": "c1-004",
+      "type": "flashcard",
+      "section": "1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Quelle est la différence entre test statique et test dynamique ?",
+      "answer": "Le test dynamique implique l'exécution du logiciel ; le test statique non. Le test statique comprend les revues et l'analyse statique.",
+      "explanation": "Le test dynamique utilise des techniques de test (chapitre 4) pour dériver des cas de test ; le test statique est détaillé au chapitre 3.",
+      "tags": ["statique", "dynamique"]
+    },
+    {
+      "id": "c1-005",
+      "type": "true_false",
+      "section": "1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Le test est avant tout une activité technique reposant sur les outils.",
+      "answer": false,
+      "explanation": "Le test est en grande partie une activité intellectuelle : connaissances spécialisées, compétences analytiques, pensée critique et pensée systémique. Il doit aussi être planifié, géré, estimé, piloté et contrôlé.",
+      "tags": ["idée reçue"]
+    },
+    {
+      "id": "c1-006",
+      "type": "mcq",
+      "section": "1.1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Lesquels des éléments suivants sont des objectifs typiques du test ? (plusieurs réponses)",
+      "options": [
+        "Provoquer des défaillances et trouver des défauts",
+        "Corriger les défauts dans le code",
+        "Fournir des informations aux parties prenantes pour des décisions éclairées",
+        "Construire la confiance dans la qualité de l'objet de test",
+        "Prouver que le logiciel ne contient aucun défaut"
+      ],
+      "correct": [0, 2, 3],
+      "explanation": "Corriger les défauts relève du débogage, pas du test. Prouver l'absence de défauts est impossible (principe 1).",
+      "tags": ["objectifs"]
+    },
+    {
+      "id": "c1-007",
+      "type": "flashcard",
+      "section": "1.1.1",
+      "lo": "FL-1.1.1",
+      "k": "K1",
+      "question": "Cite au moins 6 des 9 objectifs typiques du test.",
+      "answer": "1) Évaluer les produits d'activités (exigences, User Stories, conceptions, code)\n2) Provoquer des défaillances et trouver des défauts\n3) Assurer la couverture requise d'un objet de test\n4) Réduire le niveau de risque d'une qualité logicielle insuffisante\n5) Vérifier si les exigences spécifiées ont été satisfaites\n6) Vérifier la conformité aux exigences contractuelles, légales et réglementaires\n7) Fournir des informations aux parties prenantes pour des décisions éclairées\n8) Construire la confiance dans la qualité de l'objet de test\n9) Valider si l'objet de test est complet et fonctionne comme attendu par les parties prenantes",
+      "explanation": "Moyen mnémotechnique : Évaluer, Provoquer, Couvrir, Réduire le risque, Vérifier (x2), Informer, Rassurer, Valider.",
+      "tags": ["objectifs", "liste"]
+    },
+    {
+      "id": "c1-008",
+      "type": "mcq",
+      "section": "1.1.1",
+      "lo": "FL-1.1.1",
+      "k": "K2",
+      "question": "De quoi les objectifs du test peuvent-ils dépendre ?",
+      "options": [
+        "Uniquement du niveau de test",
+        "Uniquement des exigences du client",
+        "Du contexte : produit testé, niveau de test, risques, SDLC, facteurs métier (structure de l'entreprise, concurrence, time-to-market)",
+        "Ils sont fixés par la norme ISO 29119 et ne varient pas"
+      ],
+      "correct": [2],
+      "explanation": "Les objectifs du test varient selon le contexte, ce qui rejoint le principe 6 « le test dépend du contexte ».",
+      "tags": ["objectifs", "contexte"]
+    },
+    {
+      "id": "c1-009",
+      "type": "mcq",
+      "section": "1.1.2",
+      "lo": "FL-1.1.2",
+      "k": "K2",
+      "question": "Quelle affirmation décrit correctement la différence entre test et débogage ?",
+      "options": [
+        "Le test et le débogage sont la même activité réalisée par des personnes différentes",
+        "Le test peut déclencher des défaillances ou constater des défauts ; le débogage trouve, analyse et élimine les causes de ces défaillances",
+        "Le débogage déclenche des défaillances ; le test les corrige",
+        "Le débogage est une sous-activité de l'exécution des tests"
+      ],
+      "correct": [1],
+      "explanation": "Ce sont deux activités distinctes. Le débogage ne relève pas du test.",
+      "tags": ["débogage"]
+    },
+    {
+      "id": "c1-010",
+      "type": "ordering",
+      "section": "1.1.2",
+      "lo": "FL-1.1.2",
+      "k": "K2",
+      "question": "Remets dans l'ordre le processus de débogage typique après une défaillance détectée par test dynamique.",
+      "items": [
+        "Reproduction de la défaillance",
+        "Diagnostic (trouver la cause racine)",
+        "Correction de la cause"
+      ],
+      "explanation": "Ensuite, un test de confirmation vérifie la correction, et des tests de régression vérifient l'absence d'effets de bord.",
+      "tags": ["débogage", "ordre"]
+    },
+    {
+      "id": "c1-011",
+      "type": "true_false",
+      "section": "1.1.2",
+      "lo": "FL-1.1.2",
+      "k": "K2",
+      "question": "Lorsqu'un défaut est trouvé par test statique, le débogage nécessite de reproduire puis diagnostiquer le défaut avant de l'éliminer.",
+      "answer": false,
+      "explanation": "Le test statique constate directement les défauts et ne provoque pas de défaillance : le débogage consiste simplement à éliminer le défaut, sans reproduction ni diagnostic.",
+      "tags": ["débogage", "statique"]
+    },
+    {
+      "id": "c1-012",
+      "type": "flashcard",
+      "section": "1.1.2",
+      "lo": "FL-1.1.2",
+      "k": "K2",
+      "question": "Qui devrait idéalement réaliser le test de confirmation après une correction ?",
+      "answer": "De préférence, la même personne que celle qui a réalisé le test initial.",
+      "explanation": "Le test de confirmation vérifie que le correctif a résolu le problème ; des tests de régression peuvent suivre pour vérifier qu'il n'a pas provoqué de défaillances ailleurs.",
+      "tags": ["débogage", "confirmation"]
+    },
+    {
+      "id": "c1-013",
+      "type": "mcq",
+      "section": "1.1.2",
+      "lo": "FL-1.1.2",
+      "k": "K2",
+      "question": "Un testeur constate qu'un formulaire plante à la validation. Le développeur reproduit le plantage, trouve une division par zéro et la corrige. Le testeur relance ensuite son test. Comment s'appelle cette dernière activité ?",
+      "options": [
+        "Test de régression",
+        "Débogage",
+        "Test de confirmation",
+        "Analyse des causes racines"
+      ],
+      "correct": [2],
+      "explanation": "Relancer le test initial pour vérifier que la correction résout le problème = test de confirmation. La reproduction/diagnostic/correction par le développeur = débogage.",
+      "tags": ["scénario", "débogage", "confirmation"]
+    },
+    {
+      "id": "c1-014",
+      "type": "mcq",
+      "section": "1.2",
+      "lo": "FL-1.2.1",
+      "k": "K2",
+      "question": "Le test, en tant que forme de contrôle de la qualité, aide à atteindre les objectifs dans les limites de quelles contraintes ?",
+      "options": [
+        "Périmètre, temps, qualité et budget",
+        "Coût, délai et risque uniquement",
+        "Exigences, architecture et code",
+        "Sécurité, performance et utilisabilité"
+      ],
+      "correct": [0],
+      "explanation": "Le syllabus cite le périmètre, le temps, la qualité et le budget impartis.",
+      "tags": ["nécessité du test"]
+    },
+    {
+      "id": "c1-015",
+      "type": "true_false",
+      "section": "1.2",
+      "lo": "FL-1.2.1",
+      "k": "K1",
+      "question": "La contribution du test au succès d'un projet est limitée aux activités de l'équipe de test.",
+      "answer": false,
+      "explanation": "Toute partie prenante peut utiliser ses compétences en matière de test pour rapprocher le projet de la réussite.",
+      "tags": ["nécessité du test"]
+    },
+    {
+      "id": "c1-016",
+      "type": "flashcard",
+      "section": "1.2.1",
+      "lo": "FL-1.2.1",
+      "k": "K2",
+      "question": "Cite les 4 contributions du test au succès d'un projet.",
+      "answer": "1) Moyen efficace et peu coûteux de détecter des défauts (qui seront éliminés par débogage → qualité indirectement améliorée)\n2) Évaluer directement la qualité d'un objet de test à différents stades, pour aider aux décisions (ex. : livrer ou non)\n3) Offrir aux utilisateurs une représentation indirecte dans le projet\n4) Répondre à des exigences contractuelles, légales ou réglementaires",
+      "tags": ["nécessité du test", "liste"]
+    },
+    {
+      "id": "c1-017",
+      "type": "mcq",
+      "section": "1.2.1",
+      "lo": "FL-1.2.1",
+      "k": "K2",
+      "question": "Pourquoi dit-on que les testeurs offrent une « représentation indirecte » des utilisateurs ?",
+      "options": [
+        "Parce que les testeurs sont recrutés parmi les utilisateurs finaux",
+        "Parce qu'impliquer un ensemble représentatif d'utilisateurs dans le projet est généralement trop coûteux et qu'ils sont peu disponibles ; les testeurs portent donc leur compréhension des besoins utilisateurs tout au long du cycle",
+        "Parce que les testeurs rédigent les exigences à la place des utilisateurs",
+        "Parce que les tests d'acceptation sont toujours réalisés par les testeurs"
+      ],
+      "correct": [1],
+      "tags": ["nécessité du test"]
+    },
+    {
+      "id": "c1-018",
+      "type": "true_false",
+      "section": "1.2.1",
+      "lo": "FL-1.2.1",
+      "k": "K1",
+      "question": "Le test améliore directement la qualité du logiciel.",
+      "answer": false,
+      "explanation": "Le test détecte les défauts ; c'est le débogage (activité hors test) qui les élimine. Le test contribue donc indirectement à une meilleure qualité. En revanche, il évalue directement la qualité.",
+      "tags": ["piège", "nécessité du test"]
+    },
+    {
+      "id": "c1-019",
+      "type": "mcq",
+      "section": "1.2.2",
+      "lo": "FL-1.2.2",
+      "k": "K1",
+      "question": "Quelle affirmation décrit correctement l'assurance qualité (AQ) ?",
+      "options": [
+        "Une approche corrective, axée sur le produit",
+        "Une approche préventive, axée sur les processus, sous la responsabilité de tous les acteurs du projet",
+        "Un synonyme de « test »",
+        "Une activité réservée à l'équipe de test"
+      ],
+      "correct": [1],
+      "explanation": "L'AQ part du principe qu'un bon processus correctement suivi génère un bon produit. Elle s'applique au développement ET au test.",
+      "tags": ["assurance qualité", "mot-clé"]
+    },
+    {
+      "id": "c1-020",
+      "type": "mcq",
+      "section": "1.2.2",
+      "lo": "FL-1.2.2",
+      "k": "K1",
+      "question": "Le contrôle de la qualité (CQ) est…",
+      "options": [
+        "une approche préventive axée sur les processus",
+        "une approche corrective axée sur le produit, dont le test est une forme majeure",
+        "une activité de gestion de projet visant le respect du budget",
+        "la même chose que l'assurance qualité"
+      ],
+      "correct": [1],
+      "explanation": "Autres formes de CQ : méthodes formelles (model checking, preuve d'exactitude), simulation, prototypage.",
+      "tags": ["contrôle qualité", "mot-clé"]
+    },
+    {
+      "id": "c1-021",
+      "type": "flashcard",
+      "section": "1.2.2",
+      "lo": "FL-1.2.2",
+      "k": "K1",
+      "question": "Comment les résultats de test sont-ils utilisés respectivement par le contrôle qualité et par l'assurance qualité ?",
+      "answer": "Contrôle qualité : pour corriger les défauts.\nAssurance qualité : comme retour d'information sur l'efficacité des processus de développement et de test.",
+      "tags": ["assurance qualité", "contrôle qualité"]
+    },
+    {
+      "id": "c1-022",
+      "type": "true_false",
+      "section": "1.2.2",
+      "lo": "FL-1.2.2",
+      "k": "K1",
+      "question": "Le test est une forme d'assurance qualité.",
+      "answer": false,
+      "explanation": "Piège classique : le test est une forme de CONTRÔLE de la qualité. Les termes sont souvent confondus mais ne sont pas les mêmes.",
+      "tags": ["piège", "assurance qualité"]
+    },
+    {
+      "id": "c1-023",
+      "type": "mcq",
+      "section": "1.2.2",
+      "lo": "FL-1.2.2",
+      "k": "K2",
+      "question": "Une équipe met en place des modèles de User Stories et une checklist de « definition of done » pour tous les projets, afin d'éviter l'introduction de défauts. De quoi s'agit-il ?",
+      "options": ["Contrôle qualité", "Assurance qualité", "Test dynamique", "Débogage"],
+      "correct": [1],
+      "explanation": "Action préventive portant sur le processus = assurance qualité.",
+      "tags": ["scénario", "assurance qualité"]
+    },
+    {
+      "id": "c1-024",
+      "type": "ordering",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Remets dans l'ordre la chaîne de causalité menant à une défaillance.",
+      "items": ["Cause racine", "Erreur (humaine)", "Défaut (bug, faute)", "Défaillance"],
+      "explanation": "Une cause racine (ex. : pression du temps) conduit un humain à commettre une erreur, qui produit un défaut ; si le défaut est exécuté, il peut provoquer une défaillance.",
+      "tags": ["erreur-défaut-défaillance", "ordre"]
+    },
+    {
+      "id": "c1-025",
+      "type": "mcq",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Un développeur, pressé par une deadline, inverse une condition « > » en « < » dans le calcul des remises. En production, des clients reçoivent des remises indues. Associe : quelle est la DÉFAILLANCE ?",
+      "options": [
+        "La pression de la deadline",
+        "L'inversion de la condition par le développeur",
+        "La condition « < » erronée dans le code",
+        "Les clients reçoivent des remises indues"
+      ],
+      "correct": [3],
+      "explanation": "Deadline = cause racine ; inversion = erreur ; condition fausse dans le code = défaut ; comportement observé = défaillance.",
+      "tags": ["scénario", "erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-026",
+      "type": "mcq",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Même scénario : développeur sous pression, condition inversée, remises indues en production. Quel est le DÉFAUT ?",
+      "options": [
+        "La pression de la deadline",
+        "L'inversion de la condition par le développeur",
+        "La condition « < » erronée dans le code",
+        "Les clients reçoivent des remises indues"
+      ],
+      "correct": [2],
+      "explanation": "Le défaut est l'imperfection présente dans l'artefact (code, doc…).",
+      "tags": ["scénario", "erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-027",
+      "type": "flashcard",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Qu'est-ce qu'une cause racine et à quoi sert son analyse ?",
+      "answer": "Une raison fondamentale de l'apparition d'un problème (ex. : situation qui conduit à une erreur). L'analyse des causes racines, menée quand une défaillance survient ou qu'un défaut est identifié, permet en traitant la cause d'éviter ou de réduire la fréquence de défauts/défaillances similaires.",
+      "tags": ["cause racine", "mot-clé"]
+    },
+    {
+      "id": "c1-028",
+      "type": "flashcard",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K1",
+      "question": "Pour quelles raisons les êtres humains commettent-ils des erreurs ?",
+      "answer": "Pression du temps, complexité (des produits d'activités, processus, infrastructure ou interactions), fatigue, formation inadéquate.",
+      "tags": ["erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-029",
+      "type": "mcq",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Où peut-on trouver des défauts ? (plusieurs réponses)",
+      "options": [
+        "Dans une spécification des exigences",
+        "Dans un script de test",
+        "Dans le code source",
+        "Dans un fichier de build"
+      ],
+      "correct": [0, 1, 2, 3],
+      "explanation": "Les défauts peuvent être dans la documentation, le code ou un artefact de support. Un défaut précoce non détecté entraîne souvent des artefacts défectueux plus tard.",
+      "tags": ["erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-030",
+      "type": "true_false",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Un défaut exécuté entraîne toujours une défaillance.",
+      "answer": false,
+      "explanation": "Certains défauts entraînent toujours une défaillance, d'autres seulement dans des circonstances spécifiques, et d'autres jamais.",
+      "tags": ["piège", "erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-031",
+      "type": "true_false",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Les erreurs et défauts sont les seules causes possibles de défaillance.",
+      "answer": false,
+      "explanation": "Les conditions environnementales peuvent aussi causer des défaillances, ex. : radiations ou champs électromagnétiques provoquant des défauts dans les microprogrammes (firmware).",
+      "tags": ["piège", "erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-032",
+      "type": "flashcard",
+      "section": "1.2.3",
+      "lo": "FL-1.2.3",
+      "k": "K2",
+      "question": "Quels sont les synonymes de « défaut » donnés par le syllabus ?",
+      "answer": "Faute, bogue (bug).",
+      "tags": ["mot-clé", "erreur-défaut-défaillance"]
+    },
+    {
+      "id": "c1-033",
+      "type": "flashcard",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Cite les 7 principes du test.",
+      "answer": "1) Le test montre la présence, et non l'absence, de défauts\n2) Le test exhaustif est impossible\n3) Tester tôt économise du temps et de l'argent\n4) Regroupement des défauts\n5) Usure des tests (paradoxe du pesticide)\n6) Le test dépend du contexte\n7) L'illusion de l'absence de défaut",
+      "tags": ["principes", "liste"]
+    },
+    {
+      "id": "c1-034",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Après 3 mois d'exécution, la même suite de tests manuels ne trouve plus aucun défaut alors que les utilisateurs remontent des bugs. Quel principe est illustré ?",
+      "options": [
+        "Regroupement des défauts",
+        "Usure des tests",
+        "Le test exhaustif est impossible",
+        "L'illusion de l'absence de défaut"
+      ],
+      "correct": [1],
+      "explanation": "Répéter les mêmes tests les rend inefficaces pour trouver de nouveaux défauts. Remède : modifier les tests et données existants, écrire de nouveaux tests.",
+      "tags": ["scénario", "principes"]
+    },
+    {
+      "id": "c1-035",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "80 % des défaillances en production proviennent de 2 modules sur 15. Quel principe est illustré ?",
+      "options": [
+        "Usure des tests",
+        "Tester tôt",
+        "Regroupement des défauts",
+        "Le test dépend du contexte"
+      ],
+      "correct": [2],
+      "explanation": "Illustration du principe de Pareto. Les regroupements prévus et observés alimentent le test basé sur les risques.",
+      "tags": ["scénario", "principes"]
+    },
+    {
+      "id": "c1-036",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Toutes les exigences ont été testées et tous les défauts corrigés, mais les utilisateurs boudent l'application, qui ne répond pas à leurs besoins. Quel principe est illustré ?",
+      "options": [
+        "Le test montre la présence de défauts",
+        "L'illusion de l'absence de défaut",
+        "Usure des tests",
+        "Le test exhaustif est impossible"
+      ],
+      "correct": [1],
+      "explanation": "Vérifier ne suffit pas à garantir le succès : il faut aussi valider (Boehm 1981).",
+      "tags": ["scénario", "principes"]
+    },
+    {
+      "id": "c1-037",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Un champ accepte un entier sur 32 bits et un autre une chaîne de 50 caractères. Le manager demande de tester toutes les combinaisons. Quel principe lui opposer ?",
+      "options": [
+        "Le test exhaustif est impossible",
+        "Regroupement des défauts",
+        "Le test dépend du contexte",
+        "Tester tôt économise du temps et de l'argent"
+      ],
+      "correct": [0],
+      "explanation": "Sauf cas triviaux, on ne peut pas tout tester. On utilise les techniques de test, la priorisation des cas de test et le test basé sur les risques pour concentrer l'effort.",
+      "tags": ["scénario", "principes"]
+    },
+    {
+      "id": "c1-038",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Une équipe applique au logiciel embarqué d'un pacemaker la même approche de test légère que pour son site e-commerce. Quel principe est ignoré ?",
+      "options": [
+        "Regroupement des défauts",
+        "Usure des tests",
+        "Le test dépend du contexte",
+        "L'illusion de l'absence de défaut"
+      ],
+      "correct": [2],
+      "explanation": "Il n'existe pas d'approche universelle : on teste différemment selon les contextes (Kaner 2011).",
+      "tags": ["scénario", "principes"]
+    },
+    {
+      "id": "c1-039",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Une revue des exigences révèle une ambiguïté qui aurait conduit à développer une mauvaise fonctionnalité. Quel principe est illustré ?",
+      "options": [
+        "Tester tôt économise du temps et de l'argent",
+        "Le test exhaustif est impossible",
+        "Usure des tests",
+        "Regroupement des défauts"
+      ],
+      "correct": [0],
+      "explanation": "Les défauts éliminés tôt n'entraînent pas de défauts dans les produits dérivés ; le coût de la qualité baisse (Boehm 1981). Tests statiques et dynamiques doivent démarrer le plus tôt possible.",
+      "tags": ["scénario", "principes", "shift-left"]
+    },
+    {
+      "id": "c1-040",
+      "type": "true_false",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Si aucun défaut n'est trouvé après une campagne de test rigoureuse, on peut affirmer que le logiciel est correct.",
+      "answer": false,
+      "explanation": "Principe 1 : le test montre la présence, pas l'absence, de défauts. Il réduit seulement la probabilité de défauts non découverts.",
+      "tags": ["principes"]
+    },
+    {
+      "id": "c1-041",
+      "type": "true_false",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Selon le principe d'usure des tests, répéter les mêmes tests n'a jamais d'intérêt.",
+      "answer": false,
+      "explanation": "Dans certains cas, la répétition est bénéfique, par exemple pour les tests de régression automatisés.",
+      "tags": ["piège", "principes"]
+    },
+    {
+      "id": "c1-042",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K1",
+      "question": "Quel principe du test est une illustration du principe de Pareto ?",
+      "options": [
+        "Usure des tests",
+        "Regroupement des défauts",
+        "Le test exhaustif est impossible",
+        "Tester tôt"
+      ],
+      "correct": [1],
+      "tags": ["principes"]
+    },
+    {
+      "id": "c1-043",
+      "type": "mcq",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Quels moyens le syllabus recommande-t-il pour concentrer l'effort de test, puisque le test exhaustif est impossible ? (plusieurs réponses)",
+      "options": [
+        "Les techniques de test",
+        "La priorisation des cas de test",
+        "Le test basé sur les risques",
+        "Augmenter le nombre de testeurs jusqu'à couvrir toutes les combinaisons"
+      ],
+      "correct": [0, 1, 2],
+      "tags": ["principes"]
+    },
+    {
+      "id": "c1-044",
+      "type": "flashcard",
+      "section": "1.3",
+      "lo": "FL-1.3.1",
+      "k": "K2",
+      "question": "Quel est le remède au principe d'« usure des tests » ?",
+      "answer": "Modifier les tests et les données de test existants, et rédiger de nouveaux tests.",
+      "explanation": "Appelé autrefois « paradoxe du pesticide ».",
+      "tags": ["principes"]
+    },
+    {
+      "id": "c1-045",
+      "type": "ordering",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Remets dans l'ordre logique les groupes d'activités du processus de test.",
+      "items": [
+        "Planification des tests",
+        "Pilotage et contrôle des tests",
+        "Analyse de test",
+        "Conception des tests",
+        "Implémentation des tests",
+        "Exécution des tests",
+        "Clôture des tests"
+      ],
+      "explanation": "Attention : bien que logique, cette séquence est souvent mise en œuvre de manière itérative ou en parallèle. Le pilotage et contrôle se déroule en continu tout au long du processus.",
+      "tags": ["processus", "ordre"]
+    },
+    {
+      "id": "c1-046",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Quelle activité répond à la question « QUE tester ? » ?",
+      "options": [
+        "Planification des tests",
+        "Analyse de test",
+        "Conception des tests",
+        "Implémentation des tests"
+      ],
+      "correct": [1],
+      "explanation": "L'analyse de test répond à « que tester ? » en termes de critères de couverture mesurables. La conception répond à « comment tester ? ».",
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-047",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Quelle activité répond à la question « COMMENT tester ? » ?",
+      "options": [
+        "Analyse de test",
+        "Conception des tests",
+        "Implémentation des tests",
+        "Exécution des tests"
+      ],
+      "correct": [1],
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-048",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Au cours de quelle activité identifie-t-on les caractéristiques testables, définit-on et priorise-t-on les conditions de test, et évalue-t-on la testabilité de la base de test ?",
+      "options": ["Planification", "Analyse de test", "Conception des tests", "Clôture"],
+      "correct": [1],
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-049",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "À quelle activité appartient la tâche : « élaborer les conditions de test en cas de test, identifier les éléments de couverture, définir les exigences de données de test et concevoir l'environnement de test » ?",
+      "options": [
+        "Analyse de test",
+        "Conception des tests",
+        "Implémentation des tests",
+        "Exécution des tests"
+      ],
+      "correct": [1],
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-050",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "À quelle activité appartient la tâche : « organiser les cas de test en procédures, assembler les suites de tests, créer les scripts, établir le calendrier d'exécution et construire l'environnement de test » ?",
+      "options": [
+        "Conception des tests",
+        "Implémentation des tests",
+        "Exécution des tests",
+        "Planification des tests"
+      ],
+      "correct": [1],
+      "explanation": "Piège fréquent : CONCEVOIR l'environnement = conception ; le CONSTRUIRE et vérifier sa configuration = implémentation.",
+      "tags": ["processus", "piège"]
+    },
+    {
+      "id": "c1-051",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Comparer les résultats réels aux résultats attendus, enregistrer les résultats et analyser les anomalies pour en identifier les causes probables : de quelle activité s'agit-il ?",
+      "options": [
+        "Analyse de test",
+        "Pilotage des tests",
+        "Exécution des tests",
+        "Clôture des tests"
+      ],
+      "correct": [2],
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-052",
+      "type": "flashcard",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Quelle est la différence entre pilotage des tests et contrôle des tests ?",
+      "answer": "Pilotage : vérification continue de toutes les activités de test et comparaison des progrès réels par rapport au plan.\nContrôle : prise des mesures nécessaires pour atteindre les objectifs du test.",
+      "explanation": "Pilotage = observer/mesurer ; contrôle = agir/corriger la trajectoire.",
+      "tags": ["processus", "mot-clé"]
+    },
+    {
+      "id": "c1-053",
+      "type": "flashcard",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Quelles sont les tâches de la clôture des tests et quand a-t-elle lieu ?",
+      "answer": "Elle a lieu aux jalons du projet (livraison, fin d'itération, fin d'un niveau de test). Tâches : traiter les défauts non résolus/demandes de changement/éléments du backlog ; identifier et archiver le testware réutilisable ou le remettre aux équipes ; arrêter l'environnement de test dans un état convenu ; analyser les activités pour les leçons apprises ; créer et communiquer le rapport d'achèvement des tests.",
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-054",
+      "type": "true_false",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Les activités du processus de test doivent toujours être réalisées de manière strictement séquentielle.",
+      "answer": false,
+      "explanation": "Elles semblent suivre une séquence logique mais sont souvent itératives ou parallèles, et doivent être adaptées au système et au projet.",
+      "tags": ["processus"]
+    },
+    {
+      "id": "c1-055",
+      "type": "mcq",
+      "section": "1.4.1",
+      "lo": "FL-1.4.1",
+      "k": "K2",
+      "question": "Lors de l'analyse de test, une testeuse remarque qu'une exigence est contradictoire avec une autre. Que se passe-t-il ?",
+      "options": [
+        "Rien : les défauts ne sont signalés qu'en exécution",
+        "Elle peut le signaler : l'analyse de test évalue aussi la base de test pour identifier ses défauts et sa testabilité",
+        "Elle doit attendre la conception des tests",
+        "Il s'agit d'une défaillance"
+      ],
+      "correct": [1],
+      "explanation": "Les rapports de défauts sur la base de test font partie du testware de l'analyse. C'est un défaut (dans la doc), pas une défaillance.",
+      "tags": ["scénario", "processus"]
+    },
+    {
+      "id": "c1-056",
+      "type": "flashcard",
+      "section": "1.4.2",
+      "lo": "FL-1.4.2",
+      "k": "K2",
+      "question": "Cite les 8 facteurs contextuels qui influencent le processus de test.",
+      "answer": "1) Parties prenantes\n2) Membres de l'équipe\n3) Domaine d'activité\n4) Facteurs techniques\n5) Contraintes du projet\n6) Facteurs organisationnels\n7) Cycle de vie du développement logiciel\n8) Outils",
+      "tags": ["contexte", "liste"]
+    },
+    {
+      "id": "c1-057",
+      "type": "mcq",
+      "section": "1.4.2",
+      "lo": "FL-1.4.2",
+      "k": "K2",
+      "question": "« Criticité de l'objet de test, risques identifiés, réglementations légales spécifiques » : à quel facteur contextuel cela correspond-il ?",
+      "options": [
+        "Facteurs techniques",
+        "Domaine d'activité",
+        "Contraintes du projet",
+        "Facteurs organisationnels"
+      ],
+      "correct": [1],
+      "tags": ["contexte"]
+    },
+    {
+      "id": "c1-058",
+      "type": "mcq",
+      "section": "1.4.2",
+      "lo": "FL-1.4.2",
+      "k": "K2",
+      "question": "« Portée, temps, budget, ressources » : à quel facteur contextuel cela correspond-il ?",
+      "options": [
+        "Contraintes du projet",
+        "Parties prenantes",
+        "Facteurs organisationnels",
+        "Cycle de vie"
+      ],
+      "correct": [0],
+      "tags": ["contexte"]
+    },
+    {
+      "id": "c1-059",
+      "type": "mcq",
+      "section": "1.4.2",
+      "lo": "FL-1.4.2",
+      "k": "K2",
+      "question": "Sur quels éléments les facteurs contextuels ont-ils un impact ? (plusieurs réponses)",
+      "options": [
+        "La stratégie de test",
+        "Les techniques de test utilisées",
+        "Le degré d'automatisation",
+        "Le niveau de couverture requis et le niveau de détail de la documentation"
+      ],
+      "correct": [0, 1, 2, 3],
+      "explanation": "Ainsi que le reporting, etc.",
+      "tags": ["contexte"]
+    },
+    {
+      "id": "c1-060",
+      "type": "flashcard",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Qu'est-ce que le testware ?",
+      "answer": "L'ensemble des produits d'activités créés par les activités de test (plans, conditions, cas, procédures, scripts, données, logs, rapports…).",
+      "explanation": "Une bonne gestion de configuration garantit leur cohérence et leur intégrité.",
+      "tags": ["testware", "mot-clé"]
+    },
+    {
+      "id": "c1-061",
+      "type": "mcq",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Quel produit d'activités est issu de l'activité de CONCEPTION des tests ?",
+      "options": [
+        "Plan de test",
+        "Cas de test priorisés et chartes de test",
+        "Procédures de test et suites de tests",
+        "Logs de test"
+      ],
+      "correct": [1],
+      "explanation": "Conception : cas de test, chartes de test, éléments de couverture, exigences de données et d'environnement de test.",
+      "tags": ["testware"]
+    },
+    {
+      "id": "c1-062",
+      "type": "mcq",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Les bouchons (stubs), pilotes (drivers), simulateurs et virtualisations de services sont produits lors de quelle activité ?",
+      "options": [
+        "Conception des tests",
+        "Implémentation des tests",
+        "Exécution des tests",
+        "Analyse de test"
+      ],
+      "correct": [1],
+      "explanation": "Ce sont des éléments de l'environnement de test, créés à l'implémentation.",
+      "tags": ["testware"]
+    },
+    {
+      "id": "c1-063",
+      "type": "mcq",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Un référentiel des risques (liste de risques avec probabilité, impact et atténuation) est un produit de quelle activité ?",
+      "options": [
+        "Planification des tests",
+        "Analyse de test",
+        "Exécution des tests",
+        "Clôture des tests"
+      ],
+      "correct": [0],
+      "explanation": "Planification : plan de test, calendrier des tests, référentiel des risques, critères d'entrée et de sortie (souvent intégrés au plan de test).",
+      "tags": ["testware"]
+    },
+    {
+      "id": "c1-064",
+      "type": "mcq",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Les conditions de test priorisées (ex. : critères d'acceptation) sont des produits de quelle activité ?",
+      "options": [
+        "Planification",
+        "Analyse de test",
+        "Conception des tests",
+        "Implémentation des tests"
+      ],
+      "correct": [1],
+      "tags": ["testware"]
+    },
+    {
+      "id": "c1-065",
+      "type": "flashcard",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Associe chaque activité à ses principaux produits (testware).",
+      "answer": "Planification → plan de test, calendrier, référentiel des risques, critères d'entrée/sortie\nPilotage & contrôle → rapports d'avancement, directives de contrôle, infos sur les risques\nAnalyse → conditions de test priorisées, rapports de défauts sur la base de test\nConception → cas de test priorisés, chartes, éléments de couverture, exigences de données/environnement\nImplémentation → procédures, scripts automatisés, suites, données de test, calendrier d'exécution, éléments d'environnement (bouchons, pilotes…)\nExécution → logs de test, rapports de défaut\nClôture → rapport de clôture, améliorations, leçons apprises, demandes de changement",
+      "tags": ["testware", "liste"]
+    },
+    {
+      "id": "c1-066",
+      "type": "mcq",
+      "section": "1.4.3",
+      "lo": "FL-1.4.3",
+      "k": "K2",
+      "question": "Les logs de test et les rapports de défaut sont produits lors de…",
+      "options": [
+        "l'implémentation des tests",
+        "l'exécution des tests",
+        "la clôture des tests",
+        "le pilotage des tests"
+      ],
+      "correct": [1],
+      "tags": ["testware"]
+    },
+    {
+      "id": "c1-067",
+      "type": "flashcard",
+      "section": "1.4.4",
+      "lo": "FL-1.4.4",
+      "k": "K2",
+      "question": "Entre quels éléments faut-il établir et maintenir la traçabilité ?",
+      "answer": "Entre les éléments de la base de test, le testware associé (conditions de test, risques, cas de test), les résultats des tests et les défauts détectés.",
+      "tags": ["traçabilité"]
+    },
+    {
+      "id": "c1-068",
+      "type": "mcq",
+      "section": "1.4.4",
+      "lo": "FL-1.4.4",
+      "k": "K2",
+      "question": "Quels sont des bénéfices de la traçabilité ? (plusieurs réponses)",
+      "options": [
+        "Évaluer la couverture",
+        "Déterminer l'impact des changements",
+        "Faciliter les audits de test et répondre aux critères de gouvernance IT",
+        "Rendre les rapports d'avancement et de clôture plus compréhensibles",
+        "Supprimer le besoin de tests de régression"
+      ],
+      "correct": [0, 1, 2, 3],
+      "tags": ["traçabilité"]
+    },
+    {
+      "id": "c1-069",
+      "type": "mcq",
+      "section": "1.4.4",
+      "lo": "FL-1.4.4",
+      "k": "K2",
+      "question": "Quelle traçabilité permet d'évaluer le niveau de risque résiduel d'un objet de test ?",
+      "options": [
+        "Cas de test → exigences",
+        "Résultats de test → risques",
+        "Défauts → développeurs",
+        "Exigences → User Stories"
+      ],
+      "correct": [1],
+      "explanation": "La traçabilité cas de test → exigences permet, elle, de vérifier que les exigences sont couvertes.",
+      "tags": ["traçabilité"]
+    },
+    {
+      "id": "c1-070",
+      "type": "mcq",
+      "section": "1.4.4",
+      "lo": "FL-1.4.4",
+      "k": "K2",
+      "question": "Une exigence de paiement va être modifiée. Comment savoir rapidement quels cas de test sont à revoir ?",
+      "options": [
+        "Grâce à la traçabilité entre base de test et testware",
+        "Grâce au principe de regroupement des défauts",
+        "En relançant toute la suite de tests",
+        "Grâce à l'indépendance du test"
+      ],
+      "correct": [0],
+      "explanation": "La traçabilité permet l'analyse d'impact des changements.",
+      "tags": ["scénario", "traçabilité"]
+    },
+    {
+      "id": "c1-071",
+      "type": "mcq",
+      "section": "1.4.5",
+      "lo": "FL-1.4.5",
+      "k": "K2",
+      "question": "Sur quelles activités le rôle de TEST MANAGER est-il principalement axé ?",
+      "options": [
+        "Analyse, conception, implémentation, exécution",
+        "Planification, pilotage et contrôle, clôture",
+        "Débogage et correction",
+        "Exécution et reporting des défauts uniquement"
+      ],
+      "correct": [1],
+      "explanation": "Le test manager a la responsabilité globale du processus de test, de l'équipe de test et de la direction des activités.",
+      "tags": ["rôles"]
+    },
+    {
+      "id": "c1-072",
+      "type": "mcq",
+      "section": "1.4.5",
+      "lo": "FL-1.4.5",
+      "k": "K2",
+      "question": "Sur quelles activités le rôle de TESTEUR est-il principalement axé ?",
+      "options": [
+        "Planification, pilotage et contrôle, clôture",
+        "Analyse, conception, implémentation, exécution",
+        "Rédaction des exigences",
+        "Gestion du budget de test"
+      ],
+      "correct": [1],
+      "explanation": "Le testeur a la responsabilité globale de l'aspect technique des tests.",
+      "tags": ["rôles"]
+    },
+    {
+      "id": "c1-073",
+      "type": "true_false",
+      "section": "1.4.5",
+      "lo": "FL-1.4.5",
+      "k": "K2",
+      "question": "Une même personne peut assumer à la fois les rôles de testeur et de test manager.",
+      "answer": true,
+      "explanation": "Différentes personnes peuvent aussi assumer ces rôles à différents moments (responsable de test, chef de projet de test, responsable des développements…).",
+      "tags": ["rôles"]
+    },
+    {
+      "id": "c1-074",
+      "type": "true_false",
+      "section": "1.4.5",
+      "lo": "FL-1.4.5",
+      "k": "K2",
+      "question": "En Agile, certaines tâches du test manager peuvent être prises en charge par l'équipe Agile.",
+      "answer": true,
+      "explanation": "Les tâches qui s'étendent à plusieurs équipes ou à toute l'organisation peuvent être réalisées par des test managers extérieurs à l'équipe de développement.",
+      "tags": ["rôles", "agile"]
+    },
+    {
+      "id": "c1-075",
+      "type": "flashcard",
+      "section": "1.5.1",
+      "lo": "FL-1.5.1",
+      "k": "K2",
+      "question": "Cite les 6 compétences génériques particulièrement pertinentes pour les testeurs.",
+      "answer": "1) Connaissance en matière de test (efficacité, ex. techniques)\n2) Rigueur, attention, curiosité, souci du détail, méthode (trouver les défauts difficiles)\n3) Bonne communication, écoute active, esprit d'équipe\n4) Réflexion analytique, esprit critique, créativité (efficacité)\n5) Connaissances techniques (efficience, ex. outils)\n6) Connaissance du domaine (comprendre et communiquer avec les utilisateurs/métier)",
+      "tags": ["compétences", "liste"]
+    },
+    {
+      "id": "c1-076",
+      "type": "mcq",
+      "section": "1.5.1",
+      "lo": "FL-1.5.1",
+      "k": "K2",
+      "question": "Pourquoi les compétences en communication sont-elles cruciales pour un testeur ?",
+      "options": [
+        "Parce que le testeur rédige les spécifications",
+        "Parce que les testeurs sont souvent porteurs de mauvaises nouvelles, que les résultats peuvent être perçus comme une critique du produit et de son auteur, et que le biais de confirmation rend difficile l'acceptation d'informations dérangeantes",
+        "Parce que le testeur anime toutes les réunions du projet",
+        "Parce que le testeur doit négocier le budget"
+      ],
+      "correct": [1],
+      "explanation": "Les informations sur les défauts et défaillances doivent être communiquées de manière constructive.",
+      "tags": ["compétences"]
+    },
+    {
+      "id": "c1-077",
+      "type": "mcq",
+      "section": "1.5.1",
+      "lo": "FL-1.5.1",
+      "k": "K2",
+      "question": "Quelle compétence permet surtout d'accroître l'EFFICIENCE des tests (ex. utiliser les bons outils) ?",
+      "options": [
+        "Connaissance du domaine",
+        "Connaissances techniques",
+        "Écoute active",
+        "Curiosité"
+      ],
+      "correct": [1],
+      "tags": ["compétences"]
+    },
+    {
+      "id": "c1-078",
+      "type": "flashcard",
+      "section": "1.5.1",
+      "lo": "FL-1.5.1",
+      "k": "K2",
+      "question": "Qu'est-ce que le biais de confirmation, dans le contexte du test ?",
+      "answer": "Une tendance humaine qui rend difficile l'acceptation d'informations en désaccord avec ses convictions actuelles (ex. : un développeur convaincu que son code fonctionne a du mal à accepter un rapport de défaut).",
+      "tags": ["compétences", "biais"]
+    },
+    {
+      "id": "c1-079",
+      "type": "mcq",
+      "section": "1.5.2",
+      "lo": "FL-1.5.2",
+      "k": "K1",
+      "question": "De quelle pratique est issue l'approche équipe intégrée (whole team approach) ?",
+      "options": ["Scrum", "Programmation extrême (XP)", "Kanban", "Cycle en V"],
+      "correct": [1],
+      "tags": ["équipe intégrée"]
+    },
+    {
+      "id": "c1-080",
+      "type": "mcq",
+      "section": "1.5.2",
+      "lo": "FL-1.5.2",
+      "k": "K1",
+      "question": "Quels sont des avantages de l'approche équipe intégrée ? (plusieurs réponses)",
+      "options": [
+        "Améliore la dynamique d'équipe",
+        "Améliore la communication et la collaboration",
+        "Crée une synergie entre les différents ensembles de compétences",
+        "Garantit un niveau d'indépendance du test très élevé"
+      ],
+      "correct": [0, 1, 2],
+      "explanation": "Au contraire, elle n'est pas toujours appropriée quand un haut niveau d'indépendance est requis (ex. : systèmes critiques pour la sécurité).",
+      "tags": ["équipe intégrée"]
+    },
+    {
+      "id": "c1-081",
+      "type": "flashcard",
+      "section": "1.5.2",
+      "lo": "FL-1.5.2",
+      "k": "K1",
+      "question": "Quels sont les principes clés de l'approche équipe intégrée ?",
+      "answer": "Tout membre ayant les connaissances et compétences nécessaires peut effectuer n'importe quelle tâche ; chacun est responsable de la qualité ; l'équipe partage le même espace de travail (physique ou virtuel) pour faciliter la communication.",
+      "tags": ["équipe intégrée"]
+    },
+    {
+      "id": "c1-082",
+      "type": "true_false",
+      "section": "1.5.2",
+      "lo": "FL-1.5.2",
+      "k": "K1",
+      "question": "L'approche équipe intégrée est appropriée dans tous les contextes.",
+      "answer": false,
+      "explanation": "Dans les situations critiques pour la sécurité, un niveau élevé d'indépendance du test peut être nécessaire.",
+      "tags": ["équipe intégrée"]
+    },
+    {
+      "id": "c1-083",
+      "type": "flashcard",
+      "section": "1.5.2",
+      "lo": "FL-1.5.2",
+      "k": "K1",
+      "question": "Avec qui le testeur collabore-t-il dans l'approche équipe intégrée, et pour quoi faire ?",
+      "answer": "Avec les représentants métier, pour créer des tests d'acceptation adaptés ; avec les développeurs, pour convenir de la stratégie de test et des approches d'automatisation. Il transfère ainsi ses connaissances de test à l'équipe.",
+      "tags": ["équipe intégrée"]
+    },
+    {
+      "id": "c1-084",
+      "type": "ordering",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "Classe ces configurations du MOINS indépendant au PLUS indépendant.",
+      "items": [
+        "Test par l'auteur lui-même",
+        "Test par des pairs de la même équipe",
+        "Test par des testeurs extérieurs à l'équipe mais dans l'organisation",
+        "Test par des testeurs extérieurs à l'organisation"
+      ],
+      "explanation": "Pas d'indépendance → un peu → élevée → très élevée.",
+      "tags": ["indépendance", "ordre"]
+    },
+    {
+      "id": "c1-085",
+      "type": "mcq",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "Quel est le principal AVANTAGE de l'indépendance du test ?",
+      "options": [
+        "Les testeurs indépendants coûtent moins cher",
+        "Les testeurs indépendants repèrent des types de défauts différents grâce à leurs antécédents, perspectives et biais différents, et peuvent contester les hypothèses des parties prenantes",
+        "Les développeurs n'ont plus besoin de tester",
+        "La release est plus rapide"
+      ],
+      "correct": [1],
+      "tags": ["indépendance"]
+    },
+    {
+      "id": "c1-086",
+      "type": "mcq",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "Lesquels sont des INCONVÉNIENTS de l'indépendance du test ? (plusieurs réponses)",
+      "options": [
+        "Isolement vis-à-vis des développeurs, manque de collaboration, relation d'opposition",
+        "Les développeurs peuvent perdre le sens de la responsabilité de la qualité",
+        "Les testeurs peuvent être vus comme un goulot d'étranglement ou tenus pour responsables des retards",
+        "Les testeurs indépendants trouvent moins de défauts"
+      ],
+      "correct": [0, 1, 2],
+      "tags": ["indépendance"]
+    },
+    {
+      "id": "c1-087",
+      "type": "true_false",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "L'indépendance remplace la proximité : les développeurs ne trouvent que peu de défauts dans leur propre code.",
+      "answer": false,
+      "explanation": "L'indépendance ne remplace pas la proximité : les développeurs peuvent trouver efficacement de nombreux défauts dans leur propre code.",
+      "tags": ["indépendance", "piège"]
+    },
+    {
+      "id": "c1-088",
+      "type": "flashcard",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "Quelle répartition de l'indépendance par niveau de test le syllabus donne-t-il en exemple ?",
+      "answer": "Développeurs → tests de composants et d'intégration de composants ; équipe de test → tests système et d'intégration de systèmes ; représentants métier → tests d'acceptation.",
+      "explanation": "Pour la plupart des projets, il est préférable de combiner plusieurs niveaux d'indépendance.",
+      "tags": ["indépendance"]
+    },
+    {
+      "id": "c1-089",
+      "type": "flashcard",
+      "section": "1.5.3",
+      "lo": "FL-1.5.3",
+      "k": "K2",
+      "question": "Pourquoi un certain degré d'indépendance rend-il le testeur plus efficace ?",
+      "answer": "À cause des différences entre les biais cognitifs de l'auteur et ceux du testeur.",
+      "tags": ["indépendance", "biais"]
+    },
+    {
+      "id": "c1-090",
+      "type": "flashcard",
+      "section": "mots-clés",
+      "lo": "FL-1.4.1",
+      "k": "K1",
+      "question": "Définis : base de test, objet de test, condition de test, cas de test, procédure de test.",
+      "answer": "Base de test : ensemble des informations servant de base à l'analyse et à la conception (exigences, User Stories, spécifications…).\nObjet de test : l'artefact (produit d'activités) testé.\nCondition de test : aspect testable identifié lors de l'analyse (« que tester »).\nCas de test : ensemble de préconditions, entrées, actions, résultats attendus et postconditions élaboré à partir des conditions de test.\nProcédure de test : séquence de cas de test dans l'ordre d'exécution, avec les actions de préparation et de clôture.",
+      "explanation": "Mots-clés du chapitre 1 : à connaître (K1). Les définitions précises viennent du glossaire ISTQB.",
+      "tags": ["mot-clé", "glossaire"]
+    },
+    {
+      "id": "c1-091",
+      "type": "flashcard",
+      "section": "mots-clés",
+      "lo": "FL-1.4.4",
+      "k": "K1",
+      "question": "Qu'est-ce que la couverture (coverage) ?",
+      "answer": "Le degré, exprimé en pourcentage, auquel des éléments de couverture spécifiés ont été exercés par une suite de tests.",
+      "explanation": "Des critères de couverture mesurables peuvent servir d'indicateurs clés pour piloter l'atteinte des objectifs du test.",
+      "tags": ["mot-clé", "glossaire"]
+    },
+    {
+      "id": "c1-092",
+      "type": "mcq",
+      "section": "mots-clés",
+      "lo": "FL-1.4.1",
+      "k": "K1",
+      "question": "Qu'est-ce qu'une charte de test ?",
+      "options": [
+        "Le document contractuel du projet de test",
+        "La documentation des objectifs et du périmètre d'une session de test (notamment exploratoire), produite lors de la conception",
+        "La liste des défauts ouverts",
+        "Le plan de test en Agile"
+      ],
+      "correct": [1],
+      "tags": ["mot-clé", "testware"]
+    }
+  ]
+}
