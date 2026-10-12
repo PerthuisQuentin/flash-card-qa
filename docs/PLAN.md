@@ -136,7 +136,7 @@ Production des cartes des chapitres 2 à 6 dans `cards.json`, chapitre par chapi
 
 Avancement :
 
-- [x] Chapitre 1 : 92 cartes (48 QCM)
+- [x] Chapitre 1 : 101 cartes (48 QCM), rééquilibré (vrai/faux, explications, longueur des options)
 - [x] Chapitre 2 : 90 cartes (51 QCM)
 - [x] Chapitre 3 : 80 cartes (45 QCM)
 - [x] Chapitre 4 : 124 cartes (77 QCM)

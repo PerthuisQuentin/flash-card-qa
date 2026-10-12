@@ -8,6 +8,7 @@ import { createExam, planExam, startExam } from '../lib/exam.ts'
 import { createDefaultState, saveState, STORAGE_KEY, type StoredState } from '../lib/storage.ts'
 import { StoreProvider } from '../state/store.tsx'
 import { memoryStorage } from '../test/memoryStorage.ts'
+import { getOption } from '../test/options.ts'
 import Exam from './Exam.tsx'
 import ExamResultPage from './exam/ExamResultPage.tsx'
 
@@ -52,8 +53,7 @@ describe('Exam pages', () => {
 
     // Question 1: correct answer.
     const first = currentMcq()
-    const inputs = screen.getAllByRole(first.correct.length > 1 ? 'checkbox' : 'radio')
-    for (const index of first.correct) await user.click(inputs[index])
+    for (const index of first.correct) await user.click(getOption(first.options[index]))
     expect(screen.getByText('1/40 répondues')).toBeTruthy()
 
     // Question 2: flagged, left unanswered.
@@ -144,7 +144,8 @@ describe('Exam pages', () => {
     await user.keyboard('1f')
     expect(screen.getByText('1/40 répondues')).toBeTruthy()
     const exam = stored().currentExam!
-    expect(exam.answers[exam.questions[1]]).toEqual([0])
+    // "1" selects the first option on screen, stored by its authored index.
+    expect(exam.answers[exam.questions[1]]).toEqual([exam.optionOrders![exam.questions[1]][0]])
     expect(exam.flagged).toEqual([exam.questions[1]])
 
     await user.keyboard('{ArrowLeft}{ArrowLeft}')

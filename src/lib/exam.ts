@@ -1,6 +1,6 @@
 import { cards as allCards, chapters as allChapters } from '../data/cards.ts'
 import type { Card, CardId, Chapter, KLevel, McqCard } from '../data/schema.ts'
-import { gradeMcq, shuffle, type Random } from './grading.ts'
+import { gradeMcq, shuffle, shuffleOptions, type Random } from './grading.ts'
 import type { ExamInProgress, ExamResult, StoredState } from './storage.ts'
 
 export const OFFICIAL_QUESTION_COUNT = 40
@@ -137,12 +137,18 @@ export function createExam(
   cards: readonly Card[] = allCards,
 ): ExamInProgress {
   const plan = planExam(chapters, cards)
+  const questions = drawQuestions(plan, random, cards)
+  const mcqs = new Map(cards.flatMap((card) => (card.type === 'mcq' ? [[card.id, card]] : [])))
+  const optionOrders = Object.fromEntries(
+    questions.map((id) => [id, shuffleOptions(mcqs.get(id)!, random)]),
+  )
   return {
     id: crypto.randomUUID(),
     startedAt: now.toISOString(),
     durationSec: plan.durationSec,
     passMark: plan.passMark,
-    questions: drawQuestions(plan, random, cards),
+    questions,
+    optionOrders,
     answers: {},
     flagged: [],
     ...(plan.warning && { warning: plan.warning }),
@@ -178,7 +184,13 @@ export function scoreExam(
   const questions = exam.questions.map((cardId) => {
     const card = getCard(cardId)
     const selected = exam.answers[cardId] ?? []
-    return { cardId, selected, correct: card?.type === 'mcq' && gradeMcq(card, selected) }
+    const order = exam.optionOrders?.[cardId]
+    return {
+      cardId,
+      selected,
+      correct: card?.type === 'mcq' && gradeMcq(card, selected),
+      ...(order && { order }),
+    }
   })
   return {
     id: exam.id,

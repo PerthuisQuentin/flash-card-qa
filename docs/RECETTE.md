@@ -32,20 +32,20 @@ Légende : ☐ à faire · ✅ OK · ❌ KO (noter le détail en bas).
 
 ## 3. Révision (FSRS)
 
-| #    | Action                                                           | Attendu                                                                                                 | ☐   |
-| ---- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --- |
-| 3.1  | Réviser → « Commencer (20 cartes) »                              | 1re carte = c1-001 (flash card), compteur « 0 / 20 vues »                                               | ☐   |
-| 3.2  | Afficher la réponse                                              | Réponse multi-lignes lisible, 4 boutons avec intervalle (« 1 min », « 10 min »…)                        | ☐   |
-| 3.3  | Noter « Bien »                                                   | La carte suivante s'affiche ; compteur « 1 / 20 vues · 1 à repasser » (c1-001 reviendra en fin de file) | ☐   |
-| 3.4  | Vrai/Faux : mauvaise réponse → Valider                           | « ✗ Mauvaise réponse », bon choix en vert, explication, bouton « Continuer · revient dans 1 min »       | ☐   |
-| 3.5  | QCM à réponse unique : bonne réponse                             | « ✓ Bonne réponse », boutons « Bien » et « C'était facile » avec intervalles                            | ☐   |
-| 3.6  | QCM multi-réponses (ex. c1-006)                                  | Mention « Sélectionne 3 réponses », cases à cocher ; 2 sur 3 cochées = faux                             | ☐   |
-| 3.7  | Carte « remise en ordre » : glisser via ⋮⋮ (souris **et** doigt) | L'élément se déplace ; le scroll mobile reste possible hors poignée                                     | ☐   |
-| 3.8  | Remise en ordre : flèches ▲▼ puis valider faux                   | Positions ✓/✗ et « Ordre attendu » affichés                                                             | ☐   |
-| 3.9  | « Terminer » en cours de session                                 | Bilan : nombre de réponses, % de réussite, prochaine échéance                                           | ☐   |
-| 3.10 | Revenir sur Réviser                                              | Nouvelles cartes restantes = 20 − cartes déjà introduites aujourd'hui                                   | ☐   |
-| 3.11 | Filtres : ne garder que K1, puis tag « piège »                   | Les compteurs « dues / nouvelles » se mettent à jour ; chapitres sans cartes non sélectionnables        | ☐   |
-| 3.12 | Paramètres → 0 nouvelle carte/jour, revenir sur Réviser          | « Rien à réviser » + prochaine échéance (si des cartes sont en cours)                                   | ☐   |
+| #    | Action                                                           | Attendu                                                                                                                            | ☐   |
+| ---- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --- |
+| 3.1  | Réviser → « Commencer (20 cartes) »                              | 1re carte = c1-001 (flash card), compteur « 0 / 20 vues »                                                                          | ☐   |
+| 3.2  | Afficher la réponse                                              | Réponse multi-lignes lisible, 4 boutons avec intervalle (« 1 min », « 10 min »…)                                                   | ☐   |
+| 3.3  | Noter « Bien »                                                   | La carte suivante s'affiche ; compteur « 1 / 20 vues · 1 à repasser » (c1-001 reviendra en fin de file)                            | ☐   |
+| 3.4  | Vrai/Faux : mauvaise réponse → Valider                           | « ✗ Mauvaise réponse », bon choix en vert, explication, bouton « Continuer · revient dans 1 min »                                  | ☐   |
+| 3.5  | QCM à réponse unique : bonne réponse                             | « ✓ Bonne réponse », boutons « Bien » et « C'était facile » avec intervalles ; options dans un ordre différent si la carte revient | ☐   |
+| 3.6  | QCM multi-réponses (ex. c1-006)                                  | Mention « Sélectionne 3 réponses », cases à cocher ; 2 sur 3 cochées = faux                                                        | ☐   |
+| 3.7  | Carte « remise en ordre » : glisser via ⋮⋮ (souris **et** doigt) | L'élément se déplace ; le scroll mobile reste possible hors poignée                                                                | ☐   |
+| 3.8  | Remise en ordre : flèches ▲▼ puis valider faux                   | Positions ✓/✗ et « Ordre attendu » affichés                                                                                        | ☐   |
+| 3.9  | « Terminer » en cours de session                                 | Bilan : nombre de réponses, % de réussite, prochaine échéance                                                                      | ☐   |
+| 3.10 | Revenir sur Réviser                                              | Nouvelles cartes restantes = 20 − cartes déjà introduites aujourd'hui                                                              | ☐   |
+| 3.11 | Filtres : ne garder que K1, puis tag « piège »                   | Les compteurs « dues / nouvelles » se mettent à jour ; chapitres sans cartes non sélectionnables                                   | ☐   |
+| 3.12 | Paramètres → 0 nouvelle carte/jour, revenir sur Réviser          | « Rien à réviser » + prochaine échéance (si des cartes sont en cours)                                                              | ☐   |
 
 ## 4. Entraînement libre
 
@@ -64,9 +64,9 @@ Légende : ☐ à faire · ✅ OK · ❌ KO (noter le détail en bas).
 | 5.1  | Ouvrir Examen blanc                                                                                          | « 40 questions · 60 min · 26/40 », tant que des chapitres manquent : avertissement « Chapitres … sans QCM » et composition réelle cohérente avec le tableau (total 40) | ☐   |
 | 5.2  | Démarrer                                                                                                     | Chrono « 1:00:00 » puis 59:59… qui décompte, barre du bas toujours visible en scrollant (mobile compris)                                                               | ☐   |
 | 5.3  | Répondre à 3 questions, en marquer 2 (🚩), naviguer via la grille                                            | Grille : répondues en indigo, marquées avec pastille orange, question courante entourée                                                                                | ☐   |
-| 5.4  | Recharger la page en plein examen                                                                            | Examen repris, réponses et marquages conservés, chrono **non remis à zéro**                                                                                            | ☐   |
+| 5.4  | Recharger la page en plein examen                                                                            | Examen repris, réponses, marquages et **ordre des options** conservés, chrono **non remis à zéro**                                                                     | ☐   |
 | 5.5  | « Terminer »                                                                                                 | Confirmation dans la barre du bas : « Il reste 37 questions sans réponse… »                                                                                            | ☐   |
-| 5.6  | « Terminer et corriger »                                                                                     | Page résultat : score, Réussi/Échoué, temps passé, détail par chapitre et par K, correction                                                                            | ☐   |
+| 5.6  | « Terminer et corriger »                                                                                     | Page résultat : score, Réussi/Échoué, temps passé, détail par chapitre et par K, correction, options dans le même ordre que pendant l'examen                           | ☐   |
 | 5.7  | Cocher « Uniquement les erreurs »                                                                            | Seules les questions fausses / sans réponse restent                                                                                                                    | ☐   |
 | 5.8  | Retour aux examens                                                                                           | L'examen apparaît dans l'historique, cliquable                                                                                                                         | ☐   |
 | 5.9  | Nouvel examen → Terminer → « Abandonner sans résultat »                                                      | Retour à l'accueil de l'examen, aucun ajout à l'historique                                                                                                             | ☐   |

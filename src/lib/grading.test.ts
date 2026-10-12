@@ -6,8 +6,10 @@ import {
   gradeTrueFalse,
   isMultiAnswer,
   moveItem,
+  optionOrder,
   toggleMcqOption,
   shuffle,
+  shuffleOptions,
   shuffleOrdering,
 } from './grading.ts'
 
@@ -122,5 +124,33 @@ describe('toggleMcqOption', () => {
 
   it('ignores options that do not exist', () => {
     expect(toggleMcqOption(singleMcq, [1], 7)).toEqual([1])
+  })
+})
+
+describe('shuffleOptions', () => {
+  it('returns a permutation of the option indexes', () => {
+    const order = shuffleOptions(singleMcq, seeded(3))
+    expect([...order].sort()).toEqual([0, 1, 2, 3])
+  })
+
+  it('produces different orders over several draws', () => {
+    const random = seeded(7)
+    const orders = new Set(
+      Array.from({ length: 20 }, () => shuffleOptions(singleMcq, random).join()),
+    )
+    expect(orders.size).toBeGreaterThan(1)
+  })
+})
+
+describe('optionOrder', () => {
+  it('keeps a valid order', () => {
+    expect(optionOrder(singleMcq, [2, 0, 3, 1])).toEqual([2, 0, 3, 1])
+  })
+
+  it('falls back to the authored order when missing or invalid', () => {
+    expect(optionOrder(singleMcq)).toEqual([0, 1, 2, 3])
+    expect(optionOrder(singleMcq, [0, 1, 2])).toEqual([0, 1, 2, 3])
+    expect(optionOrder(singleMcq, [0, 0, 1, 2])).toEqual([0, 1, 2, 3])
+    expect(optionOrder(singleMcq, [0, 1, 2, 7])).toEqual([0, 1, 2, 3])
   })
 })

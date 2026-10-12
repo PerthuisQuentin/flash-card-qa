@@ -37,14 +37,15 @@ C'est le seul type utilisé à l'examen blanc : il doit ressembler aux questions
 - Options de **longueur et de forme comparables** : la bonne réponse ne doit pas se reconnaître parce qu'elle est la plus longue ou la plus nuancée.
 - Éviter « Toutes les réponses ci-dessus » et « Aucune de ces réponses ».
 - Négations et mots-pièges **en majuscules** dans l'énoncé : « Lequel n'est PAS… », « Quel est l'INCONVÉNIENT… ».
-- **Varier la position de la bonne réponse** (A, B, C, D à peu près à parts égales) : l'app n'affiche pas les options dans un ordre aléatoire. Le chapitre 1 a trop souvent la bonne réponse en B : à rééquilibrer.
+- **Ordre des options** : l'app les mélange à l'affichage, la position de la bonne réponse dans le fichier est donc sans effet. En conséquence, aucune option ne doit faire référence à une autre par sa lettre ou sa position (« A et B », « les deux premières »).
+- **Ne jamais réordonner les options d'une carte existante** : les résultats d'examens passés enregistrent les index choisis. Reformuler une option à la même place reste possible.
 - `explanation` : dire pourquoi la bonne réponse est juste et, si utile, pourquoi le distracteur le plus tentant est faux.
 
 ### Vrai / Faux (`true_false`)
 
 - **Une seule affirmation**, sans ambiguïté : elle doit être entièrement vraie ou clairement fausse selon le syllabus.
 - Bien adapté aux idées reçues (« Le test peut prouver l'absence de défauts. »), à taguer `idée reçue` ou `piège`.
-- **Équilibrer vrai et faux** : sinon répondre « Faux » devient un réflexe. Le chapitre 1 (13 faux pour 2 vrais) est à rééquilibrer.
+- **Équilibrer vrai et faux** : sinon répondre « Faux » devient un réflexe.
 - `explanation` obligatoire : corriger l'affirmation quand elle est fausse.
 
 ### Remise en ordre (`ordering`)
@@ -81,5 +82,5 @@ C'est le seul type utilisé à l'examen blanc : il doit ressembler aux questions
 - [ ] `npm test` passe (schéma, ids, cohérence chapitre / objectif, index des réponses).
 - [ ] Chaque objectif du chapitre est couvert, les K3 ont des exercices.
 - [ ] Le nombre de QCM atteint la cible du chapitre.
-- [ ] Les bonnes réponses des QCM sont bien réparties entre A, B, C et D ; les vrai/faux sont équilibrés.
+- [ ] La bonne réponse d'un QCM ne se repère pas à sa longueur ; les vrai/faux sont équilibrés.
 - [ ] Relecture rapide dans l'app (entraînement filtré sur le chapitre) pour repérer les énoncés ambigus.

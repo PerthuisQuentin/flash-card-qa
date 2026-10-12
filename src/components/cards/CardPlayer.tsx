@@ -5,6 +5,7 @@ import {
   gradeMcq,
   gradeOrdering,
   gradeTrueFalse,
+  shuffleOptions,
   shuffleOrdering,
   toggleMcqOption,
 } from '../../lib/grading.ts'
@@ -39,6 +40,7 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
   const [order, setOrder] = useState<string[]>(() =>
     card.type === 'ordering' ? shuffleOrdering(card.items) : [],
   )
+  const [mcqOrder] = useState<number[]>(() => (card.type === 'mcq' ? shuffleOptions(card) : []))
   const [outcome, setOutcome] = useState<CardOutcome | null>(null)
   const revealed = outcome !== null
 
@@ -66,8 +68,8 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
   const bindings: HotkeyBindings = {}
   if (canSubmit) bindings.enter = bindings.space = submit
   if (card.type === 'mcq') {
-    card.options.forEach((_, index) => {
-      bindings[String(index + 1)] = () => setSelected((s) => toggleMcqOption(card, s, index))
+    mcqOrder.forEach((index, position) => {
+      bindings[String(position + 1)] = () => setSelected((s) => toggleMcqOption(card, s, index))
     })
   }
   if (card.type === 'true_false') {
@@ -83,7 +85,13 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
 
       {card.type === 'flashcard' && <FlashcardView card={card} revealed={revealed} />}
       {card.type === 'mcq' && (
-        <McqView card={card} selected={selected} onChange={setSelected} revealed={revealed} />
+        <McqView
+          card={card}
+          selected={selected}
+          onChange={setSelected}
+          revealed={revealed}
+          order={mcqOrder}
+        />
       )}
       {card.type === 'true_false' && (
         <TrueFalseView card={card} value={trueFalse} onChange={setTrueFalse} revealed={revealed} />

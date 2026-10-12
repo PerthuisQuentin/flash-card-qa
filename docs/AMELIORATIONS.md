@@ -38,5 +38,5 @@ Idées non planifiées, à reprendre plus tard. Chaque piste décrit l'intérêt
 
 ## Contenu et révision
 
-- [ ] **Mélanger l'ordre des options des QCM à l'affichage** (révision, entraînement, examen), en conservant l'ordre mélangé dans l'examen en cours et son résultat. La position de la bonne réponse ne pourrait plus être mémorisée.
-- [ ] **Rééquilibrer le chapitre 1** selon [REDACTION.md](REDACTION.md) : la bonne réponse est en B dans 28 QCM à réponse unique sur 41, les vrai/faux sont presque tous faux (13 sur 15), et des explications manquent.
+- [x] **Mélanger l'ordre des options des QCM à l'affichage** (révision, entraînement, examen), en conservant l'ordre mélangé dans l'examen en cours et son résultat. La position de la bonne réponse ne pourrait plus être mémorisée.
+- [x] **Rééquilibrer le chapitre 1** selon [REDACTION.md](REDACTION.md) : 9 vrai/faux « vrais » ajoutés (11 vrais, 13 faux), explications ajoutées aux 32 cartes qui n'en avaient pas, options reformulées pour que la bonne réponse ne soit plus la plus longue. La position en B n'a plus d'effet depuis le mélange des options ; l'ordre des options n'a pas été modifié, pour ne pas fausser les résultats d'examens passés.

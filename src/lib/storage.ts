@@ -41,6 +41,8 @@ export const examInProgressSchema = z.object({
   /** Selected option indexes per question; absent = not answered. */
   answers: z.record(z.string(), z.array(z.number().int().nonnegative())),
   flagged: z.array(z.string()),
+  /** Display order of each question's options (absent in exams started before shuffling). */
+  optionOrders: z.record(z.string(), z.array(z.number().int().nonnegative())).optional(),
   /** Index of the question on screen, so a reload resumes where the user was. */
   current: z.number().int().nonnegative().optional(),
   warning: z.string().optional(),
@@ -60,6 +62,8 @@ export const examResultSchema = z.object({
       cardId: z.string(),
       selected: z.array(z.number().int().nonnegative()),
       correct: z.boolean(),
+      /** Display order of the options during the exam, to show them the same way. */
+      order: z.array(z.number().int().nonnegative()).optional(),
     }),
   ),
   warning: z.string().optional(),

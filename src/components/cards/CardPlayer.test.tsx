@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { getCard } from '../../data/cards.ts'
 import type { Card } from '../../data/schema.ts'
+import { getOption } from '../../test/options.ts'
 import CardPlayer from './CardPlayer.tsx'
 
 afterEach(cleanup)
@@ -39,8 +40,9 @@ describe('CardPlayer', () => {
     const submit = screen.getByRole('button', { name: 'Valider' })
 
     expect((submit as HTMLButtonElement).disabled).toBe(true)
-    await user.click(screen.getAllByRole('radio')[0])
-    await user.click(screen.getAllByRole('radio')[card.correct[0]])
+    const wrong = card.options.findIndex((_, i) => !card.correct.includes(i))
+    await user.click(getOption(card.options[wrong]))
+    await user.click(getOption(card.options[card.correct[0]]))
     await user.click(submit)
 
     expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: true }))
@@ -49,12 +51,26 @@ describe('CardPlayer', () => {
     expect(screen.queryByRole('button', { name: 'Valider' })).toBeNull()
   })
 
+  it('shows mcq options in a shuffled order, with shortcuts following the display', async () => {
+    const card = cardOfType('c1-003', 'mcq')
+    // Fisher–Yates with random() = 0 always swaps with the first item: [1, 2, 3, 0].
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+    const { user } = setup(card)
+    random.mockRestore()
+
+    const labels = screen.getAllByRole('radio').map((input) => input.closest('label')!.textContent)
+    expect(labels).toEqual([1, 2, 3, 0].map((i, pos) => `${'ABCD'[pos]}.${card.options[i]}`))
+
+    await user.keyboard('1')
+    expect(getOption(card.options[1]).checked).toBe(true)
+  })
+
   it('requires every correct option of a multi-answer mcq', async () => {
     const card = cardOfType('c1-006', 'mcq')
     const { user, onGraded } = setup(card)
 
     expect(screen.getByText(`Sélectionne ${card.correct.length} réponses.`)).toBeTruthy()
-    await user.click(screen.getAllByRole('checkbox')[card.correct[0]])
+    await user.click(getOption(card.options[card.correct[0]]))
     await user.click(screen.getByRole('button', { name: 'Valider' }))
 
     expect(onGraded).toHaveBeenCalledWith(expect.objectContaining({ correct: false }))

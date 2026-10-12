@@ -156,6 +156,23 @@ describe('exam lifecycle', () => {
     expect(unansweredCount(state.currentExam!)).toBe(40)
   })
 
+  it('shuffles the options of each question and keeps that order in the result', () => {
+    const exam = newExam()
+    for (const id of exam.questions) {
+      expect([...exam.optionOrders![id]].sort()).toEqual([0, 1, 2, 3])
+    }
+    const result = scoreExam(exam, after(10), getCard)
+    expect(result.questions.map((q) => q.order)).toEqual(
+      exam.questions.map((id) => exam.optionOrders![id]),
+    )
+  })
+
+  it('scores exams started before option shuffling existed', () => {
+    const { optionOrders: _orders, ...legacy } = newExam()
+    const result = scoreExam(legacy, after(10), getCard)
+    expect(result.questions.every((q) => !('order' in q))).toBe(true)
+  })
+
   it('records answers and flags', () => {
     let state = startExam(createDefaultState(), newExam())
     const [q1, q2] = state.currentExam!.questions
@@ -200,12 +217,16 @@ describe('exam lifecycle', () => {
     const [result] = state.exams
     expect(result).toMatchObject({ score: 26, passMark: 26, timedOut: false, elapsedSec: 42 * 60 })
     expect(isPassed(result)).toBe(true)
-    expect(result.questions[27]).toEqual({
+    expect(result.questions[27]).toMatchObject({
       cardId: questions[27],
       selected: [0, 1],
       correct: false,
     })
-    expect(result.questions[39]).toEqual({ cardId: questions[39], selected: [], correct: false })
+    expect(result.questions[39]).toMatchObject({
+      cardId: questions[39],
+      selected: [],
+      correct: false,
+    })
     expect(parseState(state).ok).toBe(true)
   })
 

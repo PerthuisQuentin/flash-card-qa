@@ -133,7 +133,13 @@ export default function ExamResultPage() {
                   </span>
                 </div>
                 <h3 className="font-semibold whitespace-pre-wrap">{card.question}</h3>
-                <McqView card={card} selected={question.selected} onChange={() => {}} revealed />
+                <McqView
+                  card={card}
+                  selected={question.selected}
+                  onChange={() => {}}
+                  revealed
+                  order={question.order}
+                />
                 {card.explanation && (
                   <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
                     <span className="font-semibold">Explication : </span>

@@ -40,6 +40,25 @@ export function shuffleOrdering(items: readonly string[], random: Random = Math.
   return result
 }
 
+/** Random display order of an MCQ's options, as a permutation of their indexes. */
+export function shuffleOptions(card: McqCard, random: Random = Math.random): number[] {
+  return shuffle(
+    card.options.map((_, index) => index),
+    random,
+  )
+}
+
+/**
+ * Display order of an MCQ's options: `order` when it is a permutation of the card's
+ * option indexes, else the authored order (e.g. an exam started before the card changed).
+ */
+export function optionOrder(card: McqCard, order?: readonly number[]): number[] {
+  const authored = card.options.map((_, index) => index)
+  if (!order || order.length !== authored.length) return authored
+  const valid = authored.every((index) => order.includes(index))
+  return valid ? [...order] : authored
+}
+
 export function moveItem<T>(items: readonly T[], from: number, to: number): T[] {
   const result = [...items]
   if (from < 0 || from >= result.length || to < 0 || to >= result.length) return result

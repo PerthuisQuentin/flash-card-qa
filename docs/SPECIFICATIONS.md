@@ -123,6 +123,7 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 
 - Un QCM à réponses multiples n'est juste que si la sélection est **exactement** l'ensemble correct.
 - Une carte `ordering` n'est juste que si l'ordre est entièrement correct.
+- Les options d'un QCM sont **affichées dans un ordre aléatoire**, tiré à chaque présentation de la carte : la position de la bonne réponse ne peut pas être mémorisée. Les lettres A, B, C… et les raccourcis 1–4 suivent l'ordre affiché ; les réponses restent enregistrées avec les index du JSON.
 - Après réponse : affichage de la correction (bonnes options surlignées, ordre correct) et de `explanation`.
 - Chaque bouton de notation affiche le prochain intervalle prévu (« 10 min », « 3 j »…), calculé au moment de la réponse.
 - Une flash card compte comme juste dans les statistiques sauf si elle est notée « À revoir ».
@@ -146,7 +147,7 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Uniquement les cartes de type **`mcq`**.
 - 40 questions, **60 minutes**, seuil de réussite **65 % (26/40)**.
 - Répartition officielle : ch.1 = 8, ch.2 = 6, ch.3 = 4, ch.4 = 11, ch.5 = 9, ch.6 = 2.
-- Tirage aléatoire dans chaque chapitre, questions présentées dans l'ordre des chapitres ; options affichées dans l'ordre du JSON (pas de mélange, certaines options s'y référant).
+- Tirage aléatoire dans chaque chapitre, questions présentées dans l'ordre des chapitres ; options mélangées, avec un ordre tiré au démarrage et conservé pendant tout l'examen (reprise comprise) et dans sa correction.
 - Notation tout-ou-rien par question.
 - **N'impacte pas** le planning FSRS.
 
@@ -249,8 +250,9 @@ interface ExamInProgress {
   durationSec: number
   passMark: number // ceil(65 % du nombre de questions)
   questions: CardId[]
-  answers: Record<CardId, number[]> // absent = sans réponse
+  answers: Record<CardId, number[]> // index du JSON ; absent = sans réponse
   flagged: CardId[]
+  optionOrders?: Record<CardId, number[]> // ordre d'affichage des options (absent : examens antérieurs)
   current?: number // question affichée, pour reprendre au même endroit
   warning?: string // composition non officielle
 }
@@ -264,7 +266,7 @@ interface ExamResult {
   timedOut: boolean
   passMark: number
   score: number
-  questions: Array<{ cardId: CardId; selected: number[]; correct: boolean }>
+  questions: Array<{ cardId: CardId; selected: number[]; correct: boolean; order?: number[] }>
   warning?: string
 }
 ```

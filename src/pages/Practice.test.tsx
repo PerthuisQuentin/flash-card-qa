@@ -7,6 +7,7 @@ import { cards } from '../data/cards.ts'
 import { STORAGE_KEY, type StoredState } from '../lib/storage.ts'
 import { StoreProvider } from '../state/store.tsx'
 import { memoryStorage } from '../test/memoryStorage.ts'
+import { getOption } from '../test/options.ts'
 import Practice from './Practice.tsx'
 
 afterEach(cleanup)
@@ -36,9 +37,8 @@ async function answerWrong(user: UserEvent): Promise<string> {
   }
   if (card.type === 'mcq') {
     const wrong = card.options.findIndex((_, i) => !card.correct.includes(i))
-    const inputs = screen.getAllByRole(card.correct.length > 1 ? 'checkbox' : 'radio')
     // When every option is correct, selecting a single one is still wrong.
-    await user.click(inputs[wrong === -1 ? 0 : wrong])
+    await user.click(getOption(card.options[wrong === -1 ? 0 : wrong]))
   }
   if (card.type === 'true_false') {
     await user.click(screen.getByRole('radio', { name: card.answer ? 'Faux' : 'Vrai' }))

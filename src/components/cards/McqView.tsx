@@ -1,5 +1,5 @@
 import type { McqCard } from '../../data/schema.ts'
-import { isMultiAnswer, toggleMcqOption } from '../../lib/grading.ts'
+import { isMultiAnswer, optionOrder, toggleMcqOption } from '../../lib/grading.ts'
 import { OPTION_LETTERS } from './labels.ts'
 
 interface McqViewProps {
@@ -7,17 +7,22 @@ interface McqViewProps {
   selected: number[]
   onChange: (selected: number[]) => void
   revealed: boolean
+  /** Display order of the options (indexes into `card.options`); authored order by default. */
+  order?: readonly number[]
 }
 
-export default function McqView({ card, selected, onChange, revealed }: McqViewProps) {
+export default function McqView({ card, selected, onChange, revealed, order }: McqViewProps) {
   const multi = isMultiAnswer(card)
+  // Selections and answers always use the authored indexes; only the display is reordered.
+  const displayed = optionOrder(card, order)
 
   return (
     <fieldset className="space-y-2">
       <legend className="mb-2 text-sm text-slate-500 dark:text-slate-400">
         {multi ? `Sélectionne ${card.correct.length} réponses.` : 'Sélectionne une seule réponse.'}
       </legend>
-      {card.options.map((option, index) => {
+      {displayed.map((index, position) => {
+        const option = card.options[index]
         const isSelected = selected.includes(index)
         const isCorrect = card.correct.includes(index)
         // A right option the user did not tick: worth telling apart in multi-answer questions.
@@ -40,7 +45,7 @@ export default function McqView({ card, selected, onChange, revealed }: McqViewP
               onChange={() => onChange(toggleMcqOption(card, selected, index))}
             />
             <span className="font-semibold text-slate-500 dark:text-slate-400">
-              {OPTION_LETTERS[index]}.
+              {OPTION_LETTERS[position]}.
             </span>
             <span className="flex-1">{option}</span>
             {revealed && isCorrect && (

@@ -16,7 +16,7 @@ import {
   unansweredCount,
 } from '../../lib/exam.ts'
 import { formatClock } from '../../lib/format.ts'
-import { toggleMcqOption } from '../../lib/grading.ts'
+import { optionOrder, toggleMcqOption } from '../../lib/grading.ts'
 import type { ExamInProgress } from '../../lib/storage.ts'
 import { useStore } from '../../state/store.tsx'
 
@@ -34,6 +34,7 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
   const index = Math.min(exam.current ?? 0, last)
   const cardId = exam.questions[index]
   const card = getCard(cardId)
+  const order = exam.optionOrders?.[cardId]
 
   const finish = useCallback(() => {
     update((s) => finishExam(s, new Date(), getCard))
@@ -47,8 +48,8 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
     f: () => update((s) => toggleExamFlag(s, cardId)),
   }
   if (card?.type === 'mcq') {
-    card.options.forEach((_, option) => {
-      examBindings[String(option + 1)] = () =>
+    optionOrder(card, order).forEach((option, position) => {
+      examBindings[String(position + 1)] = () =>
         update((s) =>
           setExamAnswer(
             s,
@@ -107,6 +108,7 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
               selected={exam.answers[cardId] ?? []}
               onChange={(selected) => update((s) => setExamAnswer(s, cardId, selected))}
               revealed={false}
+              order={order}
             />
           </>
         ) : (
