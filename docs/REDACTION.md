@@ -61,6 +61,7 @@ C'est le seul type utilisé à l'examen blanc : il doit ressembler aux questions
 - `explanation` : fortement recommandée partout, obligatoire pour les vrai/faux et les remises en ordre. Elle apporte une information en plus (exemple, nuance, lien avec un principe), pas une simple répétition de la réponse.
 - `tags` : 1 à 3, en minuscules et en français. **Réutiliser les tags existants** avant d'en créer un nouveau. Tags transverses :
   - `scénario` : mise en situation ;
+  - `exercice` : application chiffrée d'une technique (objectifs K3) ;
   - `piège` : formulation ou confusion fréquente à l'examen ;
   - `idée reçue` : croyance courante contredite par le syllabus ;
   - `liste` : énumération à connaître ;

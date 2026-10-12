@@ -3,7 +3,7 @@
 Personal web app to prepare the ISTQB CTFL v4.0 certification: FSRS spaced repetition, free practice, timed mock exams, stats. Client-only (no backend), progress in `localStorage`, deployed on Railway.
 
 - What the app does and why: `docs/SPECIFICATIONS.md` (source of truth, keep it up to date when behavior changes).
-- Development plan and content targets: `docs/PLAN.md`. Manual acceptance plan: `docs/RECETTE.md`.
+- Development plan and content targets: `docs/PLAN.md`. Manual acceptance plan: `docs/RECETTE.md`. Improvement backlog: `docs/AMELIORATIONS.md`.
 - Source PDFs (syllabus, summary) live in `resources/`, gitignored for copyright: never commit them or quote them at length.
 
 ## Conventions

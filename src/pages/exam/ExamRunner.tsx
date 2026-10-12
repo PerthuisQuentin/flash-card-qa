@@ -99,7 +99,9 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
 
         {card?.type === 'mcq' ? (
           <>
-            <h2 className="text-lg leading-snug font-semibold">{card.question}</h2>
+            <h2 className="text-lg leading-snug font-semibold whitespace-pre-wrap">
+              {card.question}
+            </h2>
             <McqView
               card={card}
               selected={exam.answers[cardId] ?? []}

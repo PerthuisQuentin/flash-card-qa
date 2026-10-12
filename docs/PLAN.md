@@ -138,7 +138,7 @@ Avancement :
 
 - [x] Chapitre 1 : 92 cartes (48 QCM)
 - [x] Chapitre 2 : 90 cartes (51 QCM)
-- [ ] Chapitre 3
-- [ ] Chapitre 4
-- [ ] Chapitre 5
-- [ ] Chapitre 6
+- [x] Chapitre 3 : 80 cartes (45 QCM)
+- [x] Chapitre 4 : 124 cartes (77 QCM)
+- [x] Chapitre 5 : 116 cartes (75 QCM)
+- [x] Chapitre 6 : 28 cartes (18 QCM)

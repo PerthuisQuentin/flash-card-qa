@@ -79,7 +79,7 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
   return (
     <article className="space-y-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900">
       <CardHeader card={card} />
-      <h2 className="text-lg leading-snug font-semibold">{card.question}</h2>
+      <h2 className="text-lg leading-snug font-semibold whitespace-pre-wrap">{card.question}</h2>
 
       {card.type === 'flashcard' && <FlashcardView card={card} revealed={revealed} />}
       {card.type === 'mcq' && (

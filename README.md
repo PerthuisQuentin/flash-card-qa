@@ -104,5 +104,6 @@ Il suffit de créer un service Railway à partir du dépôt GitHub.
 - [Plan de développement](docs/PLAN.md)
 - [Règles de rédaction des cartes](docs/REDACTION.md)
 - [Plan de recette](docs/RECETTE.md)
+- [Pistes d'amélioration](docs/AMELIORATIONS.md)
 
 Le contenu des cartes est rédigé à partir du syllabus ISTQB CTFL v4.0 (traduction CFTL), qui n'est pas inclus dans ce dépôt.
