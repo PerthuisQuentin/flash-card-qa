@@ -251,7 +251,7 @@ src/
   state/
     store.tsx           # contexte React + hook useStore() persistant
   components/
-    cards/              # FlashcardView, QcmView, TrueFalseView, OrderView, CardRenderer
+    cards/              # FlashcardView, McqView, TrueFalseView, OrderingView, CardPlayer
     ui/                 # boutons, barres de progression, filtres…
   pages/
     Dashboard.tsx

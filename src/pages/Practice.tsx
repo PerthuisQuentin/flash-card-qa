@@ -1,10 +1,76 @@
+import { useState } from 'react'
+import CardPlayer from '../components/cards/CardPlayer.tsx'
+import { CARD_TYPE_LABELS } from '../components/cards/labels.ts'
 import PageTitle from '../components/PageTitle.tsx'
+import Button from '../components/ui/Button.tsx'
+import { cards } from '../data/cards.ts'
+import { CARD_TYPES, type CardType } from '../data/schema.ts'
 
+// Temporary browser to try every card type; replaced by the real practice mode in step 7.
 export default function Practice() {
+  const [type, setType] = useState<CardType | 'all'>('all')
+  const [index, setIndex] = useState(0)
+
+  const list = type === 'all' ? cards : cards.filter((card) => card.type === type)
+  const card = list[Math.min(index, list.length - 1)]
+
   return (
-    <PageTitle
-      title="Entraînement libre"
-      subtitle="Séries aléatoires sans impact sur le planning — à venir."
-    />
+    <>
+      <PageTitle
+        title="Entraînement libre"
+        subtitle="Parcours de toutes les cartes (version de test)."
+      />
+
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <label className="flex items-center gap-2 text-sm">
+          Type
+          <select
+            value={type}
+            onChange={(event) => {
+              setType(event.target.value as CardType | 'all')
+              setIndex(0)
+            }}
+            className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 dark:border-slate-700 dark:bg-slate-900"
+          >
+            <option value="all">Tous</option>
+            {CARD_TYPES.map((value) => (
+              <option key={value} value={value}>
+                {CARD_TYPE_LABELS[value]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <span className="ml-auto text-sm text-slate-500 dark:text-slate-400">
+          {index + 1} / {list.length}
+        </span>
+      </div>
+
+      {card && (
+        <CardPlayer
+          key={card.id}
+          card={card}
+          renderActions={() => (
+            <div className="flex justify-end">
+              <Button onClick={() => setIndex((i) => i + 1)} disabled={index >= list.length - 1}>
+                Carte suivante →
+              </Button>
+            </div>
+          )}
+        />
+      )}
+
+      <div className="mt-4 flex justify-between">
+        <Button variant="ghost" onClick={() => setIndex((i) => i - 1)} disabled={index === 0}>
+          ← Précédente
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => setIndex((i) => i + 1)}
+          disabled={index >= list.length - 1}
+        >
+          Passer →
+        </Button>
+      </div>
+    </>
   )
 }

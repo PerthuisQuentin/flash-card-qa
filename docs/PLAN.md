@@ -31,12 +31,14 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 2 — Affichage et correction des 4 types de cartes
 
-- [ ] `lib/grading.ts` : correction `mcq` (ensemble exact), `true_false`, `ordering` + mélange garanti différent de l'ordre correct. Tests unitaires.
-- [ ] Composants `FlashcardView`, `QcmView`, `TrueFalseView`, `OrderView` (dnd-kit, utilisable au doigt) et `CardRenderer`.
-- [ ] Affichage de la correction + explication après réponse.
-- [ ] Page de démo temporaire (ou page Entraînement minimale) pour parcourir toutes les cartes du chapitre 1.
+- [x] `lib/grading.ts` : correction `mcq` (ensemble exact), `true_false`, `ordering` + mélange garanti différent de l'ordre correct. Tests unitaires.
+- [x] Composants `FlashcardView`, `McqView`, `TrueFalseView`, `OrderingView` (dnd-kit avec poignée + boutons ▲▼, utilisable au doigt) et `CardPlayer`.
+- [x] Affichage de la correction + explication après réponse.
+- [x] Page Entraînement temporaire (filtre par type, navigation) pour parcourir toutes les cartes du chapitre 1.
 
 **Terminé quand** : chaque type de carte se joue et se corrige correctement, sur desktop et mobile.
+
+> Tests composants (Testing Library + jsdom) en place. Vérification visuelle validée manuellement.
 
 ---
 
