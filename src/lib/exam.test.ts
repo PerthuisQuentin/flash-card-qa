@@ -15,6 +15,7 @@ import {
   scoreExam,
   setExamAnswer,
   startExam,
+  setExamQuestion,
   toggleExamFlag,
   unansweredCount,
 } from './exam.ts'
@@ -162,6 +163,15 @@ describe('exam lifecycle', () => {
 
     state = toggleExamFlag(state, q1)
     expect(state.currentExam!.flagged).toEqual([])
+  })
+
+  it('remembers the current question within bounds', () => {
+    let state = startExam(createDefaultState(), newExam())
+    state = setExamQuestion(state, 5)
+    expect(state.currentExam!.current).toBe(5)
+    expect(parseState(state).ok).toBe(true)
+    expect(setExamQuestion(state, -1).currentExam!.current).toBe(0)
+    expect(setExamQuestion(state, 99).currentExam!.current).toBe(39)
   })
 
   it('counts down from the start time', () => {

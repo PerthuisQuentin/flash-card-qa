@@ -32,14 +32,14 @@ describe('Review page', () => {
 
     // Default quota: 20 new cards, none due yet.
     await user.click(screen.getByRole('button', { name: 'Commencer (20 cartes)' }))
-    expect(screen.getByText('20 restante(s)')).toBeTruthy()
+    expect(screen.getByText('0 / 20 vues')).toBeTruthy()
     expect(screen.getByText(first.question)).toBeTruthy()
 
     await user.click(screen.getByRole('button', { name: 'Afficher la réponse' }))
     await user.click(screen.getByRole('button', { name: /^Bien/ }))
 
     // Still in learning after one "Good": it goes back to the end of the queue.
-    expect(screen.getByText('20 restante(s)')).toBeTruthy()
+    expect(screen.getByText('1 / 20 vues · 1 à repasser')).toBeTruthy()
     expect(stored().srs[first.id].state).toBe(1)
     expect(stored().answers).toMatchObject([
       { cardId: first.id, correct: true, mode: 'review', rating: 3 },

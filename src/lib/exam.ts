@@ -241,6 +241,14 @@ export function setExamAnswer(state: StoredState, cardId: CardId, selected: numb
   return { ...state, currentExam: { ...state.currentExam, answers } }
 }
 
+/** Moves to another question, clamped to the exam bounds. */
+export function setExamQuestion(state: StoredState, index: number): StoredState {
+  if (!state.currentExam) return state
+  const current = Math.max(0, Math.min(state.currentExam.questions.length - 1, index))
+  if (current === (state.currentExam.current ?? 0)) return state
+  return { ...state, currentExam: { ...state.currentExam, current } }
+}
+
 export function toggleExamFlag(state: StoredState, cardId: CardId): StoredState {
   if (!state.currentExam) return state
   const { flagged } = state.currentExam

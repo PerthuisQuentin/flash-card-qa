@@ -11,6 +11,7 @@ import {
   isAnswered,
   remainingSec,
   setExamAnswer,
+  setExamQuestion,
   toggleExamFlag,
   unansweredCount,
 } from '../../lib/exam.ts'
@@ -24,12 +25,13 @@ const LOW_TIME_SEC = 5 * 60
 export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
   const { update } = useStore()
   const navigate = useNavigate()
-  const [index, setIndex] = useState(0)
   const [now, setNow] = useState(() => new Date())
   const [confirm, setConfirm] = useState<'finish' | 'abandon' | null>(null)
 
   const remaining = remainingSec(exam, now)
   const unanswered = unansweredCount(exam)
+  const last = exam.questions.length - 1
+  const index = Math.min(exam.current ?? 0, last)
   const cardId = exam.questions[index]
   const card = getCard(cardId)
 
@@ -38,10 +40,10 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
     navigate(`/exam/${exam.id}`)
   }, [update, navigate, exam.id])
 
-  const last = exam.questions.length - 1
+  const setIndex = (i: number) => update((s) => setExamQuestion(s, i))
   const examBindings: HotkeyBindings = {
-    arrowleft: () => setIndex((i) => Math.max(0, i - 1)),
-    arrowright: () => setIndex((i) => Math.min(last, i + 1)),
+    arrowleft: () => setIndex(index - 1),
+    arrowright: () => setIndex(index + 1),
     f: () => update((s) => toggleExamFlag(s, cardId)),
   }
   if (card?.type === 'mcq') {

@@ -41,6 +41,8 @@ export const examInProgressSchema = z.object({
   /** Selected option indexes per question; absent = not answered. */
   answers: z.record(z.string(), z.array(z.number().int().nonnegative())),
   flagged: z.array(z.string()),
+  /** Index of the question on screen, so a reload resumes where the user was. */
+  current: z.number().int().nonnegative().optional(),
   warning: z.string().optional(),
 })
 
@@ -113,6 +115,9 @@ export function migrate(raw: unknown): unknown {
 
 /** Validates any untrusted value (localStorage content, imported file) as a StoredState. */
 export function parseState(raw: unknown): ParseResult {
+  if (typeof raw !== 'object' || raw === null || !('version' in raw)) {
+    return { ok: false, error: 'Ce fichier n’est pas une sauvegarde Flash Cards QA.' }
+  }
   const result = storedStateSchema.safeParse(migrate(raw))
   if (result.success) return { ok: true, state: result.data }
   return { ok: false, error: z.prettifyError(result.error) }

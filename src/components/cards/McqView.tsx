@@ -20,6 +20,8 @@ export default function McqView({ card, selected, onChange, revealed }: McqViewP
       {card.options.map((option, index) => {
         const isSelected = selected.includes(index)
         const isCorrect = card.correct.includes(index)
+        // A right option the user did not tick: worth telling apart in multi-answer questions.
+        const missed = revealed && multi && isCorrect && !isSelected
         return (
           <label
             key={index}
@@ -27,7 +29,7 @@ export default function McqView({ card, selected, onChange, revealed }: McqViewP
               revealed,
               isSelected,
               isCorrect,
-            )}`}
+            )} ${missed ? 'border-dashed' : ''}`}
           >
             <input
               type={multi ? 'checkbox' : 'radio'}
@@ -43,7 +45,7 @@ export default function McqView({ card, selected, onChange, revealed }: McqViewP
             <span className="flex-1">{option}</span>
             {revealed && isCorrect && (
               <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                ✓ Bonne réponse
+                {missed ? '✓ Bonne réponse oubliée' : '✓ Bonne réponse'}
               </span>
             )}
             {revealed && isSelected && !isCorrect && (

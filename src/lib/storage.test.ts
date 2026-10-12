@@ -96,6 +96,13 @@ describe('parseState', () => {
     expect(result.ok).toBe(false)
   })
 
+  it('reports a JSON file that is not a backup with a readable message', () => {
+    expect(parseState({ hello: 'world' })).toEqual({
+      ok: false,
+      error: 'Ce fichier n’est pas une sauvegarde Flash Cards QA.',
+    })
+  })
+
   it('reports invalid JSON with a readable message', () => {
     expect(parseStateJson('nope')).toEqual({
       ok: false,

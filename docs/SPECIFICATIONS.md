@@ -164,7 +164,7 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Chrono, compteur de réponses et bouton « Terminer » dans une barre collée en bas de l'écran ; la confirmation s'y affiche (avec le nombre de questions sans réponse, comptées fausses).
 - Possibilité d'abandonner un examen sans enregistrer de résultat.
 - Un examen expiré retrouvé au chargement est soumis automatiquement, clôturé à son heure limite.
-- Un examen en cours est sauvegardé (reprise possible après rechargement ; le temps continue de s'écouler sur la base de `startedAt`).
+- Un examen en cours est sauvegardé (reprise possible après rechargement, sur la question en cours ; le temps continue de s'écouler sur la base de `startedAt`).
 
 **Résultats**
 
@@ -251,6 +251,7 @@ interface ExamInProgress {
   questions: CardId[]
   answers: Record<CardId, number[]> // absent = sans réponse
   flagged: CardId[]
+  current?: number // question affichée, pour reprendre au même endroit
   warning?: string // composition non officielle
 }
 

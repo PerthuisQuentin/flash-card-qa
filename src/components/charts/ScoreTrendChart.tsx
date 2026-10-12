@@ -38,14 +38,14 @@ export default function ScoreTrendChart({ exams }: { exams: ExamResult[] }) {
         {describe(points[shown].result)}
       </p>
 
-      <div className="relative ml-9 h-44" onMouseLeave={() => setActive(null)}>
+      <div className="relative ml-11 h-44" onMouseLeave={() => setActive(null)}>
         {GRIDLINES.map((value) => (
           <div
             key={value}
             className="absolute inset-x-0 border-t border-slate-200 dark:border-slate-800"
             style={{ bottom: `${value}%` }}
           >
-            <span className="absolute -left-9 w-7 -translate-y-1/2 text-right text-xs text-slate-400 tabular-nums">
+            <span className="absolute -left-11 w-9 -translate-y-1/2 text-right whitespace-nowrap text-xs text-slate-400 tabular-nums">
               {value} %
             </span>
           </div>
@@ -99,7 +99,7 @@ export default function ScoreTrendChart({ exams }: { exams: ExamResult[] }) {
         ))}
       </div>
 
-      <div className="mt-2 ml-9 flex justify-between text-xs text-slate-400">
+      <div className="mt-2 ml-11 flex justify-between text-xs text-slate-400">
         <span>{exams.length > 1 ? 'Premier examen' : ''}</span>
         <span>{exams.length > 1 ? 'Dernier' : ''}</span>
       </div>

@@ -37,6 +37,8 @@ export default function Review() {
   const [filter, setFilter] = useState<CardFilter>({})
   const [queue, setQueue] = useState<CardId[]>([])
   const [initialSize, setInitialSize] = useState(0)
+  // Cards rated at least once this session: drives progress, since requeued cards come back.
+  const [seen, setSeen] = useState<ReadonlySet<CardId>>(new Set())
   // Incremented on every rating so a requeued card remounts with a fresh state.
   const [step, setStep] = useState(0)
   const [stats, setStats] = useState<SessionStats>({ answered: 0, correct: 0 })
@@ -44,6 +46,7 @@ export default function Review() {
   function start(ids: CardId[]) {
     setQueue(ids)
     setInitialSize(ids.length)
+    setSeen(new Set())
     setStats({ answered: 0, correct: 0 })
     setPhase('session')
   }
@@ -59,11 +62,13 @@ export default function Review() {
         <Session
           queue={queue}
           initialSize={initialSize}
+          seen={seen}
           step={step}
           onRated={(correct, requeue) => {
             setStats((s) => ({ answered: s.answered + 1, correct: s.correct + (correct ? 1 : 0) }))
             setStep((n) => n + 1)
             const [current, ...rest] = queue
+            setSeen((ids) => new Set(ids).add(current))
             const next = requeue ? [...rest, current] : rest
             setQueue(next)
             if (next.length === 0) setPhase('done')
@@ -126,18 +131,19 @@ function Setup({ filter, onFilterChange, onStart }: SetupProps) {
 interface SessionProps {
   queue: CardId[]
   initialSize: number
+  seen: ReadonlySet<CardId>
   step: number
   onRated: (correct: boolean, requeue: boolean) => void
   onStop: () => void
 }
 
-function Session({ queue, initialSize, step, onRated, onStop }: SessionProps) {
+function Session({ queue, initialSize, seen, step, onRated, onStop }: SessionProps) {
   const { state, reviewCard } = useStore()
   const card = getCard(queue[0])
   if (!card) return null
 
-  const done = Math.max(0, initialSize - queue.length)
-  const progress = initialSize > 0 ? Math.min(100, (done / initialSize) * 100) : 0
+  const progress = initialSize > 0 ? Math.min(100, (seen.size / initialSize) * 100) : 0
+  const toRetry = queue.filter((id) => seen.has(id)).length
 
   function rate(grade: Grade, correct: boolean) {
     const data = reviewCard({ cardId: card!.id, grade, correct })
@@ -151,7 +157,9 @@ function Session({ queue, initialSize, step, onRated, onStop }: SessionProps) {
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
           <div className="h-full bg-indigo-600 transition-all" style={{ width: `${progress}%` }} />
         </div>
-        <span>{queue.length} restante(s)</span>
+        <span>
+          {`${seen.size} / ${initialSize} vues` + (toRetry > 0 ? ` · ${toRetry} à repasser` : '')}
+        </span>
         <Button variant="ghost" onClick={onStop}>
           Terminer
         </Button>

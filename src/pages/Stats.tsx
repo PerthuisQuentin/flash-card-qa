@@ -13,6 +13,7 @@ import {
   overallSuccess,
   successByChapter,
   successByLearningObjective,
+  type LearningObjectiveSuccess,
   WEAK_LO_MIN_ANSWERS,
   weakestLearningObjectives,
 } from '../lib/stats.ts'
@@ -78,17 +79,7 @@ export default function Stats() {
               Pas encore assez de réponses, ou aucun point faible pour l’instant.
             </p>
           ) : (
-            <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-              {weakest.map((row) => (
-                <li key={row.lo} className="flex flex-wrap items-center gap-x-4 gap-y-1 py-2">
-                  <span className="w-20 font-mono text-sm">{row.lo}</span>
-                  <div className="min-w-40 flex-1">
-                    <SuccessBar answered={row.answered} correct={row.correct} />
-                  </div>
-                  <PracticeLink lo={row.lo} />
-                </li>
-              ))}
-            </ul>
+            <ObjectiveList rows={weakest} />
           )}
         </Panel>
 
@@ -114,30 +105,7 @@ export default function Stats() {
               Aucune réponse pour l’instant.
             </p>
           ) : (
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-slate-500 dark:text-slate-400">
-                  <th className="py-1 font-medium">Objectif</th>
-                  <th className="py-1 font-medium">Réussite</th>
-                  <th className="py-1">
-                    <span className="sr-only">Action</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {byLo.map((row) => (
-                  <tr key={row.lo} className="border-t border-slate-100 dark:border-slate-800">
-                    <td className="py-1.5 pr-3 font-mono whitespace-nowrap">{row.lo}</td>
-                    <td className="w-full py-1.5">
-                      <SuccessBar answered={row.answered} correct={row.correct} />
-                    </td>
-                    <td className="py-1.5 pl-3 text-right">
-                      <PracticeLink lo={row.lo} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ObjectiveList rows={byLo} />
           )}
         </Panel>
       </div>
@@ -163,11 +131,28 @@ function Panel({
   )
 }
 
-function PracticeLink({ lo }: { lo: string }) {
+/** Stacks the bar under the objective id on narrow screens so it keeps a usable width. */
+function ObjectiveList({ rows }: { rows: LearningObjectiveSuccess[] }) {
+  return (
+    <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+      {rows.map((row) => (
+        <li key={row.lo} className="flex flex-wrap items-center gap-x-4 gap-y-1 py-2">
+          <span className="w-20 font-mono text-sm">{row.lo}</span>
+          <PracticeLink lo={row.lo} className="ml-auto sm:order-last" />
+          <div className="w-full sm:w-auto sm:flex-1">
+            <SuccessBar answered={row.answered} correct={row.correct} />
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function PracticeLink({ lo, className = '' }: { lo: string; className?: string }) {
   return (
     <Link
       to={`/practice?lo=${encodeURIComponent(lo)}`}
-      className="text-sm font-medium whitespace-nowrap text-indigo-600 hover:underline dark:text-indigo-400"
+      className={`text-sm font-medium whitespace-nowrap text-indigo-600 hover:underline dark:text-indigo-400 ${className}`}
     >
       S’entraîner →
     </Link>
