@@ -2,6 +2,7 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
+import { cardsOfChapter, chapters } from '../data/cards.ts'
 import { applyReview, Rating } from '../lib/srs.ts'
 import { createDefaultState, saveState, type StoredState } from '../lib/storage.ts'
 import { StoreProvider } from '../state/store.tsx'
@@ -27,7 +28,8 @@ describe('Dashboard', () => {
     renderWith(createDefaultState())
     expect(screen.getByRole('link', { name: 'Réviser (20)' })).toBeTruthy()
     expect(screen.getByText('🔥 0 j')).toBeTruthy()
-    expect(screen.getAllByText('Cartes à venir')).toHaveLength(5)
+    const upcoming = chapters.filter((chapter) => cardsOfChapter(chapter.id).length === 0)
+    expect(screen.queryAllByText('Cartes à venir')).toHaveLength(upcoming.length)
   })
 
   it('reflects reviewed cards', () => {

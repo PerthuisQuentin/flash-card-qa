@@ -10,12 +10,13 @@ import {
   drawQuestions,
   finishExam,
   isPassed,
+  mcqsByChapter,
   planExam,
   remainingSec,
   scoreExam,
   setExamAnswer,
-  startExam,
   setExamQuestion,
+  startExam,
   toggleExamFlag,
   unansweredCount,
 } from './exam.ts'
@@ -112,10 +113,16 @@ describe('planExam', () => {
     )
   })
 
-  it('works with the real chapter 1 data', () => {
+  it('works with the real card data', () => {
     const plan = planExam(realChapters)
+    const available = mcqsByChapter()
     expect(plan.total).toBe(40)
-    expect(plan.quotas[1]).toBe(40)
+    expect(Object.values(plan.quotas).reduce((a, b) => a + b, 0)).toBe(40)
+    for (const chapter of realChapters) {
+      expect(plan.quotas[chapter.id] ?? 0).toBeLessThanOrEqual(
+        available.get(chapter.id)?.length ?? 0,
+      )
+    }
   })
 })
 

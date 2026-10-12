@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 import { cards } from '../data/cards.ts'
-import { createExam, startExam } from '../lib/exam.ts'
+import { createExam, planExam, startExam } from '../lib/exam.ts'
 import { createDefaultState, saveState, STORAGE_KEY, type StoredState } from '../lib/storage.ts'
 import { StoreProvider } from '../state/store.tsx'
 import { memoryStorage } from '../test/memoryStorage.ts'
@@ -41,7 +41,10 @@ describe('Exam pages', () => {
   it('runs an exam from start to result without touching the review schedule', async () => {
     const { user, stored } = setup()
 
-    expect(screen.getByRole('note').textContent).toContain('Chapitres 2 à 6 sans QCM disponible')
+    // The warning depends on which chapters have cards yet.
+    const plan = planExam()
+    if (plan.warning) expect(screen.getByRole('note').textContent).toContain(plan.warning)
+    else expect(screen.queryByRole('note')).toBeNull()
     await user.click(screen.getByRole('button', { name: 'Démarrer l’examen' }))
 
     expect(screen.getByText('Question 1 / 40')).toBeTruthy()
@@ -71,8 +74,9 @@ describe('Exam pages', () => {
     await user.click(screen.getByRole('button', { name: 'Terminer et corriger' }))
 
     expect(screen.getByText('Résultat de l’examen blanc')).toBeTruthy()
-    // Global score and chapter 1 breakdown.
-    expect(screen.getAllByText('1/40')).toHaveLength(2)
+    // Global score, and chapter 1 breakdown (questions are drawn in chapter order).
+    expect(screen.getAllByText('1/40').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(`1/${plan.quotas[1]}`).length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('Échoué')).toBeTruthy()
     expect(screen.getAllByText('✗ Sans réponse')).toHaveLength(39)
 

@@ -1395,6 +1395,1392 @@
       ],
       "correct": [1],
       "tags": ["mot-clé", "testware"]
+    },
+    {
+      "id": "c2-001",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Cite des exemples de modèles de développement séquentiels, itératifs et incrémentaux.",
+      "answer": "Séquentiels : cascade, modèle en V\nItératifs : spirale, prototypage\nIncrémental : Processus Unifié",
+      "explanation": "Un modèle de cycle de vie décrit comment les phases et activités de développement s'enchaînent, logiquement et chronologiquement.",
+      "tags": ["liste", "cycle de vie"]
+    },
+    {
+      "id": "c2-002",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Lequel de ces modèles est un modèle de développement séquentiel ?",
+      "options": [
+        "Le modèle en V",
+        "Le modèle en spirale",
+        "Le prototypage",
+        "Le Processus Unifié"
+      ],
+      "correct": [0],
+      "explanation": "Cascade et modèle en V sont séquentiels. Spirale et prototypage sont itératifs, le Processus Unifié est incrémental.",
+      "tags": ["cycle de vie"]
+    },
+    {
+      "id": "c2-003",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Sur quels aspects du test le choix du cycle de vie de développement a-t-il une incidence ?",
+      "answer": "Le périmètre et le calendrier des activités de test (niveaux, types)\nLe niveau de détail de la documentation des tests\nLe choix des techniques et de l'approche de test\nLe degré d'automatisation\nLe rôle et les responsabilités du testeur",
+      "explanation": "Pour réussir, le test doit être adapté au cycle de vie choisi.",
+      "tags": ["liste", "cycle de vie"]
+    },
+    {
+      "id": "c2-004",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Lequel de ces éléments n'est PAS directement influencé par le choix du cycle de vie de développement ?",
+      "options": [
+        "Le niveau de détail de la documentation des tests",
+        "Les sept principes du test",
+        "Le degré d'automatisation des tests",
+        "Le rôle et les responsabilités du testeur"
+      ],
+      "correct": [1],
+      "explanation": "Les principes du test s'appliquent quel que soit le cycle de vie. Les trois autres éléments dépendent du modèle choisi.",
+      "tags": ["cycle de vie", "piège"]
+    },
+    {
+      "id": "c2-005",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Dans un projet en cascade, que fait typiquement le testeur pendant les phases initiales ?",
+      "options": [
+        "Il exécute les tests dynamiques de chaque composant",
+        "Il automatise les tests de régression de chaque itération",
+        "Il fait passer les tests d'acceptation aux utilisateurs finaux",
+        "Il revoit les exigences, analyse et conçoit les tests"
+      ],
+      "correct": [3],
+      "explanation": "En séquentiel, le code exécutable n'arrive que tard : au début, le test est surtout statique (revues) et préparatoire (analyse, conception).",
+      "tags": ["scénario", "cycle de vie"]
+    },
+    {
+      "id": "c2-006",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Pourquoi les tests dynamiques ne peuvent-ils généralement pas être effectués au début d'un cycle séquentiel ?",
+      "options": [
+        "Les testeurs ne sont pas encore affectés au projet",
+        "Les tests dynamiques doivent attendre la fin des revues",
+        "L'environnement de production n'existe pas encore",
+        "Le code exécutable n'est créé que dans les phases ultérieures"
+      ],
+      "correct": [3],
+      "explanation": "Un test dynamique exécute le logiciel : sans code exécutable, il est impossible. Les revues (test statique) restent possibles.",
+      "tags": ["cycle de vie"]
+    },
+    {
+      "id": "c2-007",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Une équipe livre un incrément fonctionnel toutes les deux semaines. Quelle conséquence pour le test ?",
+      "options": [
+        "Les tests statiques deviennent inutiles",
+        "Seuls les tests d'acceptation sont exécutés à chaque itération",
+        "Un feedback rapide et des tests de régression poussés sont nécessaires",
+        "La documentation de test doit être plus détaillée qu'en cascade"
+      ],
+      "correct": [2],
+      "explanation": "Avec des livraisons fréquentes, chaque incrément peut casser l'existant : il faut un retour rapide et beaucoup de tests de régression.",
+      "tags": ["scénario", "cycle de vie", "régression"]
+    },
+    {
+      "id": "c2-008",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Pourquoi les projets agiles privilégient-ils une automatisation poussée des tests ?",
+      "options": [
+        "Parce que les tests manuels sont interdits en agile",
+        "Parce que la documentation détaillée des tests l'exige",
+        "Parce que l'automatisation remplace la revue des user stories",
+        "Parce que les changements fréquents imposent beaucoup de régression"
+      ],
+      "correct": [3],
+      "explanation": "L'agile suppose des changements tout au long du projet : documentation légère et automatisation poussée pour faciliter la régression.",
+      "tags": ["agile", "cycle de vie"]
+    },
+    {
+      "id": "c2-009",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "En développement agile, la plupart des tests manuels reposent sur des techniques de test basées sur l'expérience.",
+      "answer": true,
+      "explanation": "Ces techniques ne nécessitent pas d'analyse et de conception préalables approfondies, ce qui convient à une documentation légère.",
+      "tags": ["agile", "cycle de vie"]
+    },
+    {
+      "id": "c2-010",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.1",
+      "lo": "FL-2.1.1",
+      "k": "K2",
+      "question": "Dans certains modèles itératifs et incrémentaux, des tests statiques et dynamiques peuvent être effectués à tous les niveaux de test à chaque itération.",
+      "answer": true,
+      "explanation": "Chaque itération est censée fournir un prototype ou un incrément qui fonctionne, donc testable à tous les niveaux.",
+      "tags": ["cycle de vie"]
+    },
+    {
+      "id": "c2-011",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.2",
+      "lo": "FL-2.1.2",
+      "k": "K1",
+      "question": "Quelles sont les bonnes pratiques de test valables quel que soit le cycle de vie ?",
+      "answer": "À chaque activité de développement correspond une activité de test\nChaque niveau de test a des objectifs spécifiques\nL'analyse et la conception des tests d'un niveau commencent pendant la phase de développement correspondante\nLes testeurs revoient les produits d'activités dès leurs versions préliminaires",
+      "explanation": "Ces pratiques assurent un contrôle qualité de toutes les activités, évitent la redondance et soutiennent le test précoce (shift left).",
+      "tags": ["liste", "bonnes pratiques"]
+    },
+    {
+      "id": "c2-012",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.2",
+      "lo": "FL-2.1.2",
+      "k": "K1",
+      "question": "Laquelle est une bonne pratique de test applicable à tous les cycles de vie ?",
+      "options": [
+        "À chaque activité de développement correspond une activité de test",
+        "Les tests dynamiques commencent dès la rédaction des exigences",
+        "Tous les niveaux de test partagent les mêmes objectifs",
+        "Les testeurs revoient les documents uniquement dans leur version finale"
+      ],
+      "correct": [0],
+      "explanation": "Ainsi, toutes les activités de développement sont soumises à un contrôle de qualité.",
+      "tags": ["bonnes pratiques"]
+    },
+    {
+      "id": "c2-013",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.2",
+      "lo": "FL-2.1.2",
+      "k": "K1",
+      "question": "Quand l'analyse et la conception des tests d'un niveau de test donné devraient-elles commencer ?",
+      "options": [
+        "Une fois le code de ce niveau livré",
+        "Après la fin du niveau de test précédent",
+        "Pendant la phase de développement correspondante",
+        "Au début de l'exécution des tests"
+      ],
+      "correct": [2],
+      "explanation": "Commencer pendant la phase de développement correspondante permet d'appliquer le principe du test précoce.",
+      "tags": ["bonnes pratiques", "test précoce"]
+    },
+    {
+      "id": "c2-014",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.2",
+      "lo": "FL-2.1.2",
+      "k": "K1",
+      "question": "Les différents niveaux de test devraient avoir les mêmes objectifs, pour que la couverture soit redondante.",
+      "answer": false,
+      "explanation": "C'est l'inverse : chaque niveau a des objectifs spécifiques et différents, pour être complet tout en évitant la redondance.",
+      "tags": ["bonnes pratiques", "piège"]
+    },
+    {
+      "id": "c2-015",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.2",
+      "lo": "FL-2.1.2",
+      "k": "K1",
+      "question": "Les testeurs devraient attendre la version validée d'un document avant de le revoir.",
+      "answer": false,
+      "explanation": "Les testeurs participent aux revues dès les versions préliminaires : les défauts trouvés plus tôt coûtent moins cher (shift left).",
+      "tags": ["bonnes pratiques", "shift-left"]
+    },
+    {
+      "id": "c2-016",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Que signifient TDD, ATDD et BDD ?",
+      "answer": "TDD : développement piloté par les tests\nATDD : développement piloté par les tests d'acceptation\nBDD : développement piloté par le comportement",
+      "explanation": "Dans les trois approches, les tests sont définis avant le code pour orienter le développement.",
+      "tags": ["mot-clé", "tdd-atdd-bdd"]
+    },
+    {
+      "id": "c2-017",
+      "chapter": 2,
+      "type": "ordering",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Remets dans l'ordre le cycle du développement piloté par les tests (TDD).",
+      "items": [
+        "Écrire un test",
+        "Écrire le code qui satisfait le test",
+        "Refactoriser le test et le code"
+      ],
+      "explanation": "En TDD, le codage est dirigé par les cas de test plutôt que par une conception approfondie préalable.",
+      "tags": ["tdd-atdd-bdd", "ordre"]
+    },
+    {
+      "id": "c2-018",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Quelle approche décrit le comportement attendu en langage naturel, généralement au format Given/When/Then ?",
+      "options": ["TDD", "BDD", "ATDD", "DDD"],
+      "correct": [1],
+      "explanation": "Le BDD rend le comportement compréhensible par les parties prenantes ; les scénarios sont ensuite traduits automatiquement en tests exécutables.",
+      "tags": ["tdd-atdd-bdd"]
+    },
+    {
+      "id": "c2-019",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "En ATDD, d'où les tests sont-ils dérivés ?",
+      "options": [
+        "Du code source existant",
+        "Des critères d'acceptation",
+        "Des rapports de défauts",
+        "Des tests unitaires des développeurs"
+      ],
+      "correct": [1],
+      "explanation": "L'ATDD dérive les tests des critères d'acceptation pendant la conception, avant de développer la partie concernée.",
+      "tags": ["tdd-atdd-bdd"]
+    },
+    {
+      "id": "c2-020",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Qu'ont en commun TDD, ATDD et BDD ?",
+      "options": [
+        "Ils imposent un cycle de vie séquentiel",
+        "Ils remplacent les tests de régression",
+        "Les tests sont définis avant que le code ne soit écrit",
+        "Les tests sont écrits par les utilisateurs finaux"
+      ],
+      "correct": [2],
+      "explanation": "Les trois appliquent le principe du test précoce, suivent une approche shift left et soutiennent un développement itératif.",
+      "tags": ["tdd-atdd-bdd", "test précoce"]
+    },
+    {
+      "id": "c2-021",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "En BDD, que deviennent les scénarios écrits en langage naturel ?",
+      "options": [
+        "Ils servent uniquement de documentation",
+        "Ils sont automatiquement traduits en tests exécutables",
+        "Ils remplacent les critères d'acceptation",
+        "Ils sont convertis en exigences non fonctionnelles"
+      ],
+      "correct": [1],
+      "explanation": "Le langage naturel sert à se comprendre avec les parties prenantes ; l'outillage transforme ensuite les scénarios en tests.",
+      "tags": ["tdd-atdd-bdd"]
+    },
+    {
+      "id": "c2-022",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Quels principes ou approches TDD, ATDD et BDD mettent-ils en œuvre ? (plusieurs réponses)",
+      "options": [
+        "Le principe du test précoce",
+        "Le test exhaustif",
+        "L'approche shift left",
+        "L'indépendance totale du test"
+      ],
+      "correct": [0, 2],
+      "explanation": "Les tests étant définis avant le code, ces approches appliquent le test précoce et le shift left. Le test exhaustif reste impossible.",
+      "tags": ["tdd-atdd-bdd", "shift-left"]
+    },
+    {
+      "id": "c2-023",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "TDD, ATDD et BDD soutiennent un modèle de développement itératif.",
+      "answer": true,
+      "explanation": "Ces approches avancent par petits pas (test, code, refactorisation), ce qui s'intègre naturellement à des itérations.",
+      "tags": ["tdd-atdd-bdd"]
+    },
+    {
+      "id": "c2-024",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "En TDD, le codage est dirigé par une conception approfondie du logiciel réalisée en amont.",
+      "answer": false,
+      "explanation": "En TDD, le codage est dirigé par les cas de test, au lieu d'une conception approfondie du logiciel.",
+      "tags": ["tdd-atdd-bdd", "piège"]
+    },
+    {
+      "id": "c2-025",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.3",
+      "lo": "FL-2.1.3",
+      "k": "K1",
+      "question": "Que deviennent les tests écrits en TDD, ATDD ou BDD une fois le code livré ?",
+      "answer": "Ils peuvent persister comme tests automatisés, pour garantir la qualité du code lors des adaptations et refactorisations futures.",
+      "explanation": "Ils forment alors une base de tests de régression.",
+      "tags": ["tdd-atdd-bdd", "régression"]
+    },
+    {
+      "id": "c2-026",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Qu'est-ce que DevOps ?",
+      "answer": "Une approche organisationnelle qui fait travailler ensemble le développement (y compris le test) et l'exploitation vers des objectifs communs.",
+      "explanation": "DevOps exige un changement culturel et s'appuie sur l'autonomie des équipes, le feedback rapide, des chaînes d'outils intégrées et la CI/CD.",
+      "tags": ["mot-clé", "devops"]
+    },
+    {
+      "id": "c2-027",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Quelles pratiques techniques DevOps met-il en avant ?",
+      "options": [
+        "Le modèle en V et les revues formelles à chaque phase",
+        "Les tests d'acceptation contractuels et réglementaires",
+        "L'intégration continue (CI) et la livraison continue (CD)",
+        "Le prototypage rapide et le modèle en spirale"
+      ],
+      "correct": [2],
+      "explanation": "La CI/CD alimente un pipeline de livraison qui permet de construire, tester et livrer plus vite un code de qualité.",
+      "tags": ["devops"]
+    },
+    {
+      "id": "c2-028",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Quels sont des avantages de DevOps du point de vue du test ? (plusieurs réponses)",
+      "options": [
+        "Un feedback rapide sur la qualité du code et l'impact des modifications",
+        "La suppression du besoin de tests manuels",
+        "Un risque de régression réduit grâce à des tests de régression automatisés",
+        "Une meilleure visibilité sur les caractéristiques non fonctionnelles, comme la performance"
+      ],
+      "correct": [0, 2, 3],
+      "explanation": "DevOps réduit les tests manuels répétitifs, mais ne les supprime pas : les tests du point de vue de l'utilisateur restent nécessaires.",
+      "tags": ["devops", "piège"]
+    },
+    {
+      "id": "c2-029",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Lequel est un risque ou un défi de DevOps cité par le syllabus ?",
+      "options": [
+        "Le feedback sur la qualité du code devient plus lent",
+        "L'automatisation des tests est difficile à établir et à maintenir",
+        "Les environnements de test deviennent instables et difficiles à reproduire",
+        "Les développeurs cessent d'écrire des tests de composants"
+      ],
+      "correct": [1],
+      "explanation": "Autres défis : définir et établir le pipeline de livraison, introduire et maintenir les outils de CI/CD.",
+      "tags": ["devops"]
+    },
+    {
+      "id": "c2-030",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Comment DevOps favorise-t-il une approche shift left du test ?",
+      "options": [
+        "En repoussant les tests non fonctionnels après la mise en production",
+        "En confiant l'ensemble des tests à l'équipe d'exploitation, au plus près de la production",
+        "En incitant les développeurs à livrer du code avec tests de composants et analyse statique",
+        "En remplaçant les revues de spécifications par des tests automatisés"
+      ],
+      "correct": [2],
+      "explanation": "Le code arrive dans le pipeline déjà testé et analysé : les défauts sont trouvés plus tôt.",
+      "tags": ["devops", "shift-left"]
+    },
+    {
+      "id": "c2-031",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "Avec DevOps, les tests manuels deviennent inutiles grâce à l'automatisation.",
+      "answer": false,
+      "explanation": "Malgré un haut niveau d'automatisation, des tests manuels restent nécessaires, notamment du point de vue de l'utilisateur.",
+      "tags": ["devops", "idée reçue"]
+    },
+    {
+      "id": "c2-032",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.4",
+      "lo": "FL-2.1.4",
+      "k": "K2",
+      "question": "DevOps vise à traiter le développement, le test et l'exploitation avec la même valeur, ce qui demande un changement culturel.",
+      "answer": true,
+      "explanation": "Il s'agit de combler les écarts entre ces fonctions pour qu'elles travaillent vers des objectifs communs.",
+      "tags": ["devops"]
+    },
+    {
+      "id": "c2-033",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Qu'est-ce que l'approche shift left ?",
+      "answer": "Tester plus tôt dans le cycle de vie du développement (principe du test précoce), sans pour autant négliger les tests des phases ultérieures.",
+      "explanation": "Exemple : tester sans attendre que le code soit implémenté ou que les composants soient intégrés.",
+      "tags": ["mot-clé", "shift-left"]
+    },
+    {
+      "id": "c2-034",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Le shift left permet de réduire les tests dans les phases tardives du cycle de vie.",
+      "answer": false,
+      "explanation": "Le shift left avance le test, mais ne signifie pas que les tests doivent être négligés dans les phases ultérieures.",
+      "tags": ["shift-left", "piège"]
+    },
+    {
+      "id": "c2-035",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Lesquelles sont des bonnes pratiques pour réaliser un shift left ? (plusieurs réponses)",
+      "options": [
+        "Revoir la spécification du point de vue du test",
+        "Attendre que le système soit complet pour commencer les tests non fonctionnels",
+        "Écrire les cas de test avant le code",
+        "Commencer les tests non fonctionnels dès le niveau composant quand c'est possible"
+      ],
+      "correct": [0, 2, 3],
+      "explanation": "Autres pratiques : CI/CD pour un feedback rapide, analyse statique du code avant les tests dynamiques.",
+      "tags": ["shift-left", "liste"]
+    },
+    {
+      "id": "c2-036",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Quel est le compromis économique d'une approche shift left ?",
+      "options": [
+        "Plus d'efforts et de coûts au début, mais des économies plus tard",
+        "Aucun coût supplémentaire, à aucun moment",
+        "Des économies immédiates, mais des coûts plus élevés en fin de projet",
+        "Des coûts identiques, mais moins de documentation"
+      ],
+      "correct": [0],
+      "explanation": "Formation, efforts ou coûts supplémentaires en début de processus devraient être compensés par des économies ultérieures.",
+      "tags": ["shift-left"]
+    },
+    {
+      "id": "c2-037",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Quelle condition est importante pour réussir une approche shift left ?",
+      "options": [
+        "Que l'équipe de test soit totalement indépendante",
+        "Que le projet suive un modèle en cascade",
+        "Que tous les tests restent manuels au début",
+        "Que les parties prenantes adhèrent au concept"
+      ],
+      "correct": [3],
+      "explanation": "Le shift left demande un investissement en début de projet : sans adhésion des parties prenantes, il ne tient pas.",
+      "tags": ["shift-left"]
+    },
+    {
+      "id": "c2-038",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Une équipe mesure les performances de chaque composant dès son développement, au lieu d'attendre le système complet. De quoi s'agit-il ?",
+      "options": [
+        "D'un test de régression",
+        "D'une forme de shift left",
+        "D'un test d'acceptation opérationnelle",
+        "D'un test de maintenance"
+      ],
+      "correct": [1],
+      "explanation": "Les tests non fonctionnels se font souvent tard, sur un système complet : les avancer au niveau composant est du shift left.",
+      "tags": ["scénario", "shift-left"]
+    },
+    {
+      "id": "c2-039",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Quels défauts potentiels la revue des spécifications permet-elle souvent de trouver ?",
+      "options": [
+        "Des fuites mémoire et des temps de réponse trop longs",
+        "Des ambiguïtés, des incomplétudes et des incohérences",
+        "Des défaillances observées en production",
+        "Des erreurs de compilation et de syntaxe"
+      ],
+      "correct": [1],
+      "explanation": "Revoir la spécification du point de vue du test est une pratique de shift left : on trouve ces défauts avant d'écrire le code.",
+      "tags": ["shift-left", "statique"]
+    },
+    {
+      "id": "c2-040",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.5",
+      "lo": "FL-2.1.5",
+      "k": "K2",
+      "question": "Terminer le test statique du code source avant les tests dynamiques est une pratique de shift left.",
+      "answer": true,
+      "explanation": "Le test statique peut aussi être intégré à un processus automatisé (par exemple dans la CI).",
+      "tags": ["shift-left", "statique"]
+    },
+    {
+      "id": "c2-041",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Quelles questions aborde-t-on lors d'une rétrospective ?",
+      "answer": "Qu'est-ce qui a réussi et doit être conservé ?\nQu'est-ce qui n'a pas fonctionné et pourrait être amélioré ?\nComment intégrer les améliorations et conserver les succès à l'avenir ?",
+      "explanation": "Les résultats sont enregistrés, normalement dans le rapport de clôture des tests.",
+      "tags": ["liste", "rétrospective"]
+    },
+    {
+      "id": "c2-042",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Qui participe à une rétrospective ?",
+      "options": [
+        "Uniquement les testeurs, qui en sont responsables",
+        "Toute l'équipe : testeurs, développeurs, architectes, Product Owner…",
+        "Uniquement le test manager et le chef de projet",
+        "Uniquement les utilisateurs finaux et le Product Owner"
+      ],
+      "correct": [1],
+      "explanation": "La rétrospective porte sur tout le processus, pas seulement sur le test : toute l'équipe y participe.",
+      "tags": ["rétrospective", "rôles"]
+    },
+    {
+      "id": "c2-043",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Où les résultats d'une rétrospective sont-ils normalement consignés ?",
+      "options": [
+        "Dans le plan de test du projet",
+        "Dans un rapport de défaut dédié",
+        "Dans le rapport de clôture des tests",
+        "Dans la charte de test de l'itération"
+      ],
+      "correct": [2],
+      "explanation": "Il est aussi important que les améliorations recommandées soient suivies dans le temps.",
+      "tags": ["rétrospective", "testware"]
+    },
+    {
+      "id": "c2-044",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Lequel n'est PAS un avantage typique des rétrospectives pour le test ?",
+      "options": [
+        "Une efficacité et une efficience des tests accrues",
+        "Une meilleure qualité de la base de test",
+        "Une meilleure coopération entre développement et test",
+        "L'absence garantie de défauts à l'itération suivante"
+      ],
+      "correct": [3],
+      "explanation": "Une rétrospective améliore le processus, elle ne garantit pas l'absence de défauts. Autres avantages : qualité du testware, cohésion et apprentissage de l'équipe.",
+      "tags": ["rétrospective", "piège"]
+    },
+    {
+      "id": "c2-045",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Les rétrospectives ont lieu uniquement à la fin d'un projet.",
+      "answer": false,
+      "explanation": "Elles se tiennent aussi en fin d'itération, à une étape de livraison, ou dès que le besoin s'en fait sentir, selon le cycle de vie.",
+      "tags": ["rétrospective"]
+    },
+    {
+      "id": "c2-046",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.1.6",
+      "lo": "FL-2.1.6",
+      "k": "K2",
+      "question": "Pour que les rétrospectives servent l'amélioration continue, il est important que les améliorations recommandées soient suivies.",
+      "answer": true,
+      "explanation": "Sans suivi, les points relevés restent des intentions ; les rétrospectives sont essentielles à l'amélioration continue.",
+      "tags": ["rétrospective"]
+    },
+    {
+      "id": "c2-047",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Qu'est-ce qu'un niveau de test ?",
+      "answer": "Un groupe d'activités de test organisées et gérées ensemble : une instance du processus de test, pour un logiciel à un stade de développement donné.",
+      "explanation": "Les niveaux vont des composants individuels aux systèmes complets, voire aux systèmes de systèmes.",
+      "tags": ["mot-clé", "niveaux de test"]
+    },
+    {
+      "id": "c2-048",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quels sont les cinq niveaux de test décrits dans le syllabus ?",
+      "answer": "Tests de composants\nTests d'intégration de composants\nTests système\nTests d'intégration système\nTests d'acceptation",
+      "explanation": "Les tests de composants sont aussi appelés tests unitaires.",
+      "tags": ["liste", "niveaux de test"]
+    },
+    {
+      "id": "c2-049",
+      "chapter": 2,
+      "type": "ordering",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Remets les niveaux de test dans l'ordre où le syllabus les présente.",
+      "items": [
+        "Tests de composants",
+        "Tests d'intégration de composants",
+        "Tests système",
+        "Tests d'intégration système",
+        "Tests d'acceptation"
+      ],
+      "explanation": "On part du composant isolé pour aller jusqu'à la validation des besoins métier par les utilisateurs.",
+      "tags": ["niveaux de test", "ordre"]
+    },
+    {
+      "id": "c2-050",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quel niveau de test se concentre sur les interfaces et les interactions entre composants ?",
+      "options": [
+        "Les tests d'intégration de composants",
+        "Les tests de composants",
+        "Les tests d'intégration système",
+        "Les tests système"
+      ],
+      "correct": [0],
+      "explanation": "Les tests d'intégration système, eux, portent sur les interfaces avec d'autres systèmes et services externes.",
+      "tags": ["niveaux de test", "piège"]
+    },
+    {
+      "id": "c2-051",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quel niveau de test vise les interfaces entre le système sous test et des systèmes ou services externes ?",
+      "options": [
+        "Les tests d'intégration système",
+        "Les tests d'intégration de composants",
+        "Les tests d'acceptation",
+        "Les tests de composants"
+      ],
+      "correct": [0],
+      "explanation": "Ils demandent un environnement de test proche de l'environnement opérationnel.",
+      "tags": ["niveaux de test"]
+    },
+    {
+      "id": "c2-052",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Qui effectue normalement les tests de composants ?",
+      "options": [
+        "Une équipe de test indépendante",
+        "Les utilisateurs prévus du système",
+        "Les développeurs, dans leur environnement",
+        "L'équipe d'exploitation, en préproduction"
+      ],
+      "correct": [2],
+      "explanation": "Ces tests demandent souvent un harnais de test ou un framework de tests unitaires.",
+      "tags": ["niveaux de test", "rôles"]
+    },
+    {
+      "id": "c2-053",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Avant le déploiement, une banque fait vérifier par ses conseillers que la nouvelle application répond à leurs besoins métier. Quel niveau de test ?",
+      "options": [
+        "Les tests système",
+        "Les tests d'intégration système",
+        "Les tests de composants",
+        "Les tests d'acceptation"
+      ],
+      "correct": [3],
+      "explanation": "Valider l'aptitude au déploiement par rapport aux besoins métier, idéalement par les utilisateurs prévus : c'est le test d'acceptation (ici, UAT).",
+      "tags": ["scénario", "niveaux de test"]
+    },
+    {
+      "id": "c2-054",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "De quoi les tests d'intégration de composants dépendent-ils fortement ?",
+      "options": [
+        "De la stratégie d'intégration choisie",
+        "Du nombre d'utilisateurs prévus en production",
+        "Des caractéristiques qualité de l'ISO/IEC 25010",
+        "Du rapport de clôture des tests précédents"
+      ],
+      "correct": [0],
+      "explanation": "L'ordre dans lequel les composants sont assemblés détermine ce qui peut être testé, et quand.",
+      "tags": ["niveaux de test"]
+    },
+    {
+      "id": "c2-055",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Lequel n'est PAS une forme de test d'acceptation ?",
+      "options": [
+        "Le test alpha",
+        "Le test d'intégration de composants",
+        "Le test d'acceptation opérationnelle",
+        "Le test d'acceptation contractuel et réglementaire"
+      ],
+      "correct": [1],
+      "explanation": "Formes de test d'acceptation : UAT, acceptation opérationnelle, contractuelle et réglementaire, alpha et bêta.",
+      "tags": ["niveaux de test", "liste"]
+    },
+    {
+      "id": "c2-056",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Pourquoi teste-t-on l'utilisabilité de préférence au niveau système ?",
+      "options": [
+        "Parce que l'utilisabilité est une caractéristique fonctionnelle",
+        "Parce que les tests non fonctionnels sont interdits au niveau composant",
+        "Parce que seuls les utilisateurs finaux testent au niveau système",
+        "Parce qu'elle se teste mieux sur un système complet et représentatif"
+      ],
+      "correct": [3],
+      "explanation": "Le test système porte sur le comportement global ; il peut être mené par une équipe indépendante, à partir des spécifications du système.",
+      "tags": ["niveaux de test", "non fonctionnel"]
+    },
+    {
+      "id": "c2-057",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quel est l'objectif principal des tests d'acceptation ?",
+      "options": [
+        "Démontrer que le système répond aux besoins métier",
+        "Couvrir la structure interne du code source",
+        "Tester les interfaces et interactions entre composants",
+        "Confirmer qu'un défaut signalé a bien été corrigé"
+      ],
+      "correct": [0],
+      "explanation": "Idéalement, ils sont réalisés par les utilisateurs prévus.",
+      "tags": ["niveaux de test", "validation"]
+    },
+    {
+      "id": "c2-058",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quels attributs permettent de distinguer les niveaux de test ?",
+      "answer": "L'objet de test\nLes objectifs du test\nLa base de test\nLes défauts et défaillances\nL'approche et les responsabilités",
+      "explanation": "Liste non exhaustive : elle sert à éviter que les activités de test des différents niveaux se chevauchent.",
+      "tags": ["liste", "niveaux de test"]
+    },
+    {
+      "id": "c2-059",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Le test système peut être effectué par une équipe de test indépendante.",
+      "answer": true,
+      "explanation": "Il porte sur le comportement global du système et s'appuie sur les spécifications du système.",
+      "tags": ["niveaux de test", "indépendance"]
+    },
+    {
+      "id": "c2-060",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.1",
+      "lo": "FL-2.2.1",
+      "k": "K2",
+      "question": "Quel que soit le cycle de vie, les critères de sortie d'un niveau de test font partie des critères d'entrée du niveau suivant.",
+      "answer": false,
+      "explanation": "C'est fréquent dans les modèles séquentiels, mais pas forcément dans les modèles itératifs, où les niveaux peuvent se chevaucher dans le temps.",
+      "tags": ["niveaux de test", "cycle de vie"]
+    },
+    {
+      "id": "c2-061",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Quelle différence entre un niveau de test et un type de test ?",
+      "answer": "Niveau : activités liées à un stade de développement (composant, système…)\nType : activités liées à des caractéristiques qualité spécifiques (fonctionnel, non fonctionnel…)",
+      "explanation": "La plupart des types de test peuvent être appliqués à chaque niveau de test.",
+      "tags": ["mot-clé", "types de test", "niveaux de test"]
+    },
+    {
+      "id": "c2-062",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Quels sont les quatre types de test abordés dans le syllabus ?",
+      "answer": "Test fonctionnel\nTest non fonctionnel\nTest boîte noire\nTest boîte blanche",
+      "explanation": "Les quatre peuvent être appliqués à tous les niveaux de test, avec un accent différent selon le niveau.",
+      "tags": ["liste", "types de test"]
+    },
+    {
+      "id": "c2-063",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Fonctionnel ou non fonctionnel : quelle différence ?",
+      "answer": "Fonctionnel : ce que le système doit faire\nNon fonctionnel : comment le système se comporte",
+      "explanation": "Le test fonctionnel vérifie la complétude, l'exactitude et l'adéquation fonctionnelles ; le non fonctionnel, les autres caractéristiques qualité.",
+      "tags": ["types de test", "définition"]
+    },
+    {
+      "id": "c2-064",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Cite les caractéristiques qualité non fonctionnelles de la norme ISO/IEC 25010.",
+      "answer": "Efficacité de la performance\nCompatibilité\nUtilisabilité\nFiabilité\nSécurité\nMaintenabilité\nPortabilité",
+      "explanation": "L'adéquation fonctionnelle est la huitième caractéristique de la norme, mais elle est fonctionnelle.",
+      "tags": ["liste", "non fonctionnel"]
+    },
+    {
+      "id": "c2-065",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Lequel n'est PAS une caractéristique qualité non fonctionnelle selon l'ISO/IEC 25010 ?",
+      "options": [
+        "L'exactitude fonctionnelle",
+        "L'efficacité de la performance",
+        "La portabilité",
+        "La maintenabilité"
+      ],
+      "correct": [0],
+      "explanation": "L'exactitude fonctionnelle est vérifiée par le test fonctionnel, avec la complétude et l'adéquation fonctionnelles.",
+      "tags": ["non fonctionnel", "piège"]
+    },
+    {
+      "id": "c2-066",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Un testeur vérifie que la recherche d'un produit renvoie ses résultats en moins de deux secondes. Quel type de test ?",
+      "options": [
+        "Un test non fonctionnel",
+        "Un test fonctionnel",
+        "Un test de confirmation",
+        "Un test boîte blanche"
+      ],
+      "correct": [0],
+      "explanation": "Le délai porte sur la façon dont la fonction se comporte (efficacité de la performance), pas sur ce qu'elle fait.",
+      "tags": ["scénario", "non fonctionnel"]
+    },
+    {
+      "id": "c2-067",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Un testeur vérifie qu'une fonction existante s'exécute aussi sur une nouvelle plateforme. Quelle caractéristique qualité est visée ?",
+      "options": ["La portabilité", "La compatibilité", "La fiabilité", "L'utilisabilité"],
+      "correct": [0],
+      "explanation": "Beaucoup de tests non fonctionnels réutilisent des tests fonctionnels en vérifiant une contrainte supplémentaire, ici le portage.",
+      "tags": ["scénario", "non fonctionnel"]
+    },
+    {
+      "id": "c2-068",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "À partir de quoi le test boîte blanche dérive-t-il ses tests ?",
+      "options": [
+        "De la structure interne : code, architecture, flux",
+        "Des spécifications externes à l'objet de test",
+        "Des retours des utilisateurs en production",
+        "Des critères d'acceptation des user stories"
+      ],
+      "correct": [0],
+      "explanation": "Son objectif principal est de couvrir la structure sous-jacente jusqu'à un niveau acceptable.",
+      "tags": ["types de test", "boîte blanche"]
+    },
+    {
+      "id": "c2-069",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Quel est l'objectif principal du test boîte noire ?",
+      "options": [
+        "Couvrir la structure du code jusqu'au niveau voulu",
+        "Vérifier le comportement par rapport aux spécifications",
+        "Mesurer la maintenabilité du code source",
+        "Vérifier l'absence de régression après modification"
+      ],
+      "correct": [1],
+      "explanation": "Le test boîte noire est basé sur les spécifications : ses tests viennent de la documentation externe à l'objet de test.",
+      "tags": ["types de test", "boîte noire"]
+    },
+    {
+      "id": "c2-070",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Quel est l'objectif principal du test fonctionnel ?",
+      "options": [
+        "Vérifier les caractéristiques qualité non fonctionnelles",
+        "Couvrir la structure du code",
+        "Valider l'aptitude au déploiement",
+        "Vérifier la complétude, l'exactitude et l'adéquation fonctionnelles"
+      ],
+      "correct": [3],
+      "explanation": "Le test fonctionnel évalue ce que le composant ou le système doit faire.",
+      "tags": ["types de test"]
+    },
+    {
+      "id": "c2-071",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Pourquoi la découverte tardive de défauts non fonctionnels est-elle préoccupante ?",
+      "options": [
+        "Elle rend impossibles les tests de régression",
+        "Elle invalide les tests fonctionnels déjà exécutés",
+        "Elle oblige à changer de cycle de vie",
+        "Elle peut menacer sérieusement la réussite du projet"
+      ],
+      "correct": [3],
+      "explanation": "D'où l'intérêt de commencer certains tests non fonctionnels tôt (revues, tests de composants).",
+      "tags": ["non fonctionnel", "shift-left"]
+    },
+    {
+      "id": "c2-072",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Les quatre types de test (fonctionnel, non fonctionnel, boîte noire, boîte blanche) peuvent être appliqués à tous les niveaux de test.",
+      "answer": true,
+      "explanation": "L'accent change selon le niveau, et différentes techniques permettent de dériver conditions et cas de test pour chaque type.",
+      "tags": ["types de test", "niveaux de test"]
+    },
+    {
+      "id": "c2-073",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.2",
+      "lo": "FL-2.2.2",
+      "k": "K2",
+      "question": "Le test boîte blanche ne s'applique qu'au niveau des tests de composants.",
+      "answer": false,
+      "explanation": "La structure peut aussi être une architecture, un flux métier ou un flux de données : le test boîte blanche s'applique à tous les niveaux.",
+      "tags": ["boîte blanche", "piège"]
+    },
+    {
+      "id": "c2-074",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Quelle différence entre test de confirmation et test de régression ?",
+      "answer": "Confirmation : vérifier qu'un défaut a bien été corrigé\nRégression : vérifier qu'une modification (y compris un correctif) n'a pas eu de conséquence négative ailleurs",
+      "explanation": "Les deux sont nécessaires à tous les niveaux où des défauts sont corrigés ou des modifications apportées.",
+      "tags": ["confirmation", "régression"]
+    },
+    {
+      "id": "c2-075",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Après la correction d'un défaut, l'équipe relance toute la suite automatisée pour vérifier que rien d'autre n'a été cassé. De quoi s'agit-il ?",
+      "options": [
+        "D'un test de confirmation",
+        "D'un test de maintenance",
+        "D'un test de régression",
+        "D'un test d'acceptation"
+      ],
+      "correct": [2],
+      "explanation": "Vérifier que le défaut est corrigé serait un test de confirmation ; vérifier l'absence d'effets de bord, c'est la régression.",
+      "tags": ["scénario", "régression", "piège"]
+    },
+    {
+      "id": "c2-076",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Que conseille le syllabus de faire avant un test de régression, pour en optimiser l'étendue ?",
+      "options": [
+        "Une rétrospective",
+        "Une analyse d'impact",
+        "Un test de confirmation",
+        "Une revue de code"
+      ],
+      "correct": [1],
+      "explanation": "L'analyse d'impact montre quelles parties du logiciel pourraient être affectées par la modification.",
+      "tags": ["régression"]
+    },
+    {
+      "id": "c2-077",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Pourquoi les tests de régression sont-ils de bons candidats à l'automatisation ?",
+      "options": [
+        "Ils ne peuvent pas être exécutés manuellement par un testeur",
+        "Ils ne trouvent jamais de nouveaux défauts",
+        "Ils sont rejoués souvent et leur nombre ne cesse de croître",
+        "Ils remplacent avantageusement les tests de confirmation"
+      ],
+      "correct": [2],
+      "explanation": "L'automatisation devrait commencer dès le début du projet ; avec la CI (DevOps), on y inclut des tests de régression automatisés.",
+      "tags": ["régression", "automatisation"]
+    },
+    {
+      "id": "c2-078",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Faute de temps ou de budget, à quoi un test de confirmation peut-il se limiter ?",
+      "options": [
+        "Rejouer les étapes qui provoquaient la défaillance",
+        "Exécuter toute la suite de régression automatisée",
+        "Relire le correctif proposé par le développeur",
+        "Demander au développeur de confirmer la correction"
+      ],
+      "correct": [0],
+      "explanation": "Normalement, on rejoue tous les cas de test qui avaient échoué, ou on en ajoute pour couvrir les modifications du correctif.",
+      "tags": ["confirmation"]
+    },
+    {
+      "id": "c2-079",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Quand l'automatisation des tests de régression devrait-elle commencer ?",
+      "options": [
+        "Après la première mise en production",
+        "Quand la suite dépasse une centaine de cas",
+        "Pendant la phase de maintenance",
+        "Dès le début du projet"
+      ],
+      "correct": [3],
+      "explanation": "La suite de régression grossit à chaque itération : l'automatiser tôt évite d'accumuler une dette de tests manuels.",
+      "tags": ["régression", "automatisation"]
+    },
+    {
+      "id": "c2-080",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "À quels niveaux de test les tests de confirmation et de régression sont-ils nécessaires ?",
+      "options": [
+        "Uniquement au niveau du test système",
+        "Uniquement lors des tests d'acceptation",
+        "À tout niveau où le code est corrigé ou modifié",
+        "Uniquement au niveau des tests de composants"
+      ],
+      "correct": [2],
+      "explanation": "Ils ne sont pas propres à un niveau : ils suivent les modifications, où qu'elles aient lieu.",
+      "tags": ["confirmation", "régression", "niveaux de test"]
+    },
+    {
+      "id": "c2-081",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Le test de régression peut concerner d'autres composants, d'autres systèmes connectés et même l'environnement, pas seulement l'objet de test modifié.",
+      "answer": true,
+      "explanation": "Les conséquences négatives d'une modification peuvent se propager au-delà du composant modifié.",
+      "tags": ["régression"]
+    },
+    {
+      "id": "c2-082",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.2.3",
+      "lo": "FL-2.2.3",
+      "k": "K2",
+      "question": "Un correctif qui a déjà passé un test de confirmation n'a pas besoin de test de régression.",
+      "answer": false,
+      "explanation": "Le test de régression vérifie l'absence de conséquences négatives de toute modification, y compris d'un correctif déjà confirmé.",
+      "tags": ["confirmation", "régression", "piège"]
+    },
+    {
+      "id": "c2-083",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Quels sont les déclencheurs de la maintenance et du test de maintenance ?",
+      "answer": "Les modifications : améliorations planifiées, corrections, correctifs à chaud\nLes mises à niveau ou migrations de l'environnement opérationnel\nLe retrait d'une application en fin de vie",
+      "explanation": "Migration : tester le nouvel environnement, et la conversion des données si nécessaire. Retrait : tester l'archivage, voire la restauration.",
+      "tags": ["liste", "maintenance"]
+    },
+    {
+      "id": "c2-084",
+      "chapter": 2,
+      "type": "flashcard",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "De quoi dépend généralement le périmètre du test de maintenance ?",
+      "answer": "Du degré de risque des changements\nDe la taille du système existant\nDe l'ampleur des modifications",
+      "explanation": "Une analyse d'impact aide à estimer ces conséquences.",
+      "tags": ["liste", "maintenance"]
+    },
+    {
+      "id": "c2-085",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Une entreprise migre son application vers une nouvelle plateforme et y importe les données d'une autre application. Quels tests sont nécessaires ?",
+      "options": [
+        "Uniquement des tests de composants sur le code existant",
+        "Des tests d'archivage et de restauration des données",
+        "Des tests du nouvel environnement et de conversion des données",
+        "Aucun test, puisque le code de l'application n'a pas changé"
+      ],
+      "correct": [2],
+      "explanation": "Une migration est un déclencheur de test de maintenance, même sans modification du code.",
+      "tags": ["scénario", "maintenance"]
+    },
+    {
+      "id": "c2-086",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Une application est retirée, mais ses données doivent être conservées dix ans. Quels tests peuvent être nécessaires ?",
+      "options": [
+        "Des tests de conversion des données vers un autre système",
+        "Des tests alpha et bêta avec les derniers utilisateurs",
+        "Des tests d'intégration de composants avant l'arrêt",
+        "Des tests d'archivage et de restauration des données"
+      ],
+      "correct": [3],
+      "explanation": "Le retrait est un déclencheur du test de maintenance, surtout quand une longue conservation des données est exigée.",
+      "tags": ["scénario", "maintenance"]
+    },
+    {
+      "id": "c2-087",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Lequel n'est PAS un déclencheur du test de maintenance ?",
+      "options": [
+        "Un correctif à chaud",
+        "La migration vers une nouvelle plateforme",
+        "La rédaction du plan de test initial du projet",
+        "Le retrait d'une application"
+      ],
+      "correct": [2],
+      "explanation": "Les déclencheurs sont les modifications, les migrations ou mises à niveau de l'environnement, et le retrait.",
+      "tags": ["maintenance", "piège"]
+    },
+    {
+      "id": "c2-088",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Que comprend le test des changements apportés à un système en production ?",
+      "options": [
+        "Uniquement le test des parties modifiées du système",
+        "Tester les changements et la régression des parties inchangées",
+        "Uniquement le test des parties restées inchangées",
+        "Un test d'acceptation complet réalisé par les utilisateurs"
+      ],
+      "correct": [1],
+      "explanation": "Les parties inchangées représentent généralement la majeure partie du système.",
+      "tags": ["maintenance", "régression"]
+    },
+    {
+      "id": "c2-089",
+      "chapter": 2,
+      "type": "mcq",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Dans le contexte de la maintenance, qu'est-ce qu'un correctif à chaud ?",
+      "options": [
+        "Une amélioration planifiée dans une prochaine release",
+        "Une migration vers un nouvel environnement d'exploitation",
+        "Un test de régression automatisé lancé en continu",
+        "Une livraison non planifiée corrigeant la production"
+      ],
+      "correct": [3],
+      "explanation": "La maintenance peut impliquer des livraisons planifiées et non planifiées (correctifs à chaud).",
+      "tags": ["maintenance", "mot-clé"]
+    },
+    {
+      "id": "c2-090",
+      "chapter": 2,
+      "type": "true_false",
+      "section": "2.3",
+      "lo": "FL-2.3.1",
+      "k": "K2",
+      "question": "Une analyse d'impact peut aider à décider si un changement doit être effectué.",
+      "answer": true,
+      "explanation": "Elle évalue les conséquences potentielles du changement dans d'autres parties du système.",
+      "tags": ["maintenance"]
     }
   ]
 }

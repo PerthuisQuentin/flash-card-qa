@@ -133,3 +133,12 @@ Production des cartes des chapitres 2 à 6 dans `cards.json`, chapitre par chapi
 - assez de **QCM** par chapitre pour l'examen blanc (viser au moins 3× le quota d'examen : ch.2 ≥ 18, ch.3 ≥ 12, ch.4 ≥ 33, ch.5 ≥ 27, ch.6 ≥ 6) ;
 - exercices **K3** pour le chapitre 4 (partitions d'équivalence, valeurs limites, tables de décision, transitions d'état) et le chapitre 5 (estimation, priorisation, rapport de défaut) ;
 - le test de validation des données doit passer à chaque ajout.
+
+Avancement :
+
+- [x] Chapitre 1 : 92 cartes (48 QCM)
+- [x] Chapitre 2 : 90 cartes (51 QCM)
+- [ ] Chapitre 3
+- [ ] Chapitre 4
+- [ ] Chapitre 5
+- [ ] Chapitre 6
