@@ -100,7 +100,7 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 
 - Nombre de cartes **dues aujourd'hui** + nouvelles cartes disponibles ; bouton « Réviser ».
 - Par chapitre : nombre de cartes nouvelles / en apprentissage / en révision (maîtrisées), barre de progression ; mention « à venir » si le chapitre n'a pas de cartes.
-- Série (streak) de jours de révision consécutifs.
+- Série (streak) de jours consécutifs avec au moins une réponse (révision ou entraînement) ; elle n'est rompue qu'après une journée complète sans réponse.
 - Accès rapide : entraînement libre, examen blanc, statistiques.
 
 ### 3.2 Révision (répétition espacée FSRS)

@@ -4,8 +4,10 @@ import CardPlayer from '../components/cards/CardPlayer.tsx'
 import CardFilterPanel from '../components/CardFilterPanel.tsx'
 import PageTitle from '../components/PageTitle.tsx'
 import Button from '../components/ui/Button.tsx'
+import StatTile from '../components/ui/StatTile.tsx'
 import { getCard, type CardFilter } from '../data/cards.ts'
 import type { CardId } from '../data/schema.ts'
+import { formatDueDate, percent } from '../lib/format.ts'
 import {
   buildReviewQueue,
   formatInterval,
@@ -90,8 +92,8 @@ function Setup({ filter, onFilterChange, onStart }: SetupProps) {
   return (
     <div className="space-y-6">
       <section className="grid grid-cols-2 gap-3">
-        <Stat label="Cartes dues" value={queue.due.length} />
-        <Stat label="Nouvelles cartes" value={queue.fresh.length} />
+        <StatTile label="Cartes dues" value={queue.due.length} />
+        <StatTile label="Nouvelles cartes" value={queue.fresh.length} />
       </section>
 
       <Button
@@ -104,7 +106,7 @@ function Setup({ filter, onFilterChange, onStart }: SetupProps) {
       {total === 0 && (
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           {next
-            ? `Prochaine carte due ${formatDate(next)}.`
+            ? `Prochaine carte due ${formatDueDate(next, now)}.`
             : 'Aucune carte pour ce filtre, ou quota de nouvelles cartes atteint pour aujourd’hui.'}
         </p>
       )}
@@ -245,18 +247,18 @@ function Summary({ stats, filter, onRestart }: SummaryProps) {
   const { state } = useStore()
   const [now] = useState(() => new Date())
   const next = nextDueDate(state, filter, now)
-  const rate = stats.answered > 0 ? Math.round((stats.correct / stats.answered) * 100) : 0
+  const rate = percent(stats.correct, stats.answered)
 
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Session terminée 🎉</h2>
       <section className="grid grid-cols-2 gap-3">
-        <Stat label="Réponses" value={stats.answered} />
-        <Stat label="Réussite" value={`${rate} %`} />
+        <StatTile label="Réponses" value={stats.answered} />
+        <StatTile label="Réussite" value={`${rate} %`} />
       </section>
       {next && (
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Prochaine carte due {formatDate(next)}.
+          Prochaine carte due {formatDueDate(next, now)}.
         </p>
       )}
       <div className="flex flex-wrap gap-3">
@@ -270,21 +272,4 @@ function Summary({ stats, filter, onRestart }: SummaryProps) {
       </div>
     </div>
   )
-}
-
-function Stat({ label, value }: { label: string; value: number | string }) {
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-      <div className="text-2xl font-bold">{value}</div>
-      <div className="text-sm text-slate-500 dark:text-slate-400">{label}</div>
-    </div>
-  )
-}
-
-function formatDate(date: Date): string {
-  const now = new Date()
-  const sameDay = date.toDateString() === now.toDateString()
-  const time = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-  if (sameDay) return `aujourd’hui à ${time}`
-  return `le ${date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}`
 }

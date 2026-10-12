@@ -68,8 +68,8 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 5 — Tableau de bord
 
-- [ ] `lib/stats.ts` : comptes dues / nouvelles / apprentissage / révision par chapitre, streak.
-- [ ] Page `Dashboard` : bloc « aujourd'hui » + bouton Réviser, cartes de chapitre avec barre de progression, chapitres « à venir ».
+- [x] `lib/stats.ts` : comptes dues / nouvelles / apprentissage / révision par chapitre, streak.
+- [x] Page `Dashboard` : bloc « aujourd'hui » + bouton Réviser, cartes de chapitre avec barre de progression, chapitres « à venir ».
 
 **Terminé quand** : le dashboard reflète fidèlement l'état après une session.
 
