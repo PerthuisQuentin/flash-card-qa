@@ -91,9 +91,9 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 7 — Entraînement libre
 
-- [ ] Page `Practice` : filtres + taille de série + « uniquement mes erreurs ».
-- [ ] Tirage aléatoire, réponses enregistrées en mode `practice`, aucun impact sur `srs`.
-- [ ] Récapitulatif de fin de série.
+- [x] Page `Practice` : filtres + taille de série + « uniquement mes erreurs ».
+- [x] Tirage aléatoire, réponses enregistrées en mode `practice`, aucun impact sur `srs`.
+- [x] Récapitulatif de fin de série.
 
 ---
 

@@ -1,108 +1,261 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import CardPlayer from '../components/cards/CardPlayer.tsx'
-import { CARD_TYPE_LABELS } from '../components/cards/labels.ts'
+import CardFilterPanel from '../components/CardFilterPanel.tsx'
 import PageTitle from '../components/PageTitle.tsx'
 import Button from '../components/ui/Button.tsx'
-import { cards } from '../data/cards.ts'
-import { CARD_TYPES, type CardType } from '../data/schema.ts'
+import StatTile from '../components/ui/StatTile.tsx'
+import { getCard, type CardFilter } from '../data/cards.ts'
+import type { CardId } from '../data/schema.ts'
+import { shuffle } from '../lib/grading.ts'
+import { percent } from '../lib/format.ts'
+import {
+  buildPracticeSet,
+  practiceCandidates,
+  PRACTICE_SIZES,
+  type PracticeOptions,
+  type PracticeSize,
+} from '../lib/practice.ts'
 import { useStore } from '../state/store.tsx'
 
-// Temporary browser to try every card type; replaced by the real practice mode in step 7.
+type Phase = 'setup' | 'session' | 'done'
+
+interface Result {
+  cardId: CardId
+  correct: boolean
+}
+
 export default function Practice() {
-  const [type, setType] = useState<CardType | 'all'>('all')
-  const [index, setIndex] = useState(0)
-  const { state, recordAnswer } = useStore()
+  const [phase, setPhase] = useState<Phase>('setup')
+  const [filter, setFilter] = useState<CardFilter>({})
+  const [options, setOptions] = useState<PracticeOptions>({ size: 20, mistakesOnly: false })
+  const [series, setSeries] = useState<CardId[]>([])
+  const [results, setResults] = useState<Result[]>([])
 
-  const list = type === 'all' ? cards : cards.filter((card) => card.type === type)
-  const card = list[Math.min(index, list.length - 1)]
-
-  function goNext() {
-    setIndex((i) => Math.min(i + 1, list.length - 1))
+  function start(ids: CardId[]) {
+    setSeries(ids)
+    setResults([])
+    setPhase('session')
   }
 
   return (
     <>
       <PageTitle
         title="Entraînement libre"
-        subtitle="Parcours de toutes les cartes (version de test)."
+        subtitle="Séries aléatoires, sans impact sur le planning de révision."
       />
-
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <label className="flex items-center gap-2 text-sm">
-          Type
-          <select
-            value={type}
-            onChange={(event) => {
-              setType(event.target.value as CardType | 'all')
-              setIndex(0)
-            }}
-            className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 dark:border-slate-700 dark:bg-slate-900"
-          >
-            <option value="all">Tous</option>
-            {CARD_TYPES.map((value) => (
-              <option key={value} value={value}>
-                {CARD_TYPE_LABELS[value]}
-              </option>
-            ))}
-          </select>
-        </label>
-        <span className="ml-auto text-sm text-slate-500 dark:text-slate-400">
-          {index + 1} / {list.length} · {state.answers.length} réponses enregistrées
-        </span>
-      </div>
-
-      {card && (
-        <CardPlayer
-          key={card.id}
-          card={card}
-          onGraded={({ correct }) => {
-            // Flashcards are recorded once self-assessed, see renderActions.
-            if (correct !== null) recordAnswer({ cardId: card.id, correct, mode: 'practice' })
-          }}
-          renderActions={({ correct }) =>
-            correct === null ? (
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    recordAnswer({ cardId: card.id, correct: false, mode: 'practice' })
-                    goNext()
-                  }}
-                >
-                  À revoir
-                </Button>
-                <Button
-                  onClick={() => {
-                    recordAnswer({ cardId: card.id, correct: true, mode: 'practice' })
-                    goNext()
-                  }}
-                >
-                  Je savais
-                </Button>
-              </div>
-            ) : (
-              <div className="flex justify-end">
-                <Button onClick={goNext} disabled={index >= list.length - 1}>
-                  Carte suivante →
-                </Button>
-              </div>
-            )
-          }
+      {phase === 'setup' && (
+        <Setup
+          filter={filter}
+          options={options}
+          onFilterChange={setFilter}
+          onOptionsChange={setOptions}
+          onStart={start}
         />
       )}
+      {phase === 'session' && (
+        <Session
+          series={series}
+          results={results}
+          onAnswer={(result) => {
+            const next = [...results, result]
+            setResults(next)
+            if (next.length === series.length) setPhase('done')
+          }}
+          onStop={() => setPhase('done')}
+        />
+      )}
+      {phase === 'done' && (
+        <Summary
+          results={results}
+          onRetryMistakes={(ids) => start(shuffle(ids))}
+          onRestart={() => setPhase('setup')}
+        />
+      )}
+    </>
+  )
+}
 
-      <div className="mt-4 flex justify-between">
-        <Button variant="ghost" onClick={() => setIndex((i) => i - 1)} disabled={index === 0}>
-          ← Précédente
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={() => setIndex((i) => i + 1)}
-          disabled={index >= list.length - 1}
-        >
-          Passer →
+const SIZE_LABELS: Record<PracticeSize, string> = { 10: '10', 20: '20', 50: '50', all: 'Toutes' }
+
+interface SetupProps {
+  filter: CardFilter
+  options: PracticeOptions
+  onFilterChange: (filter: CardFilter) => void
+  onOptionsChange: (options: PracticeOptions) => void
+  onStart: (ids: CardId[]) => void
+}
+
+function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: SetupProps) {
+  const { state } = useStore()
+  const available = practiceCandidates(state, filter, options.mistakesOnly).length
+  const count = options.size === 'all' ? available : Math.min(options.size, available)
+
+  return (
+    <div className="space-y-6">
+      <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+        <fieldset>
+          <legend className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            Taille de la série
+          </legend>
+          <div className="flex flex-wrap gap-2" role="radiogroup">
+            {PRACTICE_SIZES.map((size) => (
+              <button
+                key={size}
+                type="button"
+                role="radio"
+                aria-checked={options.size === size}
+                onClick={() => onOptionsChange({ ...options, size })}
+                className={`rounded-full border px-4 py-1 text-sm ${
+                  options.size === size
+                    ? 'border-indigo-600 bg-indigo-600 text-white'
+                    : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800'
+                }`}
+              >
+                {SIZE_LABELS[size]}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            className="size-4 accent-indigo-600"
+            checked={options.mistakesOnly}
+            onChange={(event) =>
+              onOptionsChange({ ...options, mistakesOnly: event.target.checked })
+            }
+          />
+          Uniquement mes erreurs (cartes dont la dernière réponse était fausse)
+        </label>
+
+        <CardFilterPanel value={filter} onChange={onFilterChange} />
+      </section>
+
+      <Button
+        className="w-full"
+        disabled={count === 0}
+        onClick={() => onStart(buildPracticeSet(state, filter, options))}
+      >
+        {count === 0
+          ? options.mistakesOnly
+            ? 'Aucune erreur à retravailler 🎉'
+            : 'Aucune carte pour ce filtre'
+          : `Commencer (${count} carte${count > 1 ? 's' : ''})`}
+      </Button>
+    </div>
+  )
+}
+
+interface SessionProps {
+  series: CardId[]
+  results: Result[]
+  onAnswer: (result: Result) => void
+  onStop: () => void
+}
+
+function Session({ series, results, onAnswer, onStop }: SessionProps) {
+  const { recordAnswer } = useStore()
+  const index = results.length
+  const card = getCard(series[index])
+  if (!card) return null
+
+  function answer(correct: boolean) {
+    recordAnswer({ cardId: card!.id, correct, mode: 'practice' })
+    onAnswer({ cardId: card!.id, correct })
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div
+            className="h-full bg-indigo-600 transition-all"
+            style={{ width: `${(index / series.length) * 100}%` }}
+          />
+        </div>
+        <span>
+          {index + 1} / {series.length}
+        </span>
+        <Button variant="ghost" onClick={onStop}>
+          Terminer
         </Button>
       </div>
-    </>
+
+      <CardPlayer
+        key={`${card.id}-${index}`}
+        card={card}
+        renderActions={({ correct }) =>
+          correct === null ? (
+            <div className="grid grid-cols-2 gap-3">
+              <Button variant="secondary" onClick={() => answer(false)}>
+                À revoir
+              </Button>
+              <Button onClick={() => answer(true)}>Je savais</Button>
+            </div>
+          ) : (
+            <div className="flex justify-end">
+              <Button onClick={() => answer(correct)}>
+                {index + 1 < series.length ? 'Carte suivante →' : 'Voir le bilan'}
+              </Button>
+            </div>
+          )
+        }
+      />
+    </div>
+  )
+}
+
+interface SummaryProps {
+  results: Result[]
+  onRetryMistakes: (ids: CardId[]) => void
+  onRestart: () => void
+}
+
+function Summary({ results, onRetryMistakes, onRestart }: SummaryProps) {
+  const correct = results.filter((result) => result.correct).length
+  const mistakes = results.filter((result) => !result.correct).map((result) => result.cardId)
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold">Série terminée</h2>
+      <section className="grid grid-cols-2 gap-3">
+        <StatTile label="Réponses" value={results.length} />
+        <StatTile label="Réussite" value={`${percent(correct, results.length)} %`} />
+      </section>
+
+      {mistakes.length > 0 && (
+        <section>
+          <h3 className="mb-2 font-medium">À retravailler ({mistakes.length})</h3>
+          <ul className="space-y-1 text-sm">
+            {mistakes.map((id) => (
+              <li
+                key={id}
+                className="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-800 dark:bg-slate-900"
+              >
+                <span className="mr-2 font-mono text-xs text-slate-400">{id}</span>
+                {getCard(id)?.question}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <div className="flex flex-wrap gap-3">
+        {mistakes.length > 0 && (
+          <Button onClick={() => onRetryMistakes(mistakes)}>Rejouer mes erreurs</Button>
+        )}
+        <Button variant={mistakes.length > 0 ? 'secondary' : 'primary'} onClick={onRestart}>
+          Nouvelle série
+        </Button>
+        <Link
+          to="/"
+          className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+        >
+          Retour à l'accueil
+        </Link>
+      </div>
+    </div>
   )
 }

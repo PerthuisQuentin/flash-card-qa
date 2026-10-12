@@ -135,6 +135,9 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Mêmes filtres que la révision + nombre de cartes (10 / 20 / 50 / toutes) + option « uniquement mes erreurs » (cartes dont la dernière réponse était fausse).
 - Tirage aléatoire.
 - **N'impacte pas** le planning FSRS (mais alimente les statistiques de réussite).
+- Flash cards : auto-évaluation « À revoir » / « Je savais » après affichage de la réponse.
+- « Mes erreurs » = cartes dont la **dernière** réponse (révision ou entraînement) était fausse.
+- Bilan de fin de série : réussite, liste des cartes ratées, bouton « Rejouer mes erreurs ».
 
 ### 3.4 Examen blanc
 
