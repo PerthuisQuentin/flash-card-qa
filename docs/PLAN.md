@@ -20,10 +20,10 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 1 — Données et validation
 
-- [ ] Créer `src/data/cards.json` avec la liste complète des `chapters` et migrer les cartes de `data/chapitre-1.json` (ajout du champ `chapter: 1`). Supprimer l'ancien fichier.
-- [ ] `src/data/schema.ts` : schémas zod (union discriminée sur `type`) + types TS inférés.
-- [ ] `src/data/cards.ts` : chargement, index par `id`, par chapitre, helpers de filtre (chapitres, K, tags, `lo`).
-- [ ] Test de validation des données (schéma, unicité des ids, préfixe ↔ chapitre, index `correct`, etc.).
+- [x] Créer `src/data/cards.json` avec la liste complète des `chapters` et migrer les cartes de `data/chapitre-1.json` (ajout du champ `chapter: 1`). Supprimer l'ancien fichier.
+- [x] `src/data/schema.ts` : schémas zod (union discriminée sur `type`) + types TS inférés.
+- [x] `src/data/cards.ts` : chargement, index par `id`, par chapitre, helpers de filtre (chapitres, K, tags, `lo`).
+- [x] Test de validation des données (schéma, unicité des ids, préfixe ↔ chapitre, index `correct`, etc.).
 
 **Terminé quand** : le test de données passe et un test volontairement cassé (id dupliqué) échoue.
 

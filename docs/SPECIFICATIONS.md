@@ -85,8 +85,10 @@ Un schéma zod (`src/data/schema.ts`) décrit ce format. Un test Vitest vérifie
 - unicité des `id` ;
 - cohérence `id` ↔ `chapter` (préfixe `c<chapter>-`) ;
 - `chapter` présent dans `chapters` ;
-- index de `correct` valides et sans doublon ; `options.length >= 2` ;
-- `items.length >= 2` pour `ordering`.
+- `lo` appartenant au chapitre de la carte (`FL-<chapter>.`) ;
+- pas de champ inconnu (protection contre les fautes de frappe) ;
+- index de `correct` valides et sans doublon ; `options.length >= 2`, sans doublon ;
+- `items.length >= 2` et sans doublon pour `ordering`.
 
 Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont invalides.
 
