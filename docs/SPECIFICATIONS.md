@@ -207,6 +207,7 @@ interface StoredState {
       difficulty: number
       elapsed_days: number
       scheduled_days: number
+      learning_steps: number // ts-fsrs ≥ 5
       reps: number
       lapses: number
       state: 0 | 1 | 2 | 3 // New, Learning, Review, Relearning
@@ -228,7 +229,10 @@ interface StoredState {
 }
 ```
 
-- Lecture/écriture centralisées dans un module `storage` ; les dates sont sérialisées en ISO.
+- Lecture/écriture centralisées dans `lib/storage.ts` ; les dates sont sérialisées en ISO.
+- Le contenu lu est validé par zod (même schéma que pour l'import). Si les données sont illisibles ou invalides, elles sont mises de côté sous la clé `flashcards-qa:v1:corrupt:<date>` avant de repartir d'un état vierge (pas de perte silencieuse).
+- `localStorage` inaccessible (navigation privée, stockage bloqué) : l'app fonctionne sans persistance.
+- Plusieurs onglets ouverts : l'écriture d'un onglet est répercutée dans les autres (événement `storage`).
 - Le format d'export = exactement `StoredState`.
 - Volume estimé : ~500 cartes × quelques réponses → largement sous la limite de 5 Mo.
 

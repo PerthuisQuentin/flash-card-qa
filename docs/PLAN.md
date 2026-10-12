@@ -44,10 +44,10 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 3 — Persistance
 
-- [ ] `lib/storage.ts` : lecture/écriture de `flashcards-qa:v1`, état par défaut, gestion d'un JSON corrompu (fallback + log), point d'entrée pour migrations.
-- [ ] `state/store.tsx` : contexte React + `useStore()`, sauvegarde automatique à chaque modification.
-- [ ] Enregistrement des réponses dans `answers`.
-- [ ] Tests unitaires du module storage.
+- [x] `lib/storage.ts` : lecture/écriture de `flashcards-qa:v1`, état par défaut, gestion d'un JSON corrompu (fallback + log), point d'entrée pour migrations.
+- [x] `state/store.tsx` : contexte React + `useStore()`, sauvegarde automatique à chaque modification.
+- [x] Enregistrement des réponses dans `answers`.
+- [x] Tests unitaires du module storage.
 
 **Terminé quand** : les réponses survivent à un rechargement de page.
 
