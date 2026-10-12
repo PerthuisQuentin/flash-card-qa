@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatClock, formatDueDate, formatDuration, percent } from './format.ts'
+import { formatClock, formatDueDate, formatDuration, niceCeil, percent } from './format.ts'
 
 describe('formatDueDate', () => {
   const now = new Date(2026, 9, 12, 10, 0)
@@ -32,5 +32,13 @@ describe('formatDuration', () => {
     expect(formatDuration(45)).toBe('45 s')
     expect(formatDuration(12 * 60 + 10)).toBe('12 min')
     expect(formatDuration(65 * 60)).toBe('1 h 05')
+  })
+})
+
+describe('niceCeil', () => {
+  it('rounds up to 1, 2 or 5 times a power of ten', () => {
+    expect([0, 1, 2, 3, 7, 10, 11, 24, 51, 180].map(niceCeil)).toEqual([
+      1, 1, 2, 5, 10, 10, 20, 50, 100, 200,
+    ])
   })
 })

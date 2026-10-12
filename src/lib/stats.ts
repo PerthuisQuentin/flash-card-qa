@@ -94,3 +94,102 @@ export function streak(state: StoredState, now: Date): Streak {
   }
   return { days, activeToday }
 }
+
+export interface SuccessRate {
+  answered: number
+  correct: number
+}
+
+export interface ChapterSuccess extends SuccessRate {
+  chapter: Chapter
+}
+
+export interface LearningObjectiveSuccess extends SuccessRate {
+  lo: string
+  chapter: number
+}
+
+/** Answers whose card still exists, paired with that card. */
+function answeredCards(state: StoredState, cards: readonly Card[]) {
+  const byId = new Map(cards.map((card) => [card.id, card]))
+  return state.answers.flatMap((answer) => {
+    const card = byId.get(answer.cardId)
+    return card ? [{ answer, card }] : []
+  })
+}
+
+export function overallSuccess(state: StoredState, cards: readonly Card[] = allCards): SuccessRate {
+  const answers = answeredCards(state, cards)
+  return { answered: answers.length, correct: answers.filter((a) => a.answer.correct).length }
+}
+
+export function successByChapter(
+  state: StoredState,
+  chapters: readonly Chapter[] = allChapters,
+  cards: readonly Card[] = allCards,
+): ChapterSuccess[] {
+  const rows = new Map(
+    chapters.map((chapter) => [chapter.id, { chapter, answered: 0, correct: 0 }]),
+  )
+  for (const { answer, card } of answeredCards(state, cards)) {
+    const row = rows.get(card.chapter)
+    if (!row) continue
+    row.answered++
+    if (answer.correct) row.correct++
+  }
+  return [...rows.values()]
+}
+
+/** One row per learning objective that has at least one answer, in syllabus order. */
+export function successByLearningObjective(
+  state: StoredState,
+  cards: readonly Card[] = allCards,
+): LearningObjectiveSuccess[] {
+  const rows = new Map<string, LearningObjectiveSuccess>()
+  for (const { answer, card } of answeredCards(state, cards)) {
+    const row = rows.get(card.lo) ?? { lo: card.lo, chapter: card.chapter, answered: 0, correct: 0 }
+    row.answered++
+    if (answer.correct) row.correct++
+    rows.set(card.lo, row)
+  }
+  return [...rows.values()].sort((a, b) => a.lo.localeCompare(b.lo, 'en', { numeric: true }))
+}
+
+export const WEAK_LO_MIN_ANSWERS = 3
+
+/** Objectives with enough answers to be meaningful, lowest success rate first. */
+export function weakestLearningObjectives(
+  rows: readonly LearningObjectiveSuccess[],
+  limit = 5,
+  minAnswers = WEAK_LO_MIN_ANSWERS,
+): LearningObjectiveSuccess[] {
+  return rows
+    .filter((row) => row.answered >= minAnswers && row.correct < row.answered)
+    .sort((a, b) => a.correct / a.answered - b.correct / b.answered || b.answered - a.answered)
+    .slice(0, limit)
+}
+
+export interface DayActivity extends SuccessRate {
+  /** Local day, YYYY-MM-DD. */
+  day: string
+  date: Date
+}
+
+/** Answers per local day over the last `days` days, oldest first, today included. */
+export function dailyActivity(state: StoredState, now: Date, days = 30): DayActivity[] {
+  const result: DayActivity[] = []
+  const index = new Map<string, DayActivity>()
+  for (let offset = days - 1; offset >= 0; offset--) {
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - offset)
+    const row = { day: localDay(date), date, answered: 0, correct: 0 }
+    result.push(row)
+    index.set(row.day, row)
+  }
+  for (const answer of state.answers) {
+    const row = index.get(localDay(new Date(answer.at)))
+    if (!row) continue
+    row.answered++
+    if (answer.correct) row.correct++
+  }
+  return result
+}

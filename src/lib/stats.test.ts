@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import type { Card, Chapter } from '../data/schema.ts'
 import { applyReview, createScheduler, Rating, type Grade } from './srs.ts'
-import { chapterProgress, streak, todaySummary } from './stats.ts'
+import {
+  chapterProgress,
+  dailyActivity,
+  overallSuccess,
+  streak,
+  successByChapter,
+  successByLearningObjective,
+  todaySummary,
+  weakestLearningObjectives,
+} from './stats.ts'
 import { createDefaultState, type StoredState } from './storage.ts'
 
 const at = (day: number, hour = 10) => new Date(2026, 9, day, hour)
@@ -102,3 +111,100 @@ describe('streak', () => {
     expect(streak(state, at(1, 12)).days).toBe(2)
   })
 })
+
+describe('success rates', () => {
+  const lo = (id: string, chapter: number, objective: string): Card => ({
+    ...card(id, chapter),
+    lo: objective,
+  })
+  const deck = [
+    lo('c1-001', 1, 'FL-1.1.1'),
+    lo('c1-002', 1, 'FL-1.2.3'),
+    lo('c1-003', 1, 'FL-1.10.1'),
+    lo('c2-001', 2, 'FL-2.1.1'),
+  ]
+  const state = answeredOnCards(
+    ['c1-001', true],
+    ['c1-001', false],
+    ['c1-002', false],
+    ['c1-002', false],
+    ['c1-002', true],
+    ['c1-003', false],
+    ['c2-001', true],
+    ['c9-999', false], // card removed from the deck: ignored
+  )
+
+  it('computes the overall success rate', () => {
+    expect(overallSuccess(state, deck)).toEqual({ answered: 7, correct: 3 })
+  })
+
+  it('groups answers by chapter', () => {
+    expect(
+      successByChapter(state, chapters, deck).map(({ chapter, answered, correct }) => [
+        chapter.id,
+        answered,
+        correct,
+      ]),
+    ).toEqual([
+      [1, 6, 2],
+      [2, 1, 1],
+      [3, 0, 0],
+    ])
+  })
+
+  it('groups answers by learning objective in syllabus order', () => {
+    expect(successByLearningObjective(state, deck)).toEqual([
+      { lo: 'FL-1.1.1', chapter: 1, answered: 2, correct: 1 },
+      { lo: 'FL-1.2.3', chapter: 1, answered: 3, correct: 1 },
+      { lo: 'FL-1.10.1', chapter: 1, answered: 1, correct: 0 },
+      { lo: 'FL-2.1.1', chapter: 2, answered: 1, correct: 1 },
+    ])
+  })
+
+  it('ranks weak objectives with enough answers, worst first', () => {
+    const rows = [
+      { lo: 'FL-1.1.1', chapter: 1, answered: 4, correct: 3 },
+      { lo: 'FL-1.2.1', chapter: 1, answered: 3, correct: 1 },
+      { lo: 'FL-1.3.1', chapter: 1, answered: 6, correct: 2 },
+      { lo: 'FL-1.4.1', chapter: 1, answered: 2, correct: 0 }, // too few answers
+      { lo: 'FL-1.5.1', chapter: 1, answered: 5, correct: 5 }, // mastered
+    ]
+    expect(weakestLearningObjectives(rows).map((row) => row.lo)).toEqual([
+      'FL-1.3.1',
+      'FL-1.2.1',
+      'FL-1.1.1',
+    ])
+    expect(weakestLearningObjectives(rows, 1).map((row) => row.lo)).toEqual(['FL-1.3.1'])
+  })
+})
+
+describe('dailyActivity', () => {
+  it('returns one row per day, oldest first, including empty days', () => {
+    const state = answeredOn(at(12, 8), at(12, 20), at(10), at(1))
+    const days = dailyActivity(state, at(12, 22), 3)
+    expect(days.map(({ day, answered }) => [day, answered])).toEqual([
+      ['2026-10-10', 1],
+      ['2026-10-11', 0],
+      ['2026-10-12', 2],
+    ])
+  })
+
+  it('defaults to 30 days and crosses month boundaries', () => {
+    const days = dailyActivity(createDefaultState(), at(5))
+    expect(days).toHaveLength(30)
+    expect(days[0].day).toBe('2026-09-06')
+    expect(days[29].day).toBe('2026-10-05')
+  })
+})
+
+function answeredOnCards(...entries: [string, boolean][]): StoredState {
+  return {
+    ...createDefaultState(),
+    answers: entries.map(([cardId, correct]) => ({
+      cardId,
+      at: at(12).toISOString(),
+      correct,
+      mode: 'practice' as const,
+    })),
+  }
+}

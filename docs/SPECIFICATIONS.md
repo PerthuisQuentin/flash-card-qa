@@ -175,10 +175,12 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 
 ### 3.5 Statistiques
 
-- Taux de réussite par chapitre et par objectif d'apprentissage (`lo`), sur l'ensemble des réponses (révision + entraînement).
-- Top des objectifs les plus faibles → lien vers un entraînement filtré sur cet objectif.
-- Activité par jour (nombre de cartes révisées) sur les 30 derniers jours.
-- Évolution des scores d'examen blanc.
+- Indicateurs : réponses, réussite globale, cartes vues, examens réussis.
+- Taux de réussite par chapitre et par objectif d'apprentissage (`lo`), sur l'ensemble des réponses (révision + entraînement, hors examens). Barres avec un repère au seuil de 65 %.
+- Top 5 des objectifs les plus faibles (au moins 3 réponses, pas à 100 %) → lien « S'entraîner » vers `/practice?lo=FL-x.y.z`, qui présélectionne l'objectif (retirable).
+- Activité par jour (réponses) sur les 30 derniers jours : histogramme, valeurs au survol / focus clavier.
+- Évolution des scores d'examen blanc : courbe avec le seuil de 65 %, chaque point mène au résultat de l'examen.
+- Graphiques : une seule série chacun, teinte d'accent indigo (`#4f46e5` clair, `#6366f1` sombre, validées par le script de palette), traits fins, grilles discrètes.
 
 ### 3.6 Paramètres
 

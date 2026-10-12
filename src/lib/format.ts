@@ -38,3 +38,11 @@ export function formatDateTime(date: Date): string {
     minute: '2-digit',
   })
 }
+
+/** Rounds up to 1, 2 or 5 × 10^n so the top gridline lands on a clean value. */
+export function niceCeil(value: number): number {
+  if (value <= 1) return 1
+  const magnitude = 10 ** Math.floor(Math.log10(value))
+  const step = [1, 2, 5, 10].find((s) => s * magnitude >= value)!
+  return step * magnitude
+}

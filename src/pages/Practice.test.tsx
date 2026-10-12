@@ -94,3 +94,24 @@ describe('Practice page', () => {
     expect(screen.getByRole('button', { name: 'Commencer (1 carte)' })).toBeTruthy()
   })
 })
+
+describe('Practice page targeting a learning objective', () => {
+  it('preselects the objective from the URL and lets the user remove it', async () => {
+    render(
+      <StoreProvider storage={memoryStorage()}>
+        <MemoryRouter initialEntries={['/practice?lo=FL-1.3.1']}>
+          <Practice />
+        </MemoryRouter>
+      </StoreProvider>,
+    )
+    const user = userEvent.setup()
+    const count = cards.filter((card) => card.lo === 'FL-1.3.1').length
+
+    expect(screen.getByText('FL-1.3.1')).toBeTruthy()
+    await user.click(screen.getByRole('radio', { name: 'Toutes' }))
+    expect(screen.getByRole('button', { name: `Commencer (${count} cartes)` })).toBeTruthy()
+
+    await user.click(screen.getByRole('button', { name: 'Retirer' }))
+    expect(screen.getByRole('button', { name: `Commencer (${cards.length} cartes)` })).toBeTruthy()
+  })
+})

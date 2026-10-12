@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import CardPlayer from '../components/cards/CardPlayer.tsx'
 import CardFilterPanel from '../components/CardFilterPanel.tsx'
 import PageTitle from '../components/PageTitle.tsx'
@@ -27,7 +27,12 @@ interface Result {
 
 export default function Practice() {
   const [phase, setPhase] = useState<Phase>('setup')
-  const [filter, setFilter] = useState<CardFilter>({})
+  // `?lo=FL-1.3.1` (from the stats page) targets a single learning objective.
+  const [searchParams] = useSearchParams()
+  const [filter, setFilter] = useState<CardFilter>(() => {
+    const lo = searchParams.get('lo')
+    return lo ? { los: [lo] } : {}
+  })
   const [options, setOptions] = useState<PracticeOptions>({ size: 20, mistakesOnly: false })
   const [series, setSeries] = useState<CardId[]>([])
   const [results, setResults] = useState<Result[]>([])
@@ -129,6 +134,19 @@ function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: Se
           />
           Uniquement mes erreurs (cartes dont la dernière réponse était fausse)
         </label>
+
+        {filter.los?.length ? (
+          <p className="flex flex-wrap items-center gap-2 rounded-lg bg-indigo-50 px-3 py-2 text-sm dark:bg-indigo-950/40">
+            Objectif ciblé : <strong className="font-mono">{filter.los.join(', ')}</strong>
+            <button
+              type="button"
+              onClick={() => onFilterChange({ ...filter, los: [] })}
+              className="ml-auto text-indigo-600 hover:underline dark:text-indigo-400"
+            >
+              Retirer
+            </button>
+          </p>
+        ) : null}
 
         <CardFilterPanel value={filter} onChange={onFilterChange} />
       </section>

@@ -111,9 +111,9 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 9 — Statistiques
 
-- [ ] Réussite par chapitre et par `lo`, top des objectifs faibles avec lien vers un entraînement filtré.
-- [ ] Activité des 30 derniers jours.
-- [ ] Évolution des scores d'examen blanc.
+- [x] Réussite par chapitre et par `lo`, top des objectifs faibles avec lien vers un entraînement filtré.
+- [x] Activité des 30 derniers jours.
+- [x] Évolution des scores d'examen blanc.
 
 ---
 
