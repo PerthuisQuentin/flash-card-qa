@@ -7,5 +7,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
     include: ['src/**/*.test.{ts,tsx}'],
+    // Railway builds with NODE_ENV=production, which would load React's production build
+    // (no `act`) and break component tests.
+    env: { NODE_ENV: 'test' },
   },
 })
