@@ -77,10 +77,11 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 
 ## Étape 6 — Paramètres, import/export, déploiement
 
-- [ ] Page `Settings` : nouvelles cartes/jour, rétention cible.
-- [ ] Export (téléchargement du `StoredState`) et import (validation zod, confirmation, remplacement).
-- [ ] Réinitialisation avec double confirmation.
-- [ ] Déploiement Railway : `serve` en dépendance, script `start`, vérification du fallback SPA (rechargement sur `/review`).
+- [x] Page `Settings` : nouvelles cartes/jour, rétention cible.
+- [x] Export (téléchargement du `StoredState`) et import (validation zod, confirmation, remplacement).
+- [x] Réinitialisation avec double confirmation.
+- [x] Config de déploiement : `serve` en dépendance, script `start`, `railway.json` (tests au build), fallback SPA vérifié en local.
+- [ ] Mise en ligne sur Railway (reportée à la fin du développement).
 
 **Terminé quand** : l'app est en ligne sur Railway et un export → reset → import restaure la progression.
 

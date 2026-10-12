@@ -1,4 +1,4 @@
-import type { Answer, StoredState } from '../lib/storage.ts'
+import type { Answer, Settings, StoredState } from '../lib/storage.ts'
 
 export type NewAnswer = Omit<Answer, 'at'>
 
@@ -9,4 +9,8 @@ export function addAnswer(
   now: Date = new Date(),
 ): StoredState {
   return { ...state, answers: [...state.answers, { ...answer, at: now.toISOString() }] }
+}
+
+export function updateSettings(state: StoredState, changes: Partial<Settings>): StoredState {
+  return { ...state, settings: { ...state.settings, ...changes } }
 }

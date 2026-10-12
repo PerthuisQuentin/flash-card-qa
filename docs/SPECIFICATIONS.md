@@ -278,10 +278,12 @@ Principe : toute la logique métier (SRS, examen, correction, stats) vit dans `l
 
 ## 6. Déploiement Railway
 
-- Service unique lié au dépôt GitHub.
-- Build : `npm ci && npm run build`.
-- Start : `npx serve -s dist -l $PORT` (`serve` en dépendance de production ; `-s` pour le fallback SPA de react-router).
-- Version de Node fixée via `engines` dans `package.json` (ou `.nvmrc`).
+- Service unique, configuré par `railway.json` à la racine (config as code).
+- Build : `npm test && npm run build` — des données ou un code cassés bloquent le déploiement.
+- Start : `npm start` → `serve -s dist -l tcp://0.0.0.0:${PORT:-3000}` (`serve` en dépendance de production ; `-s` pour le fallback SPA de react-router ; `PORT` fourni par Railway).
+- Healthcheck sur `/`, redémarrage automatique en cas d'échec.
+- Version de Node via `engines` dans `package.json` (≥ 22).
+- `compression` (dépendance de `serve`) forcée en ≥ 1.8.2 via `overrides` (faille DoS corrigée).
 
 ---
 

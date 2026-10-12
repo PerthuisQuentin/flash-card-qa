@@ -142,3 +142,16 @@ function safeLocalStorage(): Storage | undefined {
     return undefined
   }
 }
+
+export function backupFileName(now: Date): string {
+  const day = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('-')
+  return `flashcards-qa-backup-${day}.json`
+}
+
+export function serializeState(state: StoredState): string {
+  return JSON.stringify(state, null, 2)
+}
