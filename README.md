@@ -70,6 +70,7 @@ Règles :
 
 - **Ne jamais modifier ni réutiliser un `id`** : la progression y est rattachée. Une carte supprimée laisse un trou dans la numérotation.
 - Types : `flashcard` (`answer` texte), `mcq` (`options` + `correct`, index à partir de 0), `true_false` (`answer` booléen), `ordering` (`items` **dans le bon ordre**, mélangés à l'affichage).
+- Règles de rédaction des questions : [docs/REDACTION.md](docs/REDACTION.md).
 - `npm test` valide le fichier (schéma strict, ids uniques, cohérence chapitre / objectif, index des réponses) : lance-le après chaque ajout.
 
 ## Structure
@@ -101,5 +102,7 @@ Il suffit de créer un service Railway à partir du dépôt GitHub.
 
 - [Spécifications](docs/SPECIFICATIONS.md)
 - [Plan de développement](docs/PLAN.md)
+- [Règles de rédaction des cartes](docs/REDACTION.md)
+- [Plan de recette](docs/RECETTE.md)
 
 Le contenu des cartes est rédigé à partir du syllabus ISTQB CTFL v4.0 (traduction CFTL), qui n'est pas inclus dans ce dépôt.
