@@ -12,7 +12,6 @@ import { useHotkeys } from '../hooks/useHotkeys.ts'
 import { formatDueDate, percent } from '../lib/format.ts'
 import {
   buildReviewQueue,
-  formatInterval,
   GRADE_LABELS,
   GRADES,
   gradeFromOutcome,
@@ -171,7 +170,6 @@ function Session({ queue, initialSize, seen, step, onRated, onStop }: SessionPro
         renderActions={({ correct, answeredAt }) => (
           <ReviewActions
             preview={previewIntervals(state, card.id, answeredAt)}
-            answeredAt={answeredAt}
             correct={correct}
             onRate={rate}
           />
@@ -182,15 +180,14 @@ function Session({ queue, initialSize, seen, step, onRated, onStop }: SessionPro
 }
 
 interface ReviewActionsProps {
-  preview: Record<Grade, Date>
-  answeredAt: Date
+  /** Where each grade sends the card: "dans la session", "dans 2 j"… */
+  preview: Record<Grade, string>
   correct: boolean | null
   onRate: (grade: Grade, correct: boolean) => void
 }
 
 /** Rating buttons shown once a card is answered, with matching keyboard shortcuts. */
-function ReviewActions({ preview, answeredAt, correct, onRate }: ReviewActionsProps) {
-  const label = (grade: Grade) => formatInterval(answeredAt, preview[grade])
+function ReviewActions({ preview, correct, onRate }: ReviewActionsProps) {
   const good = () => onRate(gradeFromOutcome(true), true)
   const easy = () => onRate(gradeFromOutcome(true, true), true)
   const again = () => onRate(Rating.Again, false)
@@ -208,12 +205,15 @@ function ReviewActions({ preview, answeredAt, correct, onRate }: ReviewActionsPr
   if (correct === null) {
     return (
       <div className="space-y-2">
+        <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
+          Tu connaissais la réponse ?
+        </p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {GRADES.map((grade) => (
             <RatingButton
               key={grade}
               grade={grade}
-              interval={label(grade)}
+              interval={preview[grade]}
               onClick={() => onRate(grade, isCorrectGrade(grade))}
             />
           ))}
@@ -225,8 +225,11 @@ function ReviewActions({ preview, answeredAt, correct, onRate }: ReviewActionsPr
   if (!correct) {
     return (
       <div className="space-y-2">
-        <div className="flex justify-end">
-          <Button onClick={again}>Continuer · revient dans {label(Rating.Again)}</Button>
+        <div className="flex items-center justify-end gap-3">
+          <span className="text-sm text-slate-500 dark:text-slate-400">
+            Revient {preview[Rating.Again]}
+          </span>
+          <Button onClick={again}>Continuer</Button>
         </div>
         <KeyHint items={[['Entrée', 'continuer']]} />
       </div>
@@ -235,18 +238,18 @@ function ReviewActions({ preview, answeredAt, correct, onRate }: ReviewActionsPr
   return (
     <div className="space-y-2">
       <div className="grid grid-cols-2 gap-2">
-        <RatingButton grade={Rating.Good} interval={label(Rating.Good)} onClick={good} />
         <RatingButton
-          grade={Rating.Easy}
-          label="C'était facile"
-          interval={label(Rating.Easy)}
-          onClick={easy}
+          grade={Rating.Good}
+          label="Continuer"
+          interval={preview[Rating.Good]}
+          onClick={good}
         />
+        <RatingButton grade={Rating.Easy} interval={preview[Rating.Easy]} onClick={easy} />
       </div>
       <KeyHint
         items={[
-          ['Entrée', 'bien'],
-          ['4', 'facile'],
+          ['Entrée', 'continuer'],
+          ['4', 'trop facile'],
         ]}
       />
     </div>

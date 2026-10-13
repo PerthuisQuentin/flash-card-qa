@@ -16,12 +16,19 @@ export type { Grade }
 
 export const GRADES: readonly Grade[] = [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy]
 
+/** Worded as what the user felt, so they do not need to know how FSRS uses the grades. */
 export const GRADE_LABELS: Record<Grade, string> = {
-  [Rating.Again]: 'À revoir',
-  [Rating.Hard]: 'Difficile',
-  [Rating.Good]: 'Bien',
-  [Rating.Easy]: 'Facile',
+  [Rating.Again]: 'Je ne savais pas',
+  [Rating.Hard]: 'J’ai hésité',
+  [Rating.Good]: 'Je savais',
+  [Rating.Easy]: 'Trop facile',
 }
+
+/**
+ * A single 10-minute (re)learning step: a right answer takes a new card straight to
+ * days, a wrong one brings it back once later in the session.
+ */
+const LEARNING_STEPS = ['10m'] as const
 
 interface SchedulerOptions {
   /** Randomizes intervals slightly to spread reviews; disabled in tests for determinism. */
@@ -29,7 +36,12 @@ interface SchedulerOptions {
 }
 
 export function createScheduler(settings: Settings, { fuzz = true }: SchedulerOptions = {}): FSRS {
-  return fsrs({ request_retention: settings.desiredRetention, enable_fuzz: fuzz })
+  return fsrs({
+    request_retention: settings.desiredRetention,
+    enable_fuzz: fuzz,
+    learning_steps: [...LEARNING_STEPS],
+    relearning_steps: [...LEARNING_STEPS],
+  })
 }
 
 export function serializeCard(card: FsrsCard): SrsCardData {
@@ -160,23 +172,32 @@ export function applyReview(
 }
 
 /** A card still in (re)learning and due again today comes back later in the same session. */
-export function shouldRequeue(data: SrsCardData, now: Date): boolean {
+export function shouldRequeue(data: Pick<SrsCardData, 'state' | 'due'>, now: Date): boolean {
   return data.state !== State.Review && new Date(data.due) <= endOfLocalDay(now)
 }
 
-/** Next due date for each grade, to display on the rating buttons. */
+/**
+ * What each grade would do, as shown under the rating buttons. A card that comes back
+ * in the session reads as such, since the session does not wait for its minutes.
+ */
 export function previewIntervals(
   state: StoredState,
   cardId: CardId,
   now: Date,
   scheduler: FSRS = createScheduler(state.settings),
-): Record<Grade, Date> {
+): Record<Grade, string> {
   const preview = scheduler.repeat(getFsrsCard(state, cardId, now), now)
+  const describe = (grade: Grade) => {
+    const { due, state: next } = preview[grade].card
+    return shouldRequeue({ state: next as SrsCardData['state'], due: due.toISOString() }, now)
+      ? 'dans la session'
+      : `dans ${formatInterval(now, due)}`
+  }
   return {
-    [Rating.Again]: preview[Rating.Again].card.due,
-    [Rating.Hard]: preview[Rating.Hard].card.due,
-    [Rating.Good]: preview[Rating.Good].card.due,
-    [Rating.Easy]: preview[Rating.Easy].card.due,
+    [Rating.Again]: describe(Rating.Again),
+    [Rating.Hard]: describe(Rating.Hard),
+    [Rating.Good]: describe(Rating.Good),
+    [Rating.Easy]: describe(Rating.Easy),
   }
 }
 

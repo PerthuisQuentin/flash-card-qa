@@ -110,23 +110,25 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Filtres : chapitres (multi-sélection), niveau K, tags. Par défaut : tout.
 - Contenu : toutes les cartes **dues** du filtre, puis des **nouvelles** cartes dans la limite du quota journalier restant (paramètre, 20 par défaut).
 - Ordre : cartes dues d'abord (les plus en retard en premier), puis nouvelles cartes (dans l'ordre du JSON, pour suivre la progression du syllabus).
-- Une carte encore en (ré)apprentissage et replanifiée dans la journée (étapes d'apprentissage FSRS : 1 min, 10 min) est remise **en fin de file** de la session.
+- Un seul palier d'apprentissage FSRS, de 10 min (apprentissage et réapprentissage) : une nouvelle carte réussie passe directement en révision (2 j environ) ; une carte ratée revient une fois dans la session.
+- Une carte encore en (ré)apprentissage et replanifiée dans la journée est remise **en fin de file** de la session. La session n'attend pas l'échéance en minutes : la carte revient dès que les autres ont été vues.
 - « Due » : une carte en révision (planifiée en jours) est due toute la journée de son échéance ; une carte en apprentissage (planifiée en minutes) seulement une fois l'heure passée.
 - La file est figée au lancement de la session ; les filtres ne sont pas mémorisés entre deux visites.
 
 **Notation (mapping vers FSRS)**
 
-| Type                            | Interaction                        | Note FSRS                                                                            |
-| ------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
-| `flashcard`                     | Retourner la carte, puis 4 boutons | Again / Hard / Good / Easy (choix utilisateur)                                       |
-| `mcq`, `true_false`, `ordering` | Réponse corrigée automatiquement   | Faux → **Again** ; Juste → **Good** ; bouton optionnel « C'était facile » → **Easy** |
+| Type                            | Interaction                        | Note FSRS                                                                                                |
+| ------------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `flashcard`                     | Retourner la carte, puis 4 boutons | « Je ne savais pas » → Again ; « J'ai hésité » → Hard ; « Je savais » → Good ; « Trop facile » → Easy    |
+| `mcq`, `true_false`, `ordering` | Réponse corrigée automatiquement   | Faux → **Again** (bouton « Continuer ») ; Juste → **Good** (« Continuer ») ou **Easy** (« Trop facile ») |
 
 - Un QCM à réponses multiples n'est juste que si la sélection est **exactement** l'ensemble correct.
 - Une carte `ordering` n'est juste que si l'ordre est entièrement correct.
 - Les options d'un QCM sont **affichées dans un ordre aléatoire**, tiré à chaque présentation de la carte : la position de la bonne réponse ne peut pas être mémorisée. Les lettres A, B, C… et les raccourcis 1–4 suivent l'ordre affiché ; les réponses restent enregistrées avec les index du JSON.
 - Après réponse : affichage de la correction (bonnes options surlignées, ordre correct) et de `explanation`.
-- Chaque bouton de notation affiche le prochain intervalle prévu (« 10 min », « 3 j »…), calculé au moment de la réponse.
-- Une flash card compte comme juste dans les statistiques sauf si elle est notée « À revoir ».
+- Les libellés décrivent ce que l'utilisateur a ressenti, pas la note FSRS, et restent courts.
+- Chaque bouton affiche où part la carte : « dans la session » si elle revient avant la fin de la journée, sinon « dans 2 j », « dans 3 mois »… Pas de minutes, la session n'attendant pas ce délai.
+- Une flash card compte comme juste dans les statistiques sauf si elle est notée « Je ne savais pas ».
 - Les intervalles FSRS sont légèrement randomisés (fuzz) pour étaler les révisions.
 
 **Fin de session** : récapitulatif (cartes vues, taux de réussite, prochaine échéance).
@@ -136,7 +138,7 @@ Le build échoue (via `npm test` en CI/pré-déploiement) si les données sont i
 - Mêmes filtres que la révision + nombre de cartes (10 / 20 / 50 / toutes) + option « uniquement mes erreurs » (cartes dont la dernière réponse était fausse).
 - Tirage aléatoire.
 - **N'impacte pas** le planning FSRS (mais alimente les statistiques de réussite).
-- Flash cards : auto-évaluation « À revoir » / « Je savais » après affichage de la réponse.
+- Flash cards : auto-évaluation « Je ne savais pas » / « Je savais » après affichage de la réponse.
 - « Mes erreurs » = cartes dont la **dernière** réponse (révision ou entraînement) était fausse.
 - Bilan de fin de série : réussite, liste des cartes ratées, bouton « Rejouer mes erreurs ».
 

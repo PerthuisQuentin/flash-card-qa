@@ -15,14 +15,14 @@ Tout fonctionne dans le navigateur : pas de compte, pas de backend. La progressi
 
 ### Raccourcis clavier
 
-| Contexte                       | Touches                                                               |
-| ------------------------------ | --------------------------------------------------------------------- |
-| Carte (avant réponse)          | `1`–`n` choisir une option · `V` / `F` vrai / faux · `Entrée` valider |
-| Révision — flash card          | `1` à revoir · `2` difficile · `3` bien · `4` facile                  |
-| Révision — carte auto-corrigée | `Entrée` continuer (bien / à revoir) · `4` c'était facile             |
-| Entraînement — flash card      | `1` à revoir · `2` je savais                                          |
-| Entraînement — après réponse   | `Entrée` carte suivante                                               |
-| Examen blanc                   | `1`–`4` répondre · `←` `→` naviguer · `F` marquer à revoir            |
+| Contexte                       | Touches                                                                  |
+| ------------------------------ | ------------------------------------------------------------------------ |
+| Carte (avant réponse)          | `1`–`n` choisir une option · `V` / `F` vrai / faux · `Entrée` valider    |
+| Révision — flash card          | `1` je ne savais pas · `2` j'ai hésité · `3` je savais · `4` trop facile |
+| Révision — carte auto-corrigée | `Entrée` continuer · `4` trop facile                                     |
+| Entraînement — flash card      | `1` je ne savais pas · `2` je savais                                     |
+| Entraînement — après réponse   | `Entrée` carte suivante                                                  |
+| Examen blanc                   | `1`–`4` répondre · `←` `→` naviguer · `F` marquer à revoir               |
 
 Les raccourcis sont désactivés dans les champs de saisie, et les cartes « remise en ordre » gardent la gestion clavier du glisser-déposer.
 

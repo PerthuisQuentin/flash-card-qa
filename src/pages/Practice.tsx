@@ -237,13 +237,13 @@ function PracticeActions({ correct, isLast, onAnswer }: PracticeActionsProps) {
       <div className="space-y-2">
         <div className="grid grid-cols-2 gap-3">
           <Button variant="secondary" onClick={() => onAnswer(false)}>
-            À revoir
+            Je ne savais pas
           </Button>
           <Button onClick={() => onAnswer(true)}>Je savais</Button>
         </div>
         <KeyHint
           items={[
-            ['1', 'à revoir'],
+            ['1', 'je ne savais pas'],
             ['2', 'je savais'],
           ]}
         />

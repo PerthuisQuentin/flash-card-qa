@@ -79,7 +79,7 @@ describe('todaySummary', () => {
 
   it('counts due cards and answers of the local day', () => {
     let state = review(createDefaultState(), 'c1-001', Rating.Again, at(12, 9))
-    state = review(state, 'c1-002', Rating.Good, at(11, 9))
+    state = review(state, 'c1-002', Rating.Hard, at(11, 9)) // still learning, due since yesterday
     expect(todaySummary(state, at(12, 11), cards)).toEqual({
       due: 2,
       fresh: 2,

@@ -32,7 +32,7 @@ async function answerWrong(user: UserEvent): Promise<string> {
 
   if (card.type === 'flashcard') {
     await user.click(screen.getByRole('button', { name: 'Afficher la réponse' }))
-    await user.click(screen.getByRole('button', { name: 'À revoir' }))
+    await user.click(screen.getByRole('button', { name: 'Je ne savais pas' }))
     return card.id
   }
   if (card.type === 'mcq') {

@@ -32,20 +32,20 @@ Légende : ☐ à faire · ✅ OK · ❌ KO (noter le détail en bas).
 
 ## 3. Révision (FSRS)
 
-| #    | Action                                                           | Attendu                                                                                                                            | ☐   |
-| ---- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --- |
-| 3.1  | Réviser → « Commencer (20 cartes) »                              | 1re carte = c1-001 (flash card), compteur « 0 / 20 vues »                                                                          | ☐   |
-| 3.2  | Afficher la réponse                                              | Réponse multi-lignes lisible, 4 boutons avec intervalle (« 1 min », « 10 min »…)                                                   | ☐   |
-| 3.3  | Noter « Bien »                                                   | La carte suivante s'affiche ; compteur « 1 / 20 vues · 1 à repasser » (c1-001 reviendra en fin de file)                            | ☐   |
-| 3.4  | Vrai/Faux : mauvaise réponse → Valider                           | « ✗ Mauvaise réponse », bon choix en vert, explication, bouton « Continuer · revient dans 1 min »                                  | ☐   |
-| 3.5  | QCM à réponse unique : bonne réponse                             | « ✓ Bonne réponse », boutons « Bien » et « C'était facile » avec intervalles ; options dans un ordre différent si la carte revient | ☐   |
-| 3.6  | QCM multi-réponses (ex. c1-006)                                  | Mention « Sélectionne 3 réponses », cases à cocher ; 2 sur 3 cochées = faux                                                        | ☐   |
-| 3.7  | Carte « remise en ordre » : glisser via ⋮⋮ (souris **et** doigt) | L'élément se déplace ; le scroll mobile reste possible hors poignée                                                                | ☐   |
-| 3.8  | Remise en ordre : flèches ▲▼ puis valider faux                   | Positions ✓/✗ et « Ordre attendu » affichés                                                                                        | ☐   |
-| 3.9  | « Terminer » en cours de session                                 | Bilan : nombre de réponses, % de réussite, prochaine échéance                                                                      | ☐   |
-| 3.10 | Revenir sur Réviser                                              | Nouvelles cartes restantes = 20 − cartes déjà introduites aujourd'hui                                                              | ☐   |
-| 3.11 | Filtres : ne garder que K1, puis tag « piège »                   | Les compteurs « dues / nouvelles » se mettent à jour ; chapitres sans cartes non sélectionnables                                   | ☐   |
-| 3.12 | Paramètres → 0 nouvelle carte/jour, revenir sur Réviser          | « Rien à réviser » + prochaine échéance (si des cartes sont en cours)                                                              | ☐   |
+| #    | Action                                                           | Attendu                                                                                                                                                                         | ☐   |
+| ---- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| 3.1  | Réviser → « Commencer (20 cartes) »                              | 1re carte = c1-001 (flash card), compteur « 0 / 20 vues »                                                                                                                       | ☐   |
+| 3.2  | Afficher la réponse                                              | Réponse multi-lignes lisible, « Tu connaissais la réponse ? » et 4 boutons (« Je ne savais pas » → « dans la session », « Je savais » → « dans 2 j »…), aucune durée en minutes | ☐   |
+| 3.3  | Noter « Je savais »                                              | La carte suivante s'affiche ; compteur « 1 / 20 vues » (c1-001 part à 2 j, elle ne revient pas)                                                                                 | ☐   |
+| 3.4  | Vrai/Faux : mauvaise réponse → Valider                           | « ✗ Mauvaise réponse », bon choix en vert, explication, « Revient dans la session » et bouton « Continuer » ; compteur « · 1 à repasser »                                       | ☐   |
+| 3.5  | QCM à réponse unique : bonne réponse                             | « ✓ Bonne réponse », boutons « Continuer » (dans 2 j) et « Trop facile » (dans 8 j) ; options dans un ordre différent si la carte revient                                       | ☐   |
+| 3.6  | QCM multi-réponses (ex. c1-006)                                  | Mention « Sélectionne 3 réponses », cases à cocher ; 2 sur 3 cochées = faux                                                                                                     | ☐   |
+| 3.7  | Carte « remise en ordre » : glisser via ⋮⋮ (souris **et** doigt) | L'élément se déplace ; le scroll mobile reste possible hors poignée                                                                                                             | ☐   |
+| 3.8  | Remise en ordre : flèches ▲▼ puis valider faux                   | Positions ✓/✗ et « Ordre attendu » affichés                                                                                                                                     | ☐   |
+| 3.9  | « Terminer » en cours de session                                 | Bilan : nombre de réponses, % de réussite, prochaine échéance                                                                                                                   | ☐   |
+| 3.10 | Revenir sur Réviser                                              | Nouvelles cartes restantes = 20 − cartes déjà introduites aujourd'hui                                                                                                           | ☐   |
+| 3.11 | Filtres : ne garder que K1, puis tag « piège »                   | Les compteurs « dues / nouvelles » se mettent à jour ; chapitres sans cartes non sélectionnables                                                                                | ☐   |
+| 3.12 | Paramètres → 0 nouvelle carte/jour, revenir sur Réviser          | « Rien à réviser » + prochaine échéance (si des cartes sont en cours)                                                                                                           | ☐   |
 
 ## 4. Entraînement libre
 
@@ -55,7 +55,7 @@ Légende : ☐ à faire · ✅ OK · ❌ KO (noter le détail en bas).
 | 4.2 | « Rejouer mes erreurs »                              | Série de 2 cartes, uniquement celles ratées                                        | ☐   |
 | 4.3 | Nouvelle série + « Uniquement mes erreurs »          | Le bouton indique le bon nombre de cartes                                          | ☐   |
 | 4.4 | Vérifier le tableau de bord après l'entraînement     | Cartes vues / dues **inchangées** (aucun impact FSRS), réponses du jour augmentées | ☐   |
-| 4.5 | Flash card en entraînement                           | Boutons « À revoir » / « Je savais »                                               | ☐   |
+| 4.5 | Flash card en entraînement                           | Boutons « Je ne savais pas » / « Je savais »                                       | ☐   |
 
 ## 5. Examen blanc
 

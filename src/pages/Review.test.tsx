@@ -36,11 +36,11 @@ describe('Review page', () => {
     expect(screen.getByText(first.question)).toBeTruthy()
 
     await user.click(screen.getByRole('button', { name: 'Afficher la réponse' }))
-    await user.click(screen.getByRole('button', { name: /^Bien/ }))
+    await user.click(screen.getByRole('button', { name: /^Je savais/ }))
 
-    // Still in learning after one "Good": it goes back to the end of the queue.
-    expect(screen.getByText('1 / 20 vues · 1 à repasser')).toBeTruthy()
-    expect(stored().srs[first.id].state).toBe(1)
+    // Known at first sight: straight to review, it does not come back in the session.
+    expect(screen.getByText('1 / 20 vues')).toBeTruthy()
+    expect(stored().srs[first.id].state).toBe(2)
     expect(stored().answers).toMatchObject([
       { cardId: first.id, correct: true, mode: 'review', rating: 3 },
     ])
@@ -52,8 +52,11 @@ describe('Review page', () => {
     if (second.type !== 'true_false') return
     await user.click(screen.getByRole('radio', { name: second.answer ? 'Faux' : 'Vrai' }))
     await user.click(screen.getByRole('button', { name: 'Valider' }))
-    await user.click(screen.getByRole('button', { name: /^Continuer/ }))
+    expect(screen.getByText('Revient dans la session')).toBeTruthy()
+    await user.click(screen.getByRole('button', { name: 'Continuer' }))
     expect(stored().answers[1]).toMatchObject({ cardId: second.id, correct: false, rating: 1 })
+    // Missed: it goes back to the end of the queue.
+    expect(screen.getByText('2 / 20 vues · 1 à repasser')).toBeTruthy()
 
     await user.click(screen.getByRole('button', { name: 'Terminer' }))
     expect(screen.getByText('Session terminée 🎉')).toBeTruthy()
@@ -66,7 +69,7 @@ describe('Review page', () => {
 
     // Flashcard: Enter reveals, 3 rates "Good".
     await user.keyboard('{Enter}')
-    expect(screen.getByRole('button', { name: /^Bien/ })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /^Je savais/ })).toBeTruthy()
     await user.keyboard('3')
     expect(stored().answers[0]).toMatchObject({ cardId: cards[0].id, rating: 3 })
 

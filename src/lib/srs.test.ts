@@ -57,13 +57,13 @@ describe('serialization', () => {
 describe('applyReview', () => {
   it('schedules a new card, counts it as introduced and logs the answer', () => {
     const now = at(12)
-    const state = review(stateWith(), 'c1-001', Rating.Good, now)
+    const state = review(stateWith(), 'c1-001', Rating.Hard, now)
 
     expect(state.srs['c1-001'].state).toBe(State.Learning)
     expect(state.srs['c1-001'].reps).toBe(1)
     expect(state.newCardsIntroduced).toEqual({ [localDay(now)]: 1 })
     expect(state.answers).toEqual([
-      { cardId: 'c1-001', at: now.toISOString(), correct: true, mode: 'review', rating: 3 },
+      { cardId: 'c1-001', at: now.toISOString(), correct: true, mode: 'review', rating: 2 },
     ])
     expect(parseState(state).ok).toBe(true)
   })
@@ -75,13 +75,22 @@ describe('applyReview', () => {
     expect(state.answers.map((answer) => answer.correct)).toEqual([false, true])
   })
 
-  it('graduates a card through learning steps to review', () => {
-    let state = review(stateWith(), 'c1-001', Rating.Good, at(12, 10))
-    state = review(state, 'c1-001', Rating.Good, at(12, 10, 15))
-    const data = state.srs['c1-001']
+  it('graduates a new card known at first sight straight to days', () => {
+    const data = review(stateWith(), 'c1-001', Rating.Good, at(12, 10)).srs['c1-001']
 
     expect(data.state).toBe(State.Review)
     expect(new Date(data.due).getTime()).toBeGreaterThan(endOfDay(at(12)).getTime())
+  })
+
+  it('brings a missed card back once, 10 minutes later, then graduates it', () => {
+    let state = review(stateWith(), 'c1-001', Rating.Again, at(12, 10))
+    expect(state.srs['c1-001']).toMatchObject({
+      state: State.Learning,
+      due: at(12, 10, 10).toISOString(),
+    })
+
+    state = review(state, 'c1-001', Rating.Good, at(12, 10, 10))
+    expect(state.srs['c1-001'].state).toBe(State.Review)
   })
 
   it('sends a forgotten review card to relearning', () => {
@@ -180,15 +189,20 @@ describe('session helpers', () => {
     expect(shouldRequeue(graduated.srs['c1-001'], at(12, 10))).toBe(false)
   })
 
-  it('previews increasing intervals for each grade', () => {
-    const now = at(12)
+  it('previews each grade, in-session steps instead of minutes', () => {
     const scheduler = createScheduler(stateWith().settings, { fuzz: false })
-    const preview = previewIntervals(stateWith(), 'c1-001', now, scheduler)
-    const times = [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy].map((grade) =>
-      preview[grade as Grade].getTime(),
-    )
-    expect([...times].sort((a, b) => a - b)).toEqual(times)
-    expect(times[0]).toBeGreaterThan(now.getTime())
+    expect(previewIntervals(stateWith(), 'c1-001', at(12), scheduler)).toEqual({
+      [Rating.Again]: 'dans la session',
+      [Rating.Hard]: 'dans la session',
+      [Rating.Good]: 'dans 2 j',
+      [Rating.Easy]: 'dans 8 j',
+    })
+  })
+
+  it('previews days for a card a few minutes before midnight', () => {
+    const scheduler = createScheduler(stateWith().settings, { fuzz: false })
+    const preview = previewIntervals(stateWith(), 'c1-001', at(12, 23, 55), scheduler)
+    expect(preview[Rating.Again]).toBe('dans 10 min')
   })
 
   it('finds the next due date', () => {
