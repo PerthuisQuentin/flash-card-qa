@@ -19,7 +19,10 @@ export default function ExamHome() {
         subtitle="Conditions de l’examen CTFL : QCM uniquement, chronométré."
       />
 
-      <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <section
+        data-cy="exam-plan"
+        className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+      >
         <p className="text-lg">
           <strong>{plan.total} questions</strong> · {formatDuration(plan.durationSec)} · réussite à{' '}
           <strong>
@@ -31,13 +34,14 @@ export default function ExamHome() {
         {plan.warning && (
           <p
             role="note"
+            data-cy="exam-warning"
             className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
           >
             ⚠️ {plan.warning}
           </p>
         )}
 
-        <table className="w-full text-sm">
+        <table data-cy="exam-quotas" className="w-full text-sm">
           <thead>
             <tr className="text-left text-slate-500 dark:text-slate-400">
               <th className="py-1 font-medium">Chapitre</th>
@@ -47,7 +51,11 @@ export default function ExamHome() {
           </thead>
           <tbody>
             {chapters.map((chapter) => (
-              <tr key={chapter.id} className="border-t border-slate-100 dark:border-slate-800">
+              <tr
+                key={chapter.id}
+                data-cy={`exam-quota-${chapter.id}`}
+                className="border-t border-slate-100 dark:border-slate-800"
+              >
                 <td className="py-1.5">
                   <span className="text-slate-400">{chapter.id}.</span> {chapter.title}
                 </td>
@@ -61,6 +69,7 @@ export default function ExamHome() {
         </table>
 
         <Button
+          data-cy="exam-start"
           className="w-full"
           disabled={plan.total === 0}
           onClick={() => update((s) => startExam(s, createExam(new Date())))}
@@ -73,10 +82,10 @@ export default function ExamHome() {
         </p>
       </section>
 
-      <section className="mt-8">
+      <section data-cy="exam-history" className="mt-8">
         <h2 className="mb-3 text-lg font-semibold">Historique</h2>
         {history.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p data-cy="exam-history-empty" className="text-sm text-slate-500 dark:text-slate-400">
             Aucun examen passé pour l’instant.
           </p>
         ) : (
@@ -88,6 +97,7 @@ export default function ExamHome() {
                 <li key={result.id}>
                   <Link
                     to={`/exam/${result.id}`}
+                    data-cy="exam-history-item"
                     className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-slate-200 bg-white px-4 py-3 hover:border-indigo-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-700"
                   >
                     <span className="text-sm text-slate-500 dark:text-slate-400">
@@ -114,6 +124,7 @@ export default function ExamHome() {
 export function PassBadge({ passed }: { passed: boolean }) {
   return (
     <span
+      data-cy="exam-pass-badge"
       className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
         passed
           ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'

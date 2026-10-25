@@ -20,8 +20,12 @@ export default function ActivityChart({ days }: { days: DayActivity[] }) {
   const middle = Math.floor((days.length - 1) / 2)
 
   return (
-    <figure>
-      <p aria-live="polite" className="mb-3 min-h-5 text-sm text-slate-600 dark:text-slate-300">
+    <figure data-cy="activity-chart">
+      <p
+        data-cy="activity-chart-summary"
+        aria-live="polite"
+        className="mb-3 min-h-5 text-sm text-slate-600 dark:text-slate-300"
+      >
         {active === null ? (
           <>
             <strong className="text-slate-900 dark:text-slate-100">{total}</strong> réponses sur{' '}
@@ -46,6 +50,7 @@ export default function ActivityChart({ days }: { days: DayActivity[] }) {
           {days.map((day, i) => (
             <div
               key={day.day}
+              data-cy="activity-chart-day"
               tabIndex={0}
               role="img"
               aria-label={describe(day)}

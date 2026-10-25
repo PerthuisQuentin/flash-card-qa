@@ -17,7 +17,7 @@ export default function McqView({ card, selected, onChange, revealed, order }: M
   const displayed = optionOrder(card, order)
 
   return (
-    <fieldset className="space-y-2">
+    <fieldset data-cy="mcq-options" className="space-y-2">
       <legend className="mb-2 text-sm text-slate-500 dark:text-slate-400">
         {multi ? `Sélectionne ${card.correct.length} réponses.` : 'Sélectionne une seule réponse.'}
       </legend>
@@ -30,6 +30,7 @@ export default function McqView({ card, selected, onChange, revealed, order }: M
         return (
           <label
             key={index}
+            data-cy="mcq-option"
             className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors has-[:disabled]:cursor-default ${optionStyle(
               revealed,
               isSelected,

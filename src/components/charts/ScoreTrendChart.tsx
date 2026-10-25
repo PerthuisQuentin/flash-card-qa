@@ -32,8 +32,12 @@ export default function ScoreTrendChart({ exams }: { exams: ExamResult[] }) {
   const shown = active ?? points.length - 1
 
   return (
-    <figure>
-      <p aria-live="polite" className="mb-3 min-h-5 text-sm text-slate-600 dark:text-slate-300">
+    <figure data-cy="score-trend-chart">
+      <p
+        data-cy="score-trend-summary"
+        aria-live="polite"
+        className="mb-3 min-h-5 text-sm text-slate-600 dark:text-slate-300"
+      >
         {active === null && 'Dernier examen : '}
         {describe(points[shown].result)}
       </p>
@@ -82,6 +86,7 @@ export default function ScoreTrendChart({ exams }: { exams: ExamResult[] }) {
           <Link
             key={point.result.id}
             to={`/exam/${point.result.id}`}
+            data-cy="score-trend-point"
             aria-label={`Examen du ${describe(point.result)}`}
             onMouseEnter={() => setActive(i)}
             onFocus={() => setActive(i)}

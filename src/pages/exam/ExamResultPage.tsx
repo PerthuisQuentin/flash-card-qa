@@ -19,7 +19,11 @@ export default function ExamResultPage() {
     return (
       <>
         <PageTitle title="Résultat introuvable" />
-        <Link to="/exam" className="text-indigo-600 underline dark:text-indigo-400">
+        <Link
+          to="/exam"
+          data-cy="exam-result-back"
+          className="text-indigo-600 underline dark:text-indigo-400"
+        >
           Retour aux examens
         </Link>
       </>
@@ -40,13 +44,14 @@ export default function ExamResultPage() {
       />
 
       <section
+        data-cy="exam-result-header"
         className={`mb-6 flex flex-wrap items-center gap-4 rounded-xl border p-5 ${
           passed
             ? 'border-emerald-300 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-950/40'
             : 'border-rose-300 bg-rose-50 dark:border-rose-800 dark:bg-rose-950/40'
         }`}
       >
-        <div className="text-4xl font-bold tabular-nums">
+        <div data-cy="exam-result-score" className="text-4xl font-bold tabular-nums">
           {result.score}/{total}
         </div>
         <div>
@@ -59,30 +64,37 @@ export default function ExamResultPage() {
 
       <section className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <StatTile
+          cy="exam-result-time"
           label="Temps passé"
           value={formatDuration(result.elapsedSec)}
           hint={`sur ${formatDuration(result.durationSec)}${result.timedOut ? ' · temps écoulé' : ''}`}
         />
-        <StatTile label="Bonnes réponses" value={result.score} />
+        <StatTile cy="exam-result-correct" label="Bonnes réponses" value={result.score} />
         <StatTile
+          cy="exam-result-unanswered"
           label="Sans réponse"
           value={result.questions.filter((q) => q.selected.length === 0).length}
         />
       </section>
 
       {result.warning && (
-        <p className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+        <p
+          data-cy="exam-warning"
+          className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
+        >
           ⚠️ {result.warning}
         </p>
       )}
 
       <section className="mb-8 grid gap-6 sm:grid-cols-2">
         <BreakdownTable
+          cy="exam-result-by-chapter"
           title="Par chapitre"
           rows={breakdown(result, byChapter, getCard)}
           label={(key) => `${key}. ${getChapter(key)?.title ?? ''}`}
         />
         <BreakdownTable
+          cy="exam-result-by-level"
           title="Par niveau"
           rows={breakdown(result, byLevel, getCard)}
           label={(key) => key}
@@ -95,6 +107,7 @@ export default function ExamResultPage() {
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
+              data-cy="exam-result-mistakes-only"
               className="size-4 accent-indigo-600"
               checked={mistakesOnly}
               onChange={(event) => setMistakesOnly(event.target.checked)}
@@ -102,13 +115,14 @@ export default function ExamResultPage() {
             Uniquement les erreurs
           </label>
         </div>
-        <ol className="space-y-4">
+        <ol data-cy="exam-result-questions" className="space-y-4">
           {questions.map((question) => {
             const card = getCard(question.cardId)
             if (card?.type !== 'mcq') return null
             return (
               <li
                 key={question.cardId}
+                data-cy="exam-result-question"
                 className="space-y-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
               >
                 <div className="flex flex-wrap items-center gap-2 text-sm">
@@ -116,6 +130,7 @@ export default function ExamResultPage() {
                     Question {question.index + 1}
                   </span>
                   <span
+                    data-cy="exam-result-verdict"
                     className={
                       question.correct
                         ? 'text-emerald-700 dark:text-emerald-400'
@@ -151,12 +166,18 @@ export default function ExamResultPage() {
           })}
         </ol>
         {questions.length === 0 && (
-          <p className="text-sm text-slate-500 dark:text-slate-400">Aucune erreur 🎉</p>
+          <p
+            data-cy="exam-result-no-mistakes"
+            className="text-sm text-slate-500 dark:text-slate-400"
+          >
+            Aucune erreur 🎉
+          </p>
         )}
       </section>
 
       <Link
         to="/exam"
+        data-cy="exam-result-back"
         className="mt-8 inline-flex rounded-lg px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-slate-800"
       >
         ← Retour aux examens
@@ -166,21 +187,31 @@ export default function ExamResultPage() {
 }
 
 interface BreakdownTableProps<K> {
+  cy: string
   title: string
   rows: ScoreBreakdown<K>[]
   label: (key: K) => string
 }
 
-function BreakdownTable<K extends number | string>({ title, rows, label }: BreakdownTableProps<K>) {
+function BreakdownTable<K extends number | string>({
+  cy,
+  title,
+  rows,
+  label,
+}: BreakdownTableProps<K>) {
   return (
-    <div>
+    <div data-cy={cy}>
       <h2 className="mb-2 font-semibold">{title}</h2>
       <table className="w-full text-sm">
         <tbody>
           {rows.map((row) => {
             const pct = percent(row.correct, row.total)
             return (
-              <tr key={String(row.key)} className="border-t border-slate-100 dark:border-slate-800">
+              <tr
+                key={String(row.key)}
+                data-cy="exam-result-breakdown-row"
+                className="border-t border-slate-100 dark:border-slate-800"
+              >
                 <td className="py-1.5 pr-2">{label(row.key)}</td>
                 <td className="w-24 py-1.5">
                   <div className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">

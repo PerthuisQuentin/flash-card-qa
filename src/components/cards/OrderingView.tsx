@@ -42,12 +42,13 @@ export default function OrderingView({ card, order, onChange, revealed }: Orderi
     const allCorrect = order.every((item, i) => item === card.items[i])
     return (
       <div className="space-y-4">
-        <ol className="space-y-2">
+        <ol data-cy="ordering-result" className="space-y-2">
           {order.map((item, i) => {
             const ok = item === card.items[i]
             return (
               <li
                 key={item}
+                data-cy="ordering-result-item"
                 className={`flex items-start gap-3 rounded-lg border p-3 ${
                   ok
                     ? 'border-emerald-500 bg-emerald-50 dark:border-emerald-600 dark:bg-emerald-950/40'
@@ -66,7 +67,7 @@ export default function OrderingView({ card, order, onChange, revealed }: Orderi
             <p className="mb-2 text-sm font-medium text-emerald-700 dark:text-emerald-400">
               Ordre attendu :
             </p>
-            <ol className="list-decimal space-y-1 pl-6 text-sm">
+            <ol data-cy="ordering-expected" className="list-decimal space-y-1 pl-6 text-sm">
               {card.items.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -85,7 +86,7 @@ export default function OrderingView({ card, order, onChange, revealed }: Orderi
       </p>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={order} strategy={verticalListSortingStrategy}>
-          <ol className="space-y-2">
+          <ol data-cy="ordering-list" className="space-y-2">
             {order.map((item, index) => (
               <SortableItem
                 key={item}
@@ -123,6 +124,7 @@ function SortableItem({ item, index, count, onMove }: SortableItemProps) {
   return (
     <li
       ref={setNodeRef}
+      data-cy="ordering-item"
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={`flex items-center gap-2 rounded-lg border bg-white p-2 dark:bg-slate-900 ${
         isDragging
@@ -132,6 +134,7 @@ function SortableItem({ item, index, count, onMove }: SortableItemProps) {
     >
       <button
         ref={setActivatorNodeRef}
+        data-cy="ordering-handle"
         type="button"
         aria-label={`Déplacer « ${item} »`}
         className="cursor-grab touch-none rounded px-1.5 py-2 text-slate-400 hover:bg-slate-100 active:cursor-grabbing dark:hover:bg-slate-800"
@@ -145,6 +148,7 @@ function SortableItem({ item, index, count, onMove }: SortableItemProps) {
       <div className="flex flex-col">
         <button
           type="button"
+          data-cy="ordering-up"
           aria-label={`Monter « ${item} »`}
           disabled={index === 0}
           onClick={() => onMove(index - 1)}
@@ -154,6 +158,7 @@ function SortableItem({ item, index, count, onMove }: SortableItemProps) {
         </button>
         <button
           type="button"
+          data-cy="ordering-down"
           aria-label={`Descendre « ${item} »`}
           disabled={index === count - 1}
           onClick={() => onMove(index + 1)}

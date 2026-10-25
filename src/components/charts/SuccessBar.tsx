@@ -13,6 +13,7 @@ export default function SuccessBar({ correct, answered }: SuccessBarProps) {
     <div className="flex items-center gap-3">
       <div
         role="meter"
+        data-cy="success-bar"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={value}

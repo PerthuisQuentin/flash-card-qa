@@ -25,3 +25,8 @@ dist-ssr
 
 # Source PDFs (ISTQB/CFTL copyright)
 resources/
+
+# Cypress artifacts
+cypress/screenshots
+cypress/videos
+cypress/downloads

@@ -36,9 +36,12 @@ export default function Settings() {
   )
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ cy, title, children }: { cy: string; title: string; children: ReactNode }) {
   return (
-    <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <section
+      data-cy={cy}
+      className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+    >
       <h2 className="text-lg font-semibold">{title}</h2>
       {children}
     </section>
@@ -63,13 +66,14 @@ function ReviewSettings() {
   }
 
   return (
-    <Section title="Révision">
+    <Section cy="settings-review" title="Révision">
       <div className="space-y-1">
         <label htmlFor="new-cards-per-day" className="block text-sm font-medium">
           Nouvelles cartes par jour
         </label>
         <input
           id="new-cards-per-day"
+          data-cy="settings-new-cards"
           aria-describedby="new-cards-per-day-hint"
           type="number"
           inputMode="numeric"
@@ -84,6 +88,7 @@ function ReviewSettings() {
         />
         <p
           id="new-cards-per-day-hint"
+          data-cy="settings-new-cards-hint"
           className={`text-xs ${draftValid ? 'text-slate-500 dark:text-slate-400' : 'text-rose-600'}`}
         >
           {draftValid
@@ -98,6 +103,7 @@ function ReviewSettings() {
         </label>
         <select
           id="desired-retention"
+          data-cy="settings-retention"
           aria-describedby="desired-retention-hint"
           value={desiredRetention}
           onChange={(event) =>
@@ -159,14 +165,20 @@ function BackupSection() {
   }
 
   return (
-    <Section title="Sauvegarde">
+    <Section cy="settings-backup" title="Sauvegarde">
       <p className="text-sm text-slate-600 dark:text-slate-400">
         La progression est stockée dans ce navigateur uniquement ({summarize(state)}). Exporte-la
         pour la sauvegarder ou la transférer sur un autre appareil.
       </p>
       <div className="flex flex-wrap gap-3">
-        <Button onClick={exportState}>Exporter la progression</Button>
-        <Button variant="secondary" onClick={() => fileInput.current?.click()}>
+        <Button data-cy="settings-export" onClick={exportState}>
+          Exporter la progression
+        </Button>
+        <Button
+          data-cy="settings-import"
+          variant="secondary"
+          onClick={() => fileInput.current?.click()}
+        >
           Importer une sauvegarde…
         </Button>
         <input
@@ -175,12 +187,16 @@ function BackupSection() {
           accept="application/json,.json"
           className="hidden"
           data-testid="import-input"
+          data-cy="settings-import-input"
           onChange={onFileSelected}
         />
       </div>
 
       {status.kind === 'preview' && (
-        <div className="space-y-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm dark:border-amber-800 dark:bg-amber-950/40">
+        <div
+          data-cy="settings-import-preview"
+          className="space-y-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm dark:border-amber-800 dark:bg-amber-950/40"
+        >
           <p>
             <strong>{status.fileName}</strong> : {summarize(status.state)}.
           </p>
@@ -189,6 +205,7 @@ function BackupSection() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Button
+              data-cy="settings-import-confirm"
               onClick={() => {
                 update(() => status.state)
                 setStatus({ kind: 'done' })
@@ -196,20 +213,31 @@ function BackupSection() {
             >
               Remplacer
             </Button>
-            <Button variant="ghost" onClick={() => setStatus({ kind: 'idle' })}>
+            <Button
+              data-cy="settings-import-cancel"
+              variant="ghost"
+              onClick={() => setStatus({ kind: 'idle' })}
+            >
               Annuler
             </Button>
           </div>
         </div>
       )}
       {status.kind === 'error' && (
-        <div className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200">
+        <div
+          data-cy="settings-import-error"
+          className="rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm text-rose-800 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200"
+        >
           <p className="font-medium">Fichier invalide, rien n’a été modifié.</p>
           <pre className="mt-2 text-xs whitespace-pre-wrap">{status.message}</pre>
         </div>
       )}
       {status.kind === 'done' && (
-        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400" role="status">
+        <p
+          data-cy="settings-import-done"
+          className="text-sm font-medium text-emerald-700 dark:text-emerald-400"
+          role="status"
+        >
           ✓ Progression importée.
         </p>
       )}
@@ -223,7 +251,7 @@ function ResetSection() {
   const [done, setDone] = useState(false)
 
   return (
-    <Section title="Réinitialisation">
+    <Section cy="settings-reset-section" title="Réinitialisation">
       <p className="text-sm text-slate-600 dark:text-slate-400">
         Efface toute la progression, l’historique et les paramètres. Pense à exporter avant.
       </p>
@@ -233,6 +261,7 @@ function ResetSection() {
             Tout effacer définitivement ?
           </span>
           <Button
+            data-cy="settings-reset-confirm"
             className="bg-rose-600 hover:bg-rose-500"
             onClick={() => {
               update(() => createDefaultState())
@@ -242,12 +271,17 @@ function ResetSection() {
           >
             Oui, tout effacer
           </Button>
-          <Button variant="ghost" onClick={() => setConfirming(false)}>
+          <Button
+            data-cy="settings-reset-cancel"
+            variant="ghost"
+            onClick={() => setConfirming(false)}
+          >
             Annuler
           </Button>
         </div>
       ) : (
         <Button
+          data-cy="settings-reset"
           variant="secondary"
           onClick={() => {
             setConfirming(true)
@@ -258,7 +292,11 @@ function ResetSection() {
         </Button>
       )}
       {done && (
-        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400" role="status">
+        <p
+          data-cy="settings-reset-done"
+          className="text-sm font-medium text-emerald-700 dark:text-emerald-400"
+          role="status"
+        >
           ✓ Progression réinitialisée.
         </p>
       )}

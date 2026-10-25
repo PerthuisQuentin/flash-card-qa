@@ -10,6 +10,7 @@ Personal web app to prepare the ISTQB CTFL v4.0 certification: FSRS spaced repet
 
 - **Code in English, UI in French.** Identifiers, file names, routes (`/review`, `/practice`, `/exam`…), JSON enum values (`mcq`, `true_false`, `ordering`…), comments and commit messages are in English. Everything the user reads (UI text, card content, docs in `docs/`) is in French.
 - Prettier: no semicolons, single quotes, width 100. Run `npm run format` after edits (it also reformats code blocks in Markdown).
+- UI elements carry `data-cy` hooks for Cypress (`<area>-<element>`, kebab-case English). Add them to new interactive or asserted elements and keep the catalogue in `cypress/README.md` in sync.
 - Lint is oxlint with React rules: no impure calls (`new Date()`, `Math.random()`) during render (use lazy `useState`, event handlers, or values passed in), no ref writes during render.
 
 ## Commands

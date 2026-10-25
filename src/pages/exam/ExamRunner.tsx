@@ -72,20 +72,27 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
   }, [remaining, finish])
 
   return (
-    <div className="space-y-5">
+    <div data-cy="exam-runner" className="space-y-5">
       {exam.warning && index === 0 && (
-        <p className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+        <p
+          data-cy="exam-warning"
+          className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
+        >
           ⚠️ {exam.warning}
         </p>
       )}
 
       <article className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          <span
+            data-cy="exam-question-counter"
+            className="text-sm font-medium text-slate-500 dark:text-slate-400"
+          >
             Question {index + 1} / {exam.questions.length}
           </span>
           <button
             type="button"
+            data-cy="exam-flag"
             aria-pressed={exam.flagged.includes(cardId)}
             onClick={() => update((s) => toggleExamFlag(s, cardId))}
             className={`rounded-lg border px-3 py-1 text-sm ${
@@ -100,7 +107,10 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
 
         {card?.type === 'mcq' ? (
           <>
-            <h2 className="text-lg leading-snug font-semibold whitespace-pre-wrap">
+            <h2
+              data-cy="exam-question"
+              className="text-lg leading-snug font-semibold whitespace-pre-wrap"
+            >
               {card.question}
             </h2>
             <McqView
@@ -116,10 +126,16 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
         )}
 
         <div className="flex justify-between">
-          <Button variant="ghost" disabled={index === 0} onClick={() => setIndex(index - 1)}>
+          <Button
+            data-cy="exam-prev"
+            variant="ghost"
+            disabled={index === 0}
+            onClick={() => setIndex(index - 1)}
+          >
             ← Précédente
           </Button>
           <Button
+            data-cy="exam-next"
             variant={index === exam.questions.length - 1 ? 'secondary' : 'primary'}
             onClick={() =>
               index === exam.questions.length - 1 ? setConfirm('finish') : setIndex(index + 1)
@@ -137,7 +153,7 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
         />
       </article>
 
-      <nav aria-label="Questions">
+      <nav data-cy="exam-navigator" aria-label="Questions">
         <ol className="grid grid-cols-8 gap-1.5 sm:grid-cols-10">
           {exam.questions.map((id, i) => {
             const answered = isAnswered(exam, id)
@@ -149,6 +165,7 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
               <li key={id}>
                 <button
                   type="button"
+                  data-cy={`exam-nav-${i + 1}`}
                   aria-label={`Question ${i + 1}, ${status}`}
                   aria-current={i === index ? 'step' : undefined}
                   onClick={() => setIndex(i)}
@@ -196,6 +213,7 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
         <div className="flex items-center gap-3">
           <span
             role="timer"
+            data-cy="exam-timer"
             aria-label="Temps restant"
             className={`font-mono text-lg font-semibold tabular-nums ${
               remaining <= LOW_TIME_SEC ? 'text-rose-600 dark:text-rose-400' : ''
@@ -203,10 +221,18 @@ export default function ExamRunner({ exam }: { exam: ExamInProgress }) {
           >
             ⏱ {formatClock(remaining)}
           </span>
-          <span className="text-sm text-slate-500 dark:text-slate-400">
+          <span
+            data-cy="exam-answered-count"
+            className="text-sm text-slate-500 dark:text-slate-400"
+          >
             {exam.questions.length - unanswered}/{exam.questions.length} répondues
           </span>
-          <Button className="ml-auto" variant="secondary" onClick={() => setConfirm('finish')}>
+          <Button
+            data-cy="exam-finish"
+            className="ml-auto"
+            variant="secondary"
+            onClick={() => setConfirm('finish')}
+          >
             Terminer
           </Button>
         </div>
@@ -227,6 +253,7 @@ function ConfirmPanel({ kind, unanswered, onConfirm, onCancel, onAbandon }: Conf
   return (
     <div
       role="alertdialog"
+      data-cy="exam-confirm"
       aria-label={kind === 'finish' ? 'Terminer l’examen' : 'Abandonner l’examen'}
       className="space-y-3 rounded-xl border border-amber-300 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/40"
     >
@@ -240,14 +267,19 @@ function ConfirmPanel({ kind, unanswered, onConfirm, onCancel, onAbandon }: Conf
         <p className="text-sm">L’examen sera supprimé sans résultat. Abandonner ?</p>
       )}
       <div className="flex flex-wrap gap-3">
-        <Button onClick={onConfirm}>
+        <Button data-cy="exam-confirm-ok" onClick={onConfirm}>
           {kind === 'finish' ? 'Terminer et corriger' : 'Oui, abandonner'}
         </Button>
-        <Button variant="ghost" onClick={onCancel}>
+        <Button data-cy="exam-confirm-cancel" variant="ghost" onClick={onCancel}>
           Continuer l’examen
         </Button>
         {kind === 'finish' && (
-          <Button variant="ghost" className="ml-auto text-rose-600" onClick={onAbandon}>
+          <Button
+            data-cy="exam-confirm-abandon"
+            variant="ghost"
+            className="ml-auto text-rose-600"
+            onClick={onAbandon}
+          >
             Abandonner sans résultat
           </Button>
         )}

@@ -21,6 +21,7 @@ export default function TrueFalseView({ card, value, onChange, revealed }: TrueF
         return (
           <button
             key={choice.label}
+            data-cy={choice.value ? 'tf-true' : 'tf-false'}
             type="button"
             role="radio"
             aria-checked={isSelected}

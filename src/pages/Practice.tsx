@@ -109,6 +109,7 @@ function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: Se
             {PRACTICE_SIZES.map((size) => (
               <button
                 key={size}
+                data-cy={`practice-size-${size}`}
                 type="button"
                 role="radio"
                 aria-checked={options.size === size}
@@ -128,6 +129,7 @@ function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: Se
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
+            data-cy="practice-mistakes-only"
             className="size-4 accent-indigo-600"
             checked={options.mistakesOnly}
             onChange={(event) =>
@@ -138,10 +140,14 @@ function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: Se
         </label>
 
         {filter.los?.length ? (
-          <p className="flex flex-wrap items-center gap-2 rounded-lg bg-indigo-50 px-3 py-2 text-sm dark:bg-indigo-950/40">
+          <p
+            data-cy="practice-target-lo"
+            className="flex flex-wrap items-center gap-2 rounded-lg bg-indigo-50 px-3 py-2 text-sm dark:bg-indigo-950/40"
+          >
             Objectif ciblé : <strong className="font-mono">{filter.los.join(', ')}</strong>
             <button
               type="button"
+              data-cy="practice-target-lo-remove"
               onClick={() => onFilterChange({ ...filter, los: [] })}
               className="ml-auto text-indigo-600 hover:underline dark:text-indigo-400"
             >
@@ -154,6 +160,7 @@ function Setup({ filter, options, onFilterChange, onOptionsChange, onStart }: Se
       </section>
 
       <Button
+        data-cy="practice-start"
         className="w-full"
         disabled={count === 0}
         onClick={() => onStart(buildPracticeSet(state, filter, options))}
@@ -187,7 +194,7 @@ function Session({ series, results, onAnswer, onStop }: SessionProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div data-cy="practice-session" className="space-y-4">
       <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
           <div
@@ -195,10 +202,10 @@ function Session({ series, results, onAnswer, onStop }: SessionProps) {
             style={{ width: `${(index / series.length) * 100}%` }}
           />
         </div>
-        <span>
+        <span data-cy="practice-progress">
           {index + 1} / {series.length}
         </span>
-        <Button variant="ghost" onClick={onStop}>
+        <Button data-cy="practice-stop" variant="ghost" onClick={onStop}>
           Terminer
         </Button>
       </div>
@@ -236,10 +243,12 @@ function PracticeActions({ correct, isLast, onAnswer }: PracticeActionsProps) {
     return (
       <div className="space-y-2">
         <div className="grid grid-cols-2 gap-3">
-          <Button variant="secondary" onClick={() => onAnswer(false)}>
+          <Button data-cy="practice-dont-know" variant="secondary" onClick={() => onAnswer(false)}>
             Je ne savais pas
           </Button>
-          <Button onClick={() => onAnswer(true)}>Je savais</Button>
+          <Button data-cy="practice-know" onClick={() => onAnswer(true)}>
+            Je savais
+          </Button>
         </div>
         <KeyHint
           items={[
@@ -253,7 +262,9 @@ function PracticeActions({ correct, isLast, onAnswer }: PracticeActionsProps) {
   return (
     <div className="space-y-2">
       <div className="flex justify-end">
-        <Button onClick={next}>{isLast ? 'Voir le bilan' : 'Carte suivante →'}</Button>
+        <Button data-cy="practice-next" onClick={next}>
+          {isLast ? 'Voir le bilan' : 'Carte suivante →'}
+        </Button>
       </div>
       <KeyHint items={[['Entrée', isLast ? 'bilan' : 'suivante']]} />
     </div>
@@ -271,20 +282,25 @@ function Summary({ results, onRetryMistakes, onRestart }: SummaryProps) {
   const mistakes = results.filter((result) => !result.correct).map((result) => result.cardId)
 
   return (
-    <div className="space-y-6">
+    <div data-cy="practice-summary" className="space-y-6">
       <h2 className="text-xl font-semibold">Série terminée</h2>
       <section className="grid grid-cols-2 gap-3">
-        <StatTile label="Réponses" value={results.length} />
-        <StatTile label="Réussite" value={`${percent(correct, results.length)} %`} />
+        <StatTile cy="practice-summary-answered" label="Réponses" value={results.length} />
+        <StatTile
+          cy="practice-summary-rate"
+          label="Réussite"
+          value={`${percent(correct, results.length)} %`}
+        />
       </section>
 
       {mistakes.length > 0 && (
-        <section>
+        <section data-cy="practice-mistakes">
           <h3 className="mb-2 font-medium">À retravailler ({mistakes.length})</h3>
           <ul className="space-y-1 text-sm">
             {mistakes.map((id) => (
               <li
                 key={id}
+                data-cy="practice-mistake"
                 className="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-800 dark:bg-slate-900"
               >
                 <span className="mr-2 font-mono text-xs text-slate-400">{id}</span>
@@ -297,13 +313,20 @@ function Summary({ results, onRetryMistakes, onRestart }: SummaryProps) {
 
       <div className="flex flex-wrap gap-3">
         {mistakes.length > 0 && (
-          <Button onClick={() => onRetryMistakes(mistakes)}>Rejouer mes erreurs</Button>
+          <Button data-cy="practice-retry-mistakes" onClick={() => onRetryMistakes(mistakes)}>
+            Rejouer mes erreurs
+          </Button>
         )}
-        <Button variant={mistakes.length > 0 ? 'secondary' : 'primary'} onClick={onRestart}>
+        <Button
+          data-cy="practice-restart"
+          variant={mistakes.length > 0 ? 'secondary' : 'primary'}
+          onClick={onRestart}
+        >
           Nouvelle série
         </Button>
         <Link
           to="/"
+          data-cy="practice-home-link"
           className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
         >
           Retour à l'accueil

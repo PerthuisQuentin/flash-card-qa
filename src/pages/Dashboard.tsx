@@ -24,16 +24,19 @@ export default function Dashboard() {
         subtitle="ISTQB CTFL v4.0 — Testeur Certifié Niveau Fondation"
       />
 
-      <section className="mb-8 rounded-xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-900 dark:bg-indigo-950/40">
+      <section
+        data-cy="dashboard-today"
+        className="mb-8 rounded-xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-900 dark:bg-indigo-950/40"
+      >
         <h2 className="text-lg font-semibold">Aujourd’hui</h2>
         {toReview > 0 ? (
-          <p className="mt-1 text-slate-700 dark:text-slate-300">
+          <p data-cy="dashboard-today-summary" className="mt-1 text-slate-700 dark:text-slate-300">
             <strong>{today.due}</strong> carte{today.due > 1 ? 's' : ''} due
             {today.due > 1 ? 's' : ''} · <strong>{today.fresh}</strong> nouvelle
             {today.fresh > 1 ? 's' : ''}
           </p>
         ) : (
-          <p className="mt-1 text-slate-700 dark:text-slate-300">
+          <p data-cy="dashboard-today-summary" className="mt-1 text-slate-700 dark:text-slate-300">
             Tout est à jour 🎉
             {next && ` Prochaine carte due ${formatDueDate(next, now)}.`}
           </p>
@@ -41,6 +44,7 @@ export default function Dashboard() {
         <div className="mt-4 flex flex-wrap gap-3">
           <Link
             to="/review"
+            data-cy="dashboard-review-cta"
             className={`inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium ${
               toReview > 0
                 ? 'bg-indigo-600 text-white hover:bg-indigo-500'
@@ -49,13 +53,18 @@ export default function Dashboard() {
           >
             {toReview > 0 ? `Réviser (${toReview})` : 'Ouvrir la révision'}
           </Link>
-          <QuickLink to="/practice">Entraînement libre</QuickLink>
-          <QuickLink to="/exam">Examen blanc</QuickLink>
+          <QuickLink to="/practice" cy="dashboard-practice-link">
+            Entraînement libre
+          </QuickLink>
+          <QuickLink to="/exam" cy="dashboard-exam-link">
+            Examen blanc
+          </QuickLink>
         </div>
       </section>
 
       <section className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <StatTile
+          cy="dashboard-streak"
           label="Série en cours"
           value={`🔥 ${currentStreak.days} j`}
           hint={
@@ -64,8 +73,13 @@ export default function Dashboard() {
               : undefined
           }
         />
-        <StatTile label="Réponses aujourd’hui" value={today.answeredToday} />
         <StatTile
+          cy="dashboard-answered-today"
+          label="Réponses aujourd’hui"
+          value={today.answeredToday}
+        />
+        <StatTile
+          cy="dashboard-cards-seen"
           label="Cartes vues"
           value={`${Object.keys(state.srs).length} / ${progress.reduce((n, p) => n + p.total, 0)}`}
         />
@@ -90,6 +104,7 @@ function ChapterCard({ progress }: { progress: ChapterProgress }) {
 
   return (
     <article
+      data-cy={`dashboard-chapter-${chapter.id}`}
       className={`rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 ${
         upcoming ? 'opacity-60' : ''
       }`}
@@ -144,10 +159,11 @@ function Legend() {
   )
 }
 
-function QuickLink({ to, children }: { to: string; children: React.ReactNode }) {
+function QuickLink({ to, cy, children }: { to: string; cy: string; children: React.ReactNode }) {
   return (
     <Link
       to={to}
+      data-cy={cy}
       className="inline-flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-white/60 dark:text-slate-300 dark:hover:bg-slate-800"
     >
       {children}

@@ -10,13 +10,14 @@ const ALL_TAGS = listTags()
 
 export default function CardFilterPanel({ value, onChange }: CardFilterPanelProps) {
   return (
-    <div className="space-y-4">
+    <div data-cy="card-filter" className="space-y-4">
       <FilterGroup label="Chapitres">
         {chapters.map((chapter) => {
           const available = cardsOfChapter(chapter.id).length > 0
           return (
             <Chip
               key={chapter.id}
+              cy={`filter-chapter-${chapter.id}`}
               active={value.chapters?.includes(chapter.id) ?? false}
               disabled={!available}
               title={chapter.title}
@@ -33,6 +34,7 @@ export default function CardFilterPanel({ value, onChange }: CardFilterPanelProp
         {K_LEVELS.map((level) => (
           <Chip
             key={level}
+            cy={`filter-level-${level}`}
             active={value.levels?.includes(level) ?? false}
             onClick={() => onChange({ ...value, levels: toggle(value.levels, level) })}
           >
@@ -45,6 +47,7 @@ export default function CardFilterPanel({ value, onChange }: CardFilterPanelProp
         {ALL_TAGS.map((tag) => (
           <Chip
             key={tag}
+            cy="filter-tag"
             active={value.tags?.includes(tag) ?? false}
             onClick={() => onChange({ ...value, tags: toggle(value.tags, tag) })}
           >
@@ -80,14 +83,16 @@ interface ChipProps {
   active: boolean
   disabled?: boolean
   title?: string
+  cy: string
   onClick: () => void
   children: React.ReactNode
 }
 
-function Chip({ active, disabled, title, onClick, children }: ChipProps) {
+function Chip({ active, disabled, title, cy, onClick, children }: ChipProps) {
   return (
     <button
       type="button"
+      data-cy={cy}
       aria-pressed={active}
       disabled={disabled}
       title={title}

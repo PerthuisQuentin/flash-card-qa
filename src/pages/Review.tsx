@@ -98,11 +98,12 @@ function Setup({ filter, onFilterChange, onStart }: SetupProps) {
   return (
     <div className="space-y-6">
       <section className="grid grid-cols-2 gap-3">
-        <StatTile label="Cartes dues" value={queue.due.length} />
-        <StatTile label="Nouvelles cartes" value={queue.fresh.length} />
+        <StatTile cy="review-due" label="Cartes dues" value={queue.due.length} />
+        <StatTile cy="review-new" label="Nouvelles cartes" value={queue.fresh.length} />
       </section>
 
       <Button
+        data-cy="review-start"
         className="w-full"
         disabled={total === 0}
         onClick={() => onStart([...queue.due, ...queue.fresh])}
@@ -110,15 +111,23 @@ function Setup({ filter, onFilterChange, onStart }: SetupProps) {
         {total === 0 ? 'Rien à réviser' : `Commencer (${total} cartes)`}
       </Button>
       {total === 0 && (
-        <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+        <p
+          data-cy="review-empty"
+          className="text-center text-sm text-slate-500 dark:text-slate-400"
+        >
           {next
             ? `Prochaine carte due ${formatDueDate(next, now)}.`
             : 'Aucune carte pour ce filtre, ou quota de nouvelles cartes atteint pour aujourd’hui.'}
         </p>
       )}
 
-      <details className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-        <summary className="cursor-pointer font-medium">Filtrer les cartes</summary>
+      <details
+        data-cy="review-filters"
+        className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <summary data-cy="review-filters-toggle" className="cursor-pointer font-medium">
+          Filtrer les cartes
+        </summary>
         <div className="mt-4">
           <CardFilterPanel value={filter} onChange={onFilterChange} />
         </div>
@@ -151,15 +160,15 @@ function Session({ queue, initialSize, seen, step, onRated, onStop }: SessionPro
   }
 
   return (
-    <div className="space-y-4">
+    <div data-cy="review-session" className="space-y-4">
       <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
           <div className="h-full bg-indigo-600 transition-all" style={{ width: `${progress}%` }} />
         </div>
-        <span>
+        <span data-cy="review-progress">
           {`${seen.size} / ${initialSize} vues` + (toRetry > 0 ? ` · ${toRetry} à repasser` : '')}
         </span>
-        <Button variant="ghost" onClick={onStop}>
+        <Button data-cy="review-stop" variant="ghost" onClick={onStop}>
           Terminer
         </Button>
       </div>
@@ -229,7 +238,9 @@ function ReviewActions({ preview, correct, onRate }: ReviewActionsProps) {
           <span className="text-sm text-slate-500 dark:text-slate-400">
             Revient {preview[Rating.Again]}
           </span>
-          <Button onClick={again}>Continuer</Button>
+          <Button data-cy="review-continue" onClick={again}>
+            Continuer
+          </Button>
         </div>
         <KeyHint items={[['Entrée', 'continuer']]} />
       </div>
@@ -256,6 +267,14 @@ function ReviewActions({ preview, correct, onRate }: ReviewActionsProps) {
   )
 }
 
+// Stable e2e names for the rating buttons: `review-rate-<name>`.
+const GRADE_CY: Record<Grade, string> = {
+  [Rating.Again]: 'again',
+  [Rating.Hard]: 'hard',
+  [Rating.Good]: 'good',
+  [Rating.Easy]: 'easy',
+}
+
 const GRADE_STYLES: Record<Grade, string> = {
   [Rating.Again]:
     'border-rose-300 text-rose-700 hover:bg-rose-50 dark:border-rose-800 dark:text-rose-300 dark:hover:bg-rose-950/40',
@@ -278,6 +297,7 @@ function RatingButton({ grade, interval, label, onClick }: RatingButtonProps) {
   return (
     <button
       type="button"
+      data-cy={`review-rate-${GRADE_CY[grade]}`}
       onClick={onClick}
       className={`flex flex-col items-center rounded-lg border-2 bg-white px-3 py-2 font-medium transition-colors dark:bg-slate-900 ${GRADE_STYLES[grade]}`}
     >
@@ -300,21 +320,24 @@ function Summary({ stats, filter, onRestart }: SummaryProps) {
   const rate = percent(stats.correct, stats.answered)
 
   return (
-    <div className="space-y-6">
+    <div data-cy="review-summary" className="space-y-6">
       <h2 className="text-xl font-semibold">Session terminée 🎉</h2>
       <section className="grid grid-cols-2 gap-3">
-        <StatTile label="Réponses" value={stats.answered} />
-        <StatTile label="Réussite" value={`${rate} %`} />
+        <StatTile cy="review-summary-answered" label="Réponses" value={stats.answered} />
+        <StatTile cy="review-summary-rate" label="Réussite" value={`${rate} %`} />
       </section>
       {next && (
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p data-cy="review-next-due" className="text-sm text-slate-600 dark:text-slate-400">
           Prochaine carte due {formatDueDate(next, now)}.
         </p>
       )}
       <div className="flex flex-wrap gap-3">
-        <Button onClick={onRestart}>Nouvelle session</Button>
+        <Button data-cy="review-restart" onClick={onRestart}>
+          Nouvelle session
+        </Button>
         <Link
           to="/"
+          data-cy="review-home-link"
           className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
         >
           Retour à l'accueil

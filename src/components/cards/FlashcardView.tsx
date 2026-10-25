@@ -8,13 +8,16 @@ interface FlashcardViewProps {
 export default function FlashcardView({ card, revealed }: FlashcardViewProps) {
   if (!revealed) {
     return (
-      <p className="text-sm text-slate-500 italic dark:text-slate-400">
+      <p data-cy="flashcard-hint" className="text-sm text-slate-500 italic dark:text-slate-400">
         Formule ta réponse, puis affiche-la pour t'auto-évaluer.
       </p>
     )
   }
   return (
-    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 whitespace-pre-line dark:border-slate-700 dark:bg-slate-800/50">
+    <div
+      data-cy="flashcard-answer"
+      className="rounded-lg border border-slate-200 bg-slate-50 p-4 whitespace-pre-line dark:border-slate-700 dark:bg-slate-800/50"
+    >
       {card.answer}
     </div>
   )

@@ -19,7 +19,11 @@ export default class ErrorBoundary extends Component<{ children: ReactNode }, St
   render() {
     if (!this.state.error) return this.props.children
     return (
-      <div role="alert" className="mx-auto max-w-xl space-y-4 px-4 py-16 text-center">
+      <div
+        data-cy="error-boundary"
+        role="alert"
+        className="mx-auto max-w-xl space-y-4 px-4 py-16 text-center"
+      >
         <h1 className="text-2xl font-bold">Oups, quelque chose s’est mal passé</h1>
         <p className="text-slate-600 dark:text-slate-400">
           Ta progression est enregistrée dans le navigateur et n’est pas perdue. Recharge la page ;
@@ -31,6 +35,7 @@ export default class ErrorBoundary extends Component<{ children: ReactNode }, St
         <div className="flex justify-center gap-3">
           <button
             type="button"
+            data-cy="error-reload"
             onClick={() => window.location.reload()}
             className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
           >

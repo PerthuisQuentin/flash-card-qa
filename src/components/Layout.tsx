@@ -1,13 +1,14 @@
 import { NavLink, Outlet } from 'react-router'
 import { useStore } from '../state/store.tsx'
 
+// `cy` is the stable e2e hook (`data-cy="nav-<cy>"`), independent of the French label.
 const NAV_ITEMS = [
-  { to: '/', label: 'Accueil', end: true },
-  { to: '/review', label: 'Réviser' },
-  { to: '/practice', label: 'Entraînement' },
-  { to: '/exam', label: 'Examen blanc' },
-  { to: '/stats', label: 'Stats' },
-  { to: '/settings', label: 'Paramètres' },
+  { to: '/', label: 'Accueil', cy: 'home', end: true },
+  { to: '/review', label: 'Réviser', cy: 'review' },
+  { to: '/practice', label: 'Entraînement', cy: 'practice' },
+  { to: '/exam', label: 'Examen blanc', cy: 'exam' },
+  { to: '/stats', label: 'Stats', cy: 'stats' },
+  { to: '/settings', label: 'Paramètres', cy: 'settings' },
 ]
 
 export default function Layout() {
@@ -24,12 +25,14 @@ export default function Layout() {
         <div className="mx-auto flex max-w-4xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
           <NavLink
             to="/"
+            data-cy="nav-brand"
             className="rounded text-lg font-semibold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
           >
             Flash Cards <span className="text-indigo-600 dark:text-indigo-400">QA</span>
           </NavLink>
           <nav
             aria-label="Navigation principale"
+            data-cy="main-nav"
             className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0"
           >
             <ul className="flex gap-1 text-sm whitespace-nowrap">
@@ -38,6 +41,7 @@ export default function Layout() {
                   <NavLink
                     to={item.to}
                     end={item.end}
+                    data-cy={`nav-${item.cy}`}
                     className={({ isActive }) =>
                       `block rounded-md px-3 py-1.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 ${
                         isActive
@@ -57,6 +61,7 @@ export default function Layout() {
       {saveFailed && (
         <p
           role="alert"
+          data-cy="save-failed-alert"
           className="border-b border-amber-300 bg-amber-50 px-4 py-2 text-center text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/60 dark:text-amber-200"
         >
           ⚠️ Impossible d’enregistrer dans ce navigateur (navigation privée ou stockage plein) : ta

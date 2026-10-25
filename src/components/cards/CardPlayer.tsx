@@ -79,9 +79,17 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
   useHotkeys(bindings, !revealed)
 
   return (
-    <article className="space-y-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900">
+    <article
+      data-cy="card-player"
+      className="space-y-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:border-slate-800 dark:bg-slate-900"
+    >
       <CardHeader card={card} />
-      <h2 className="text-lg leading-snug font-semibold whitespace-pre-wrap">{card.question}</h2>
+      <h2
+        data-cy="card-question"
+        className="text-lg leading-snug font-semibold whitespace-pre-wrap"
+      >
+        {card.question}
+      </h2>
 
       {card.type === 'flashcard' && <FlashcardView card={card} revealed={revealed} />}
       {card.type === 'mcq' && (
@@ -102,7 +110,12 @@ export default function CardPlayer({ card, onGraded, renderActions }: CardPlayer
 
       {!revealed && (
         <div className="space-y-2">
-          <Button onClick={submit} disabled={!canSubmit} className="w-full sm:w-auto">
+          <Button
+            data-cy="card-submit"
+            onClick={submit}
+            disabled={!canSubmit}
+            className="w-full sm:w-auto"
+          >
             {card.type === 'flashcard' ? 'Afficher la réponse' : 'Valider'}
           </Button>
           <KeyHint items={hintsFor(card)} />
@@ -134,9 +147,10 @@ function hintsFor(card: Card): [string, string][] {
 function Feedback({ card, outcome }: { card: Card; outcome: CardOutcome }) {
   if (outcome.correct === null && !card.explanation) return null
   return (
-    <div className="space-y-2" aria-live="polite">
+    <div data-cy="card-feedback" className="space-y-2" aria-live="polite">
       {outcome.correct !== null && (
         <p
+          data-cy="card-result"
           className={`font-semibold ${
             outcome.correct
               ? 'text-emerald-700 dark:text-emerald-400'
@@ -147,7 +161,10 @@ function Feedback({ card, outcome }: { card: Card; outcome: CardOutcome }) {
         </p>
       )}
       {card.explanation && (
-        <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
+        <p
+          data-cy="card-explanation"
+          className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200"
+        >
           <span className="font-semibold">Explication : </span>
           {card.explanation}
         </p>
