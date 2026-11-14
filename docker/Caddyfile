@@ -1,0 +1,14 @@
+# Static server inside the image. TLS is expected to be handled by a reverse proxy in front.
+:80 {
+	root * /srv
+	encode zstd gzip
+	# SPA fallback: unknown paths are handled by react-router.
+	try_files {path} /index.html
+	file_server
+
+	# Vite emits hashed file names under /assets: cache them forever, revalidate the rest.
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+	@notAssets not path /assets/*
+	header @notAssets Cache-Control "no-cache"
+}

@@ -13,7 +13,6 @@
     "typecheck": "tsc -b",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "start": "serve -s dist -l tcp://0.0.0.0:${PORT:-3000}",
     "cy:open": "cypress open --e2e",
     "cy:run": "cypress run --e2e"
   },
@@ -24,7 +23,6 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^8.4.0",
-    "serve": "^14.2.6",
     "ts-fsrs": "^5.4.2",
     "zod": "^4.6.6"
   },
@@ -48,8 +46,5 @@
   },
   "engines": {
     "node": ">=22"
-  },
-  "overrides": {
-    "compression": "^1.8.2"
   }
 }

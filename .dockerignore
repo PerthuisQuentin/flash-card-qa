@@ -1,0 +1,11 @@
+node_modules
+dist
+# Copyrighted source PDFs: must never end up in an image.
+resources
+cypress
+cypress.config.ts
+docs
+.git
+.claude
+.vscode
+*.log

@@ -81,9 +81,10 @@ Chaque étape aboutit à une app qui build, dont les tests passent, et donne lie
 - [x] Export (téléchargement du `StoredState`) et import (validation zod, confirmation, remplacement).
 - [x] Réinitialisation avec double confirmation.
 - [x] Config de déploiement : `serve` en dépendance, script `start`, `railway.json` (tests au build), fallback SPA vérifié en local.
-- [ ] Mise en ligne sur Railway (reportée à la fin du développement).
+- [x] Déploiement remplacé par une image Docker (`Dockerfile`, `compose.yml`), `railway.json` et `serve` supprimés.
+- [ ] Mise en ligne.
 
-**Terminé quand** : l'app est en ligne sur Railway et un export → reset → import restaure la progression.
+**Terminé quand** : l'app est en ligne et un export → reset → import restaure la progression.
 
 > 🎯 **MVP atteint** : révision quotidienne utilisable sur desktop et mobile.
 

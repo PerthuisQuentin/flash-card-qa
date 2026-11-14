@@ -1,6 +1,6 @@
 # Flash Cards QA
 
-Personal web app to prepare the ISTQB CTFL v4.0 certification: FSRS spaced repetition, free practice, timed mock exams, stats. Client-only (no backend), progress in `localStorage`, deployed on Railway.
+Personal web app to prepare the ISTQB CTFL v4.0 certification: FSRS spaced repetition, free practice, timed mock exams, stats. Client-only (no backend), progress in `localStorage`, deployed as a Docker image (`Dockerfile`, `compose.yml`).
 
 - What the app does and why: `docs/SPECIFICATIONS.md` (source of truth, keep it up to date when behavior changes).
 - Development plan and content targets: `docs/PLAN.md`. Manual acceptance plan: `docs/RECETTE.md`. Improvement backlog: `docs/AMELIORATIONS.md`.
@@ -21,10 +21,9 @@ npm test             # Vitest (includes cards.json validation)
 npm run typecheck    # tsc -b
 npm run lint         # oxlint
 npm run build        # production build in dist/
-npm start            # serve dist/ with SPA fallback on $PORT
 ```
 
-Before declaring work done: `npm run typecheck && npm run lint && npm test`. Railway runs `npm test && npm run build`, so a failing test blocks the deploy.
+Before declaring work done: `npm run typecheck && npm run lint && npm test`. The Docker build runs `npm test && npm run build`, so a failing test blocks the deploy.
 
 ## Architecture
 

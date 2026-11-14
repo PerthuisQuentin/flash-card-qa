@@ -17,8 +17,8 @@ Idées non planifiées, à reprendre plus tard. Chaque piste décrit l'intérêt
 **Points d'attention**
 
 - Sur iOS, l'app installée sur l'écran d'accueil a **son propre stockage**, séparé de Safari : la progression faite dans Safari n'y apparaît pas. Prévoir un mot dans l'interface ou le README (passer par l'export / import).
-- Le service worker doit être servi sans cache long, sinon les mises à jour tardent : vérifier les en-têtes envoyés par `serve` sur Railway (configurer `serve.json` si besoin).
-- HTTPS obligatoire : déjà le cas sur Railway.
+- Le service worker doit être servi sans cache long, sinon les mises à jour tardent : `docker/Caddyfile` envoie déjà `no-cache` hors de `/assets/`, à vérifier pour le fichier du service worker.
+- HTTPS obligatoire : assuré par le reverse proxy devant le conteneur.
 
 ## Open Graph et aperçus de lien
 
@@ -33,7 +33,7 @@ Idées non planifiées, à reprendre plus tard. Chaque piste décrit l'intérêt
 
 **Points d'attention**
 
-- `og:url` et `og:image` doivent être des **URL absolues** : attendre le domaine Railway définitif (ou un domaine personnalisé).
+- `og:url` et `og:image` doivent être des **URL absolues** : à renseigner avec le domaine de production.
 - Les robots d'aperçu n'exécutent pas le JavaScript : les balises doivent être dans `index.html`, pas ajoutées par React. Elles seront donc identiques pour toutes les pages, ce qui suffit ici.
 
 ## Contenu et révision

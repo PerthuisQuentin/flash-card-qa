@@ -35,16 +35,15 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-| Script               | Rôle                                                      |
-| -------------------- | --------------------------------------------------------- |
-| `npm run dev`        | Serveur de développement Vite                             |
-| `npm test`           | Tests (Vitest), dont la validation des données            |
-| `npm run test:watch` | Tests en mode watch                                       |
-| `npm run typecheck`  | Vérification TypeScript                                   |
-| `npm run lint`       | oxlint                                                    |
-| `npm run format`     | Prettier                                                  |
-| `npm run build`      | Build de production dans `dist/`                          |
-| `npm start`          | Sert `dist/` (fallback SPA) sur `$PORT` (3000 par défaut) |
+| Script               | Rôle                                           |
+| -------------------- | ---------------------------------------------- |
+| `npm run dev`        | Serveur de développement Vite                  |
+| `npm test`           | Tests (Vitest), dont la validation des données |
+| `npm run test:watch` | Tests en mode watch                            |
+| `npm run typecheck`  | Vérification TypeScript                        |
+| `npm run lint`       | oxlint                                         |
+| `npm run format`     | Prettier                                       |
+| `npm run build`      | Build de production dans `dist/`               |
 
 ## Ajouter ou modifier des cartes
 
@@ -88,15 +87,17 @@ docs/           spécifications et plan de développement
 
 Conventions : code (identifiants, fichiers, routes, commentaires, commits) en anglais ; interface et contenu des cartes en français.
 
-## Déploiement (Railway)
+## Déploiement (Docker)
 
-Le service est décrit par [`railway.json`](railway.json) :
+Le [`compose.yml`](compose.yml) sert au déploiement :
 
-- build : `npm test && npm run build` (des données invalides bloquent le déploiement) ;
-- start : `npm start` (`serve -s dist` sur le `PORT` fourni par Railway) ;
-- healthcheck sur `/`.
+```bash
+docker compose up -d --build
+```
 
-Il suffit de créer un service Railway à partir du dépôt GitHub.
+- [`Dockerfile`](Dockerfile) : build en deux étapes. `npm test && npm run build` dans une image Node (des données invalides bloquent le build), puis seuls les fichiers de `dist/` sont copiés dans une image Caddy.
+- [`docker/Caddyfile`](docker/Caddyfile) : serveur statique sur le port 80, avec fallback SPA, compression et cache long sur `/assets/` (noms de fichiers hashés).
+- Le conteneur `flash-card-qa` ne publie aucun port : il rejoint le réseau Docker externe `proxy`, sur lequel un reverse proxy gère le HTTPS. Créer le réseau une fois avec `docker network create proxy`.
 
 ## Documentation
 

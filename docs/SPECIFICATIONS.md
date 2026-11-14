@@ -6,7 +6,7 @@ Application web de révision de la certification **ISTQB CTFL v4.0** (Testeur Ce
 - Langue : français uniquement (pas d'i18n).
 - Convention : **code en anglais** (identifiants, fichiers, routes, clés et valeurs d'énumération JSON, commentaires, commits) ; **interface et contenu des cartes en français**.
 - Appareils : desktop et mobile (pas de synchronisation entre appareils ; import/export manuel).
-- Hébergement : Railway, site statique.
+- Hébergement : site statique, servi par une image Docker.
 
 ---
 
@@ -24,7 +24,7 @@ Application web de révision de la certification **ISTQB CTFL v4.0** (Testeur Ce
 | Lint / format                   | oxlint + Prettier                                                                |
 | Tests                           | Vitest (+ Testing Library pour les composants critiques)                         |
 | Persistance                     | `localStorage`                                                                   |
-| Déploiement                     | Railway : `npm run build` puis `serve -s dist -l $PORT`                          |
+| Déploiement                     | Image Docker : build Node, fichiers statiques servis par Caddy                   |
 
 Pas de backend, pas de base de données.
 
@@ -315,14 +315,16 @@ Principe : toute la logique métier (SRS, examen, correction, stats) vit dans `l
 
 ---
 
-## 6. Déploiement Railway
+## 6. Déploiement Docker
 
-- Service unique, configuré par `railway.json` à la racine (config as code).
-- Build : `npm test && npm run build` — des données ou un code cassés bloquent le déploiement.
-- Start : `npm start` → `serve -s dist -l tcp://0.0.0.0:${PORT:-3000}` (`serve` en dépendance de production ; `-s` pour le fallback SPA de react-router ; `PORT` fourni par Railway).
-- Healthcheck sur `/`, redémarrage automatique en cas d'échec.
+- `compose.yml` à la racine : `docker compose up -d --build`, redémarrage automatique (`unless-stopped`).
+- `Dockerfile` en deux étapes :
+  - build (`node:24-alpine`) : `npm ci` puis `npm test && npm run build` — des données ou un code cassés bloquent le déploiement. `CYPRESS_INSTALL_BINARY=0` évite de télécharger Cypress.
+  - exécution (`caddy:2-alpine`) : uniquement le contenu de `dist/`, servi par `docker/Caddyfile` sur le port 80.
+- `docker/Caddyfile` : fallback SPA vers `index.html` pour react-router, compression zstd/gzip, `Cache-Control` immuable sur `/assets/*` (noms hashés par Vite) et `no-cache` sur le reste.
+- Aucun port publié : le conteneur rejoint le réseau Docker externe `proxy`, où un reverse proxy assure le HTTPS.
+- `.dockerignore` exclut notamment `resources/` (PDF sous copyright).
 - Version de Node via `engines` dans `package.json` (≥ 22).
-- `compression` (dépendance de `serve`) forcée en ≥ 1.8.2 via `overrides` (faille DoS corrigée).
 
 ---
 

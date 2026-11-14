@@ -1,0 +1,15 @@
+# Production deployment: `docker compose up -d --build`.
+# The app publishes no port: it joins the external `proxy` network, where a reverse proxy
+# (handling TLS) reaches it as `flash-card-qa:80`.
+services:
+  flash-card-qa:
+    build: .
+    image: flash-card-qa
+    container_name: flash-card-qa
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
